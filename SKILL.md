@@ -1,134 +1,128 @@
 ---
 name: single-surface-design
-description: Design principles, token hierarchy, typography calibration, and anti-AI-slop rules for building Apple/Linear-inspired single-surface web interfaces with zero nested container clutter.
+description: Master design engineering skill unifying Apple & Linear single-surface architecture, Emil Kowalski's craft polish, fluid spring physics, and anti-AI-slop frontend standards.
 ---
 
-# Single-Surface Design Language (Anti-AI-Slop Standard)
+# Single-Surface Design & Fluid Motion Engineering
 
-This skill guides AI coding assistants in crafting high-end, human-feeling, production-ready frontend interfaces following the **Single-Surface Apple & Linear design philosophy**. It eliminates generic "AI slop" (multi-level boxed card nesting, aggressive bolding, screaming uppercase headers, and clunky container frames).
+A comprehensive design engineering standard for crafting interfaces that feel calm, physically grounded, responsive, and free of generic "AI slop". It unifies:
+1. **The Single-Surface Architecture** (Zero container-in-container nesting, pure `#FFFFFF` canvas, divider-first lists).
+2. **Proportional Typography Scale** (`font-semibold` $\to$ `font-medium` $\to$ `font-normal`).
+3. **Emil Kowalski's Craft Polish** (Subtle compounding details, press states, exact easing curves, zero unearned motion).
+4. **Apple WWDC Fluid Motion & Spring Physics** (Interruptibility, 1:1 direct tracking, velocity handoff, `transform` + `opacity` only).
 
 ---
 
-## 🏛️ The 5 Core Design Principles
+## 🏛️ The Core Architectural Pillars
 
 ```mermaid
 graph TD
-    A["Principle 1: Single Flat Surface"] --> B["Never nest gray boxes inside white cards inside outer card frames"]
-    C["Principle 2: Proportional Typography"] --> D["Strict 3-tier hierarchy: semibold (600) -> medium (500) -> normal (400)"]
-    E["Principle 3: Divider-First Lists"] --> F["Apple/Linear divide-y divide-[#ECECEC] with negative margin hover fills"]
-    G["Principle 4: Hardware GPU Motion"] --> H["[transform:translateZ(0)] on frosted blurs for 60fps mobile scroll"]
-    I["Principle 5: Siri Windowed Pickers"] --> J["3-item focal sliding windows with directional spring physics"]
+    A["Single-Surface Design & Motion System"] --> B["1. Flat Surface Architecture"]
+    A --> C["2. Proportional Typography"]
+    A --> D["3. Animation Gate & Frequency"]
+    A --> E["4. Fluid Spring Physics"]
+    A --> F["5. Anti-AI-Slop Rules"]
+
+    B --> B1["Pure #FFFFFF canvas, divide-y divide-[#ECECEC], negative margin hover fills"]
+    C --> C1["semibold (600) Headings -> medium (500) Controls -> normal (400) Body"]
+    D --> D1["Gated by frequency: 100+/day (instant) vs occasional vs rare"]
+    E --> E1["Critically damped springs (damping 1.0, response 0.35s), interruptible, transform-only"]
+    F --> F1["No 3-layer card boxes, no shouting uppercase headers, no scale(0)"]
 ```
 
 ---
 
-## 1. The Single-Surface Principle (Anti-AI-Slop)
-* **The Golden Rule**: Never place gray cards inside white cards inside outer boxed cards.
-* **Canvas Elevation**: All primary content sits directly on the clean `#FFFFFF` canvas. 
-* **Interactive Boundaries**: Instead of boxing every element in a `<div className="border rounded-2xl p-6">`, use subtle divider lines (`border-t border-[#ECECEC]`) or borderless interactive rows styled with `hover:bg-[#F7F7F8] rounded-xl`.
+## 1. Single-Surface Architecture & Divider-First Lists
+
+* **The Core Rule**: Never place gray cards inside white cards inside outer card frames.
+* **Canvas Elevation**: Primary surfaces rest on pure `#FFFFFF`.
+* **Subtle Separation**: Separate list items with Apple/Linear divider lines (`divide-y divide-[#ECECEC] border-t border-b border-[#ECECEC]`).
+* **Negative-Margin Hover Expansion**: Interactive rows expand into container padding on hover:
+  ```tsx
+  <div className="group py-4 px-3 sm:px-4 -mx-3 sm:-mx-4 rounded-2xl hover:bg-[#F7F7F8] transition-colors flex items-center justify-between">
+    <div className="space-y-0.5 text-left">
+      <h3 className="font-semibold text-sm text-[#111827]">{item.title}</h3>
+      <p className="text-xs font-normal text-[#4B5563]">{item.description}</p>
+    </div>
+    <span className="font-semibold text-sm text-[#111827]">€{item.price.toFixed(2)}</span>
+  </div>
+  ```
 
 ---
 
-## 2. Proportional 3-Tier Typography Scale
+## 2. Proportional Typography Hierarchy
 
-| Hierarchy Tier | Font Weight | Tailwind Token | Applied To |
+| Tier | Weight | Tailwind Class | Usage Scope |
 | :--- | :--- | :--- | :--- |
-| **Tier 1: Headings & Names** | `600` (SemiBold) | `font-semibold` | Brand logos, page headings (24–32px), salon/item titles, primary section headers. |
-| **Tier 2: Controls & Actions** | `500` (Medium) | `font-medium` | Interactive pill buttons (`Book`, `Save`, `Share`), tabs, chips, form labels. |
-| **Tier 3: Body & Metadata** | `400` (Normal) | `font-normal` | Descriptions, addresses, timestamps, durations, review comments, footer links. |
+| **Tier 1: Headings & Names** | `600` | `font-semibold` | Brand logos, page headers (20–32px), treatment names, reviewer names. |
+| **Tier 2: Controls & Actions** | `500` | `font-medium` | Button pills (`Book`, `Save`, `Share`), tabs, chips, form labels. |
+| **Tier 3: Body & Metadata** | `400` | `font-normal` | Descriptions, addresses, opening hours, durations, timestamps, review text. |
 
 > [!WARNING]
-> **No Exaggerated Weights**: Avoid aggressive `font-black` (900) or heavy `font-extrabold` (800) in body or headings. Overly heavy weights distort optical kerning and feel like cheap templates.
+> **No Exaggerated Weights**: Avoid aggressive `font-black` (900) or heavy `font-extrabold` (800) in body or headings. Overly heavy weights distort optical kerning.
 
 ---
 
-## 3. Strict Anti-AI-Slop Checklist
+## 3. The Animation Decision Gate (Emil Kowalski Framework)
 
-1. ❌ **No Nested Box Clutter**: Drop outer gray cards around forms. Use open, continuous single-layer forms.
-2. ❌ **No Screaming Uppercase Micro-Headers**: Replace `1. CONTACT DETAILS` or `POPULAR SERVICES` with clean, elegant title case: `Your Details` or `Available Services`.
-3. ❌ **No Duplicate Subtitle Redundancy**: Never repeat the title as a subtitle on the right side of the same row (e.g. `Haircut · Haircut`).
-4. ❌ **No Solid White Input Cutouts**: Search capsule and form inputs must use `!bg-transparent` so input fields never render a solid white rectangle over hover backgrounds.
-5. ❌ **Zero Outer Padding (`p-0`) on Capsules**: Search capsules and segmented controls must use `p-0` so hover highlights cover 100% of height and curved pill radius.
-6. ❌ **No Multi-Border Divides**: Avoid stacking `border-t` and `border-b` around floating popups or menus. Use single-surface panels (`bg-white rounded-2xl border border-[#E5E7EB] shadow-[0_12px_36px_rgba(0,0,0,0.12)] p-1.5`).
-7. ❌ **No Heavy Box Accordions**: Prefer borderless Apple/Linear divider accordions (`divide-y divide-[#ECECEC]`) over individual floating boxed cards for FAQs and options.
+Before writing any motion code, evaluate the **Frequency Gate**:
+
+| Action Frequency | Decision | Implementation |
+| :--- | :--- | :--- |
+| **100+ times/day** (keyboard shortcuts, command palette, tabs) | **NO animation. Ever.** | Instant state change. Zero latency. |
+| **Tens of times/day** (hover effects, list navigation) | **Near-imperceptible** | `100ms - 150ms ease-out` on transform/opacity. |
+| **Occasional** (modals, drawers, dropdowns) | **Standard physical animation** | Critically damped spring or `200ms ease-out`. |
+| **Rare / First-time** (onboarding, success screens) | **Delight allowed** | Smooth sequence with playful physics. |
+
+> [!IMPORTANT]
+> **Never animate keyboard-initiated actions.** Raycast and Spotlight open instantly without transitions — this is the gold standard for high-frequency actions.
 
 ---
 
-## 4. Design Tokens & Palette
+## 4. Physical Motion Rules & Properties
 
-```css
-/* Surface Colors */
---bg-canvas: #FFFFFF;
---bg-subtle-hover: #F7F7F8;
---bg-active-fill: #EBECEE;
+1. **Only Animate `transform` and `opacity`**:
+   * Skips layout and paint steps, running purely on the GPU compositing thread.
+   * Never animate `top`, `left`, `width`, `height`, `margin`, or `padding`.
+2. **Never Start From `scale(0)`**:
+   * Nothing in the physical world appears from a mathematical singularity.
+   * Entrances start from `scale(0.95)` with `opacity: 0` $\to$ `scale(1)` with `opacity: 1`.
+3. **`transform-origin` Anchoring**:
+   * Dropdowns, menus, and popovers scale outward from their trigger button (`transform-origin: var(--transform-origin)` or top-right). Modals stay centered.
+4. **Instant Press Feedback (Pointer-Down)**:
+   * Buttons must react immediately when pressed (`active:scale-[0.97] transition-transform duration-100 ease-out`).
+5. **GPU Rasterization Layer**:
+   * Fixed and sticky blurred elements must use `[transform:translateZ(0)]` to force GPU compositing and prevent mobile scroll lag.
 
-/* Text Hierarchy */
---text-primary: #111827;    /* High-contrast brand dark */
---text-secondary: #4B5563;  /* Balanced body text */
---text-muted: #6B7280;      /* Subtle metadata & timestamps */
---text-placeholder: #9CA3AF;/* Input placeholders */
+---
 
-/* Borders & Dividers */
---border-subtle: #ECECEC;   /* Primary divider lines */
---border-control: #E5E7EB;  /* Button & input borders */
+## 5. Apple WWDC Fluid Spring Physics
 
-/* Shadows */
---shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.04);
---shadow-elevated: 0 12px 36px rgba(0, 0, 0, 0.12);
+```ts
+// 1. Critically Damped Spring (Default for 90% of UI — no distracting overshoot)
+const standardSpring = {
+  type: "spring",
+  stiffness: 480,
+  damping: 34, // damping ratio ~ 1.0 (critically damped)
+  mass: 1,
+};
+
+// 2. Physical Momentum Spring (Reserved strictly for swipe, throw, or drag release)
+const momentumSpring = {
+  type: "spring",
+  stiffness: 400,
+  damping: 26, // damping ratio ~ 0.8 (gentle, satisfying settle)
+  mass: 1,
+};
 ```
 
 ---
 
-## 5. Apple/Linear Divider-First Row Pattern
+## 6. Strict Anti-AI-Slop Checklist
 
-When rendering lists of services, options, or items, use borderless rows with negative margin hover fills:
-
-```tsx
-<div className="divide-y divide-[#ECECEC] border-t border-b border-[#ECECEC]">
-  {items.map((item) => (
-    <div 
-      key={item.id} 
-      className="group py-4 px-3 sm:px-4 -mx-3 sm:-mx-4 rounded-2xl hover:bg-[#F7F7F8] transition-colors flex items-center justify-between gap-4"
-    >
-      <div className="space-y-1 flex-1 text-left">
-        <h3 className="font-semibold text-sm sm:text-base text-[#111827]">
-          {item.title}
-        </h3>
-        <p className="text-xs font-normal text-[#4B5563] leading-relaxed">
-          {item.description}
-        </p>
-      </div>
-
-      <div className="flex items-center gap-4 shrink-0">
-        <span className="font-semibold text-base text-[#111827]">€{item.price.toFixed(2)}</span>
-        <button className="h-8.5 px-4 rounded-full bg-[#111827] hover:bg-[#262626] text-white text-xs font-medium transition-all active:scale-95">
-          Select
-        </button>
-      </div>
-    </div>
-  ))}
-</div>
-```
-
----
-
-## 6. Hardware GPU-Accelerated Header Pattern
-
-```tsx
-<header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md [transform:translateZ(0)] border-b border-[#ECECEC] h-16 md:h-20 flex items-center shadow-2xs px-6 md:px-12">
-  <div className="max-w-4xl w-full mx-auto flex items-center justify-between gap-4">
-    <span className="font-display font-semibold text-xl md:text-2xl text-[#111827] tracking-tight">
-      brandname
-    </span>
-    {/* Navigation Controls */}
-  </div>
-</header>
-```
-
----
-
-## 7. Siri 3-Item Windowed Focal Wheel Pickers
-
-* Displays only 3 items at a time: previous adjacent step, center active focus, next adjacent step.
-* Directional sliding animations: text slides right-to-left when stepping forward, left-to-right when stepping backward using spring physics (`stiffness: 480, damping: 34`).
-* Center focus pill supports direct typing of custom decimal values with instant bidirectional state recalculations.
+* ❌ **No 3-Layer Boxed Nesting**: Drop outer gray wrapper cards. Keep views on flat `#FFFFFF`.
+* ❌ **No Screaming Uppercase Headers**: Change `1. CONTACT DETAILS` to `Your Details`.
+* ❌ **No Duplicated Subtitles**: Never show redundant label repetition (e.g. `Haircut · Haircut`).
+* ❌ **No Solid White Input Boxes**: Capsule search fields must include `!bg-transparent`.
+* ❌ **Zero Outer Padding (`p-0`) on Capsules**: Hover fills must touch 100% of height and curved edges.
+* ❌ **No Multi-Border Divides**: Avoid dividing floating popups with stacked borders.
