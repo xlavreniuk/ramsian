@@ -10,10 +10,39 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg-canvas: #FFFFFF;
+      --text-primary: #111827;
+      --text-secondary: #4B5563;
+      --text-muted: #6B7280;
+      --border-hairline: #ECECEC;
+      --bg-surface: #F7F7F8;
+      --bg-track: #EBECEE;
+      --card-active: #FFFFFF;
+      --header-bg: rgba(255, 255, 255, 0.9);
+      --input-bg: #FFFFFF;
+      --slider-thumb-border: #FFFFFF;
+    }
+
+    html.dark {
+      --bg-canvas: #09090B;
+      --text-primary: #F9FAFB;
+      --text-secondary: #D1D5DB;
+      --text-muted: #9CA3AF;
+      --border-hairline: #27272A;
+      --bg-surface: #18181B;
+      --bg-track: #27272A;
+      --card-active: #18181B;
+      --header-bg: rgba(9, 9, 11, 0.9);
+      --input-bg: #18181B;
+      --slider-thumb-border: #09090B;
+    }
+
     body {
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: #FFFFFF;
-      color: #111827;
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
 
@@ -21,7 +50,7 @@
     input[type=range] {
       -webkit-appearance: none;
       appearance: none;
-      background: #EBECEE;
+      background: var(--bg-track);
       height: 6px;
       border-radius: 9999px;
       outline: none;
@@ -34,11 +63,11 @@
       appearance: none;
       width: 18px;
       height: 18px;
-      background: #111827;
+      background: var(--text-primary);
       border-radius: 50%;
       cursor: pointer;
-      border: 2px solid #FFFFFF !important;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+      border: 2px solid var(--slider-thumb-border) !important;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
       transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     input[type=range]::-webkit-slider-thumb:hover {
@@ -59,16 +88,17 @@
     .ios-switch input { opacity: 0; width: 0; height: 0; }
     .ios-slider {
       position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-      background-color: #E5E7EB; border-radius: 9999px;
+      background-color: var(--bg-track); border-radius: 9999px;
       transition: background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .ios-slider:before {
       position: absolute; content: ""; height: 20px; width: 20px; left: 2px; bottom: 2px;
       background-color: #FFFFFF; border-radius: 50%;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
       transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    input:checked + .ios-slider { background-color: #111827; }
+    input:checked + .ios-slider { background-color: var(--text-primary); }
+    html.dark input:checked + .ios-slider { background-color: #38BDF8; }
     input:checked + .ios-slider:before { transform: translateX(20px); }
 
     /* Circular Progress Ring */
@@ -80,26 +110,16 @@
 
     /* Spring Animation Utilities */
     .spring-press {
-      transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.15s ease, border-color 0.15s ease;
+      transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
     }
     .spring-press:active {
       transform: scale(0.95);
     }
 
-    /* Pulse Glow for Live Mode */
-    @keyframes pulse-live {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.08); opacity: 0.8; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    .live-pulse-dot {
-      animation: pulse-live 1.6s infinite ease-in-out;
-    }
-
     /* Apple Segmented Control Slider Track & Pill */
     .apple-seg-track {
       position: relative;
-      background-color: #EBECEE;
+      background-color: var(--bg-track);
       border-radius: 9999px;
       padding: 3px;
       display: inline-flex;
@@ -110,9 +130,9 @@
       top: 3px;
       bottom: 3px;
       left: 0;
-      background-color: #FFFFFF;
+      background-color: var(--card-active);
       border-radius: 9999px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
       transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
       pointer-events: none;
     }
@@ -123,9 +143,9 @@
       top: 0;
       bottom: 0;
       left: 0;
-      background-color: #FFFFFF;
+      background-color: var(--card-active);
       border-radius: 9999px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
       transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
       z-index: 5;
       pointer-events: none;
@@ -147,14 +167,14 @@
       flex-shrink: 0;
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
-      color: #9CA3AF;
+      color: var(--text-muted);
       opacity: 0.45;
       transition: opacity 0.25s ease, transform 0.25s ease, color 0.25s ease, font-size 0.25s ease;
       user-select: none;
       cursor: pointer;
     }
     .siri-wheel-item.active {
-      color: #111827;
+      color: var(--text-primary);
       font-weight: 700;
       font-size: 13px;
       opacity: 1;
@@ -170,27 +190,34 @@
     }
   </style>
 </head>
-<body class="bg-[#FFFFFF] text-[#111827] min-h-screen flex flex-col antialiased selection:bg-[#111827] selection:text-white" onclick="handleGlobalClick(event)">
+<body class="min-h-screen flex flex-col antialiased selection:bg-[#111827] selection:text-white dark:selection:bg-white dark:selection:text-black" onclick="handleGlobalClick(event)">
 
   <!-- Fixed Topbar (Single-Surface Standard) -->
-  <header class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md [transform:translateZ(0)] border-b border-[#ECECEC] h-16 flex items-center px-6 md:px-12">
+  <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md [transform:translateZ(0)] border-b h-16 flex items-center px-6 md:px-12 transition-colors" style="background-color: var(--header-bg); border-color: var(--border-hairline);">
     <div class="max-w-6xl w-full mx-auto flex items-center justify-between gap-4">
       <div class="flex items-center gap-2.5">
-        <span class="font-bold text-lg text-[#111827] tracking-tight">single-surface-design</span>
-        <span class="text-[11px] font-medium text-[#6B7280]">/ showroom</span>
+        <span class="font-bold text-lg tracking-tight" style="color: var(--text-primary);">single-surface-design</span>
+        <span class="text-[11px] font-medium" style="color: var(--text-muted);">/ showroom</span>
       </div>
 
       <div class="flex items-center gap-2">
-        <button onclick="toggleLiveMode()" id="liveModeBtn" class="h-9 px-3.5 rounded-full border border-[#ECECEC] bg-white hover:bg-[#F7F7F8] text-[#111827] text-xs font-semibold spring-press flex items-center gap-2 cursor-pointer shadow-2xs">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 live-pulse-dot"></span>
-          <span id="liveModeText">Live: On</span>
+        <!-- 1. Light / Dark Mode Toggle Switch -->
+        <button onclick="toggleTheme()" id="themeToggleBtn" class="h-9 px-3.5 rounded-full border text-xs font-semibold spring-press flex items-center gap-2 cursor-pointer shadow-2xs" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-primary);">
+          <svg id="themeSunIcon" class="w-4 h-4 text-amber-500 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          <svg id="themeMoonIcon" class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+          <span id="themeText">Theme</span>
         </button>
-        <a href="https://github.com/xlavreniuk/single-surface-design" target="_blank" class="h-9 px-4 rounded-full border border-[#ECECEC] bg-white hover:bg-[#F7F7F8] text-[#111827] text-xs font-semibold spring-press flex items-center gap-1.5 cursor-pointer shadow-2xs">
+
+        <!-- 2. GitHub Link -->
+        <a href="https://github.com/xlavreniuk/single-surface-design" target="_blank" class="h-9 px-4 rounded-full border text-xs font-semibold spring-press flex items-center gap-1.5 cursor-pointer shadow-2xs" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-primary);">
           <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
           <span>GitHub</span>
         </a>
-        <button onclick="openDemoModal()" class="h-9 px-4 rounded-full bg-[#111827] hover:bg-[#262626] text-white text-xs font-semibold shadow-2xs spring-press flex items-center gap-1.5 cursor-pointer">
-          <span>Modal</span>
+
+        <!-- 3. Copy Skill Command Button (Replaces Modal) -->
+        <button onclick="copySkillCommand()" id="copySkillBtn" class="h-9 px-4 rounded-full text-xs font-semibold shadow-2xs spring-press flex items-center gap-1.5 cursor-pointer dark:bg-white dark:text-black bg-[#111827] text-white">
+          <svg id="copySkillIcon" class="w-3.5 h-3.5 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+          <span id="copySkillText">Copy Skill</span>
         </button>
       </div>
     </div>
@@ -201,60 +228,58 @@
 
     <!-- 1. SEARCH CAPSULE ISLAND WITH PHYSICAL SLIDING HIGHLIGHT PILL -->
     <section class="space-y-4 relative">
-      <!-- Search Capsule Bar with Smooth Sliding Background Pill -->
-      <div id="searchCapsule" class="w-full bg-[#EBECEE] p-0 rounded-full flex items-center relative transition-all shadow-sm overflow-hidden">
+      <div id="searchCapsule" class="w-full p-0 rounded-full flex items-center relative transition-all shadow-sm overflow-hidden" style="background-color: var(--bg-track);">
         
-        <!-- Sliding White Pill Highlight -->
         <div id="searchSlidingPill"></div>
 
         <button onclick="event.stopPropagation(); toggleSearchSegment('where')" id="seg-where" class="flex-1 px-5 py-3.5 text-left rounded-full transition-all cursor-pointer relative z-10 spring-press">
-          <span class="block text-[10px] font-semibold text-[#111827]">Destination</span>
-          <span class="block text-xs font-normal text-[#4B5563]" id="whereLabel">San Francisco, CA</span>
+          <span class="block text-[10px] font-semibold" style="color: var(--text-primary);">Destination</span>
+          <span class="block text-xs font-normal" style="color: var(--text-secondary);" id="whereLabel">San Francisco, CA</span>
         </button>
-        <div id="div-1" class="w-px h-6 bg-[#ECECEC] opacity-0 transition-opacity z-10"></div>
+        <div id="div-1" class="w-px h-6 opacity-0 transition-opacity z-10" style="background-color: var(--border-hairline);"></div>
         <button onclick="event.stopPropagation(); toggleSearchSegment('when')" id="seg-when" class="flex-1 px-5 py-3.5 text-left rounded-full transition-all cursor-pointer relative z-10 spring-press">
-          <span class="block text-[10px] font-semibold text-[#111827]">Date & Time</span>
-          <span class="block text-xs font-normal text-[#6B7280]" id="whenLabel">Tomorrow, 14:00</span>
+          <span class="block text-[10px] font-semibold" style="color: var(--text-primary);">Date & Time</span>
+          <span class="block text-xs font-normal" style="color: var(--text-muted);" id="whenLabel">Tomorrow, 14:00</span>
         </button>
-        <div id="div-2" class="w-px h-6 bg-[#ECECEC] opacity-100 transition-opacity z-10"></div>
+        <div id="div-2" class="w-px h-6 opacity-100 transition-opacity z-10" style="background-color: var(--border-hairline);"></div>
         <button onclick="event.stopPropagation(); toggleSearchSegment('service')" id="seg-service" class="flex-1 px-5 py-3.5 text-left rounded-full transition-all cursor-pointer relative z-10 spring-press">
-          <span class="block text-[10px] font-semibold text-[#111827]">Service Type</span>
-          <span class="block text-xs font-normal text-[#6B7280]" id="serviceLabel">Product Strategy & Design</span>
+          <span class="block text-[10px] font-semibold" style="color: var(--text-primary);">Service Type</span>
+          <span class="block text-xs font-normal" style="color: var(--text-muted);" id="serviceLabel">Product Strategy & Design</span>
         </button>
         <div class="pr-2 z-20">
-          <button onclick="event.stopPropagation(); triggerToast('Searching catalog for ' + currentWhere)" class="w-10 h-10 rounded-full bg-[#111827] hover:bg-[#262626] text-white flex items-center justify-center spring-press cursor-pointer shadow-2xs">
+          <button onclick="event.stopPropagation(); triggerToast('Searching catalog for ' + currentWhere)" class="w-10 h-10 rounded-full flex items-center justify-center spring-press cursor-pointer shadow-2xs dark:bg-white dark:text-black bg-[#111827] text-white">
             <svg class="w-4 h-4 stroke-[2.2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
           </button>
         </div>
       </div>
 
       <!-- Interactive Flyout Picker for Active Segment -->
-      <div id="segmentFlyout" class="hidden absolute top-16 left-0 right-0 z-30 bg-white rounded-2xl border border-[#ECECEC] shadow-xl p-4 transition-all duration-200 transform scale-98 opacity-0">
+      <div id="segmentFlyout" class="hidden absolute top-16 left-0 right-0 z-30 rounded-2xl border shadow-xl p-4 transition-all duration-200 transform scale-98 opacity-0" style="background-color: var(--card-active); border-color: var(--border-hairline);">
         <div id="flyoutContent" class="space-y-2">
           <!-- Dynamic options populated by JS -->
         </div>
       </div>
 
-      <!-- Sliding Category Pill Bar -->
+      <!-- Category Pill Bar -->
       <div class="flex items-center gap-1.5 overflow-x-auto py-1">
-        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full bg-[#111827] text-white text-xs font-semibold spring-press cursor-pointer shadow-2xs">All</button>
-        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border border-[#ECECEC] hover:bg-[#F7F7F8] text-[#4B5563] text-xs font-medium spring-press cursor-pointer">Design System</button>
-        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border border-[#ECECEC] hover:bg-[#F7F7F8] text-[#4B5563] text-xs font-medium spring-press cursor-pointer">iOS SwiftUI</button>
-        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border border-[#ECECEC] hover:bg-[#F7F7F8] text-[#4B5563] text-xs font-medium spring-press cursor-pointer">Android Compose</button>
-        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border border-[#ECECEC] hover:bg-[#F7F7F8] text-[#4B5563] text-xs font-medium spring-press cursor-pointer">Web & Next.js</button>
-        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border border-[#ECECEC] hover:bg-[#F7F7F8] text-[#4B5563] text-xs font-medium spring-press cursor-pointer">React Native</button>
+        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full text-xs font-semibold spring-press cursor-pointer shadow-2xs dark:bg-white dark:text-black bg-[#111827] text-white">All</button>
+        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-secondary);">Design System</button>
+        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-secondary);">iOS SwiftUI</button>
+        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-secondary);">Android Compose</button>
+        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-secondary);">Web & Next.js</button>
+        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-secondary);">React Native</button>
       </div>
     </section>
 
     <!-- 2. INTERACTIVE FINANCIAL CHART WITH Y/X AXES, SLIDING PERIOD SEGMENT & EXACT HOVER DOT -->
     <section class="space-y-4">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#ECECEC] pb-3">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b pb-3" style="border-color: var(--border-hairline);">
         <div class="flex items-center gap-3">
           <div>
-            <span class="text-xs text-[#6B7280] block">Gross Merchandise Volume</span>
+            <span class="text-xs block" style="color: var(--text-muted);">Gross Merchandise Volume</span>
             <div class="flex items-baseline gap-2 mt-0.5">
-              <span id="chartRevenueText" class="font-bold text-2xl sm:text-3xl text-[#111827] font-mono tracking-tight">$52,100.00</span>
-              <span id="trendBadge" class="text-xs font-bold text-emerald-600 bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded-full transition-all">
+              <span id="chartRevenueText" class="font-bold text-2xl sm:text-3xl font-mono tracking-tight" style="color: var(--text-primary);">$52,100.00</span>
+              <span id="trendBadge" class="text-xs font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/60 dark:border-emerald-800/40 px-2 py-0.5 rounded-full transition-all">
                 +24.6%
               </span>
             </div>
@@ -267,11 +292,11 @@
           <!-- Apple Segmented Trend Control (Sliding Smooth Pill) -->
           <div class="apple-seg-track relative" id="appleSegTrack">
             <div class="apple-seg-pill" id="appleSegPill"></div>
-            <button onclick="setTrendMode('up')" id="trendBtnUp" class="relative z-10 px-3.5 py-1.5 text-xs font-semibold text-[#111827] flex items-center gap-1.5 cursor-pointer spring-press">
+            <button onclick="setTrendMode('up')" id="trendBtnUp" class="relative z-10 px-3.5 py-1.5 text-xs font-semibold flex items-center gap-1.5 cursor-pointer spring-press" style="color: var(--text-primary);">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
               <span>Up Trend</span>
             </button>
-            <button onclick="setTrendMode('down')" id="trendBtnDown" class="relative z-10 px-3.5 py-1.5 text-xs font-medium text-[#6B7280] hover:text-[#111827] flex items-center gap-1.5 cursor-pointer spring-press">
+            <button onclick="setTrendMode('down')" id="trendBtnDown" class="relative z-10 px-3.5 py-1.5 text-xs font-medium flex items-center gap-1.5 cursor-pointer spring-press" style="color: var(--text-muted);">
               <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
               <span>Down Trend</span>
             </button>
@@ -280,9 +305,9 @@
           <!-- Apple Segmented Period Control (7D / 30D / 90D Sliding Pill) -->
           <div class="apple-seg-track relative" id="applePeriodTrack">
             <div class="apple-seg-pill" id="applePeriodPill"></div>
-            <button onclick="updateChartPeriod('7D')" id="chartBtn7D" class="relative z-10 px-3.5 py-1.5 text-xs font-medium text-[#6B7280] hover:text-[#111827] spring-press cursor-pointer">7D</button>
-            <button onclick="updateChartPeriod('30D')" id="chartBtn30D" class="relative z-10 px-3.5 py-1.5 text-xs font-semibold text-[#111827] spring-press cursor-pointer">30D</button>
-            <button onclick="updateChartPeriod('90D')" id="chartBtn90D" class="relative z-10 px-3.5 py-1.5 text-xs font-medium text-[#6B7280] hover:text-[#111827] spring-press cursor-pointer">90D</button>
+            <button onclick="updateChartPeriod('7D')" id="chartBtn7D" class="relative z-10 px-3 py-1.5 text-xs font-medium spring-press cursor-pointer" style="color: var(--text-muted);">7D</button>
+            <button onclick="updateChartPeriod('30D')" id="chartBtn30D" class="relative z-10 px-3 py-1.5 text-xs font-semibold spring-press cursor-pointer" style="color: var(--text-primary);">30D</button>
+            <button onclick="updateChartPeriod('90D')" id="chartBtn90D" class="relative z-10 px-3 py-1.5 text-xs font-medium spring-press cursor-pointer" style="color: var(--text-muted);">90D</button>
           </div>
         </div>
       </div>
@@ -291,54 +316,47 @@
       <div class="relative w-full pt-2">
         <div class="grid grid-cols-12 gap-2 items-center">
           
-          <!-- Y-Axis Labels (1 col) -->
-          <div class="col-span-1 flex flex-col justify-between h-44 text-[10px] font-mono text-[#9CA3AF] text-right pr-2 select-none">
+          <div class="col-span-1 flex flex-col justify-between h-44 text-[10px] font-mono text-right pr-2 select-none" style="color: var(--text-muted);">
             <span id="yAxisMax">$60k</span>
             <span id="yAxisMidHigh">$45k</span>
             <span id="yAxisMidLow">$30k</span>
             <span id="yAxisMin">$0k</span>
           </div>
 
-          <!-- SVG Area & Line (11 cols) -->
           <div class="col-span-11 relative h-44 cursor-crosshair" onmousemove="handleChartHover(event)" onmouseleave="handleChartLeave()">
-            <!-- Background Grid Hairlines -->
-            <div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-40">
-              <div class="border-b border-dashed border-[#ECECEC] w-full"></div>
-              <div class="border-b border-dashed border-[#ECECEC] w-full"></div>
-              <div class="border-b border-dashed border-[#ECECEC] w-full"></div>
-              <div class="border-b border-[#ECECEC] w-full"></div>
+            <div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-30">
+              <div class="border-b border-dashed w-full" style="border-color: var(--border-hairline);"></div>
+              <div class="border-b border-dashed w-full" style="border-color: var(--border-hairline);"></div>
+              <div class="border-b border-dashed w-full" style="border-color: var(--border-hairline);"></div>
+              <div class="border-b w-full" style="border-color: var(--border-hairline);"></div>
             </div>
 
             <svg id="mainSvgCanvas" class="w-full h-full overflow-visible relative z-10" viewBox="0 0 600 160" preserveAspectRatio="none">
               <defs>
                 <linearGradient id="chartGradGreen" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#10B981" stop-opacity="0.22"/>
+                  <stop offset="0%" stop-color="#10B981" stop-opacity="0.25"/>
                   <stop offset="100%" stop-color="#10B981" stop-opacity="0.00"/>
                 </linearGradient>
                 <linearGradient id="chartGradRed" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#F43F5E" stop-opacity="0.22"/>
+                  <stop offset="0%" stop-color="#F43F5E" stop-opacity="0.25"/>
                   <stop offset="100%" stop-color="#F43F5E" stop-opacity="0.00"/>
                 </linearGradient>
               </defs>
               <path id="chartAreaPath" d="M0,130 Q100,100 200,80 T400,50 T600,20 L600,160 L0,160 Z" fill="url(#chartGradGreen)" class="transition-all duration-300"/>
               <path id="chartLinePath" d="M0,130 Q100,100 200,80 T400,50 T600,20" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" class="transition-all duration-300"/>
               
-              <!-- Exact Vertical Crosshair Hairline -->
-              <line id="chartCrossLine" x1="400" y1="0" x2="400" y2="160" stroke="#ECECEC" stroke-width="1.5" stroke-dasharray="3 3" class="hidden"/>
-              <!-- Exact Anchored Dot Sitting 100% on the SVG Path -->
-              <circle id="chartDot" cx="400" cy="50" r="5.5" fill="#FFFFFF" stroke="#10B981" stroke-width="3" class="hidden shadow-md"/>
+              <line id="chartCrossLine" x1="400" y1="0" x2="400" y2="160" stroke="#9CA3AF" stroke-width="1.5" stroke-dasharray="3 3" class="hidden opacity-50"/>
+              <circle id="chartDot" cx="400" cy="50" r="5.5" fill="var(--bg-canvas)" stroke="#10B981" stroke-width="3" class="hidden shadow-md"/>
             </svg>
 
-            <!-- Floating Hover Tooltip -->
-            <div id="chartTooltip" class="absolute top-1 right-2 text-right hidden bg-white/95 backdrop-blur-xs px-3 py-1.5 rounded-xl border border-[#ECECEC] shadow-sm z-20 pointer-events-none">
-              <span id="tooltipDate" class="text-[10px] text-[#6B7280] block font-medium">Point Tracking</span>
-              <span id="tooltipVal" class="font-mono font-bold text-xs text-[#111827]">$1,840.00</span>
+            <div id="chartTooltip" class="absolute top-1 right-2 text-right hidden backdrop-blur-xs px-3 py-1.5 rounded-xl border shadow-sm z-20 pointer-events-none" style="background-color: var(--card-active); border-color: var(--border-hairline);">
+              <span id="tooltipDate" class="text-[10px] block font-medium" style="color: var(--text-muted);">Point Tracking</span>
+              <span id="tooltipVal" class="font-mono font-bold text-xs" style="color: var(--text-primary);">$1,840.00</span>
             </div>
           </div>
         </div>
 
-        <!-- X-Axis Labels -->
-        <div class="grid grid-cols-12 gap-2 pt-1 text-[10px] font-mono text-[#9CA3AF] select-none">
+        <div class="grid grid-cols-12 gap-2 pt-1 text-[10px] font-mono select-none" style="color: var(--text-muted);">
           <div class="col-span-1"></div>
           <div class="col-span-11 flex justify-between px-1" id="xAxisLabels">
             <span>Mon</span>
@@ -354,24 +372,24 @@
     </section>
 
     <!-- 3. FLAT DIVIDER METRIC STATS ROW WITH COUNT-UP NUMBERS -->
-    <section class="grid grid-cols-2 sm:grid-cols-4 gap-4 py-4 border-t border-b border-[#ECECEC]">
+    <section class="grid grid-cols-2 sm:grid-cols-4 gap-4 py-4 border-t border-b" style="border-color: var(--border-hairline);">
       <div>
-        <span class="text-xs text-[#6B7280]">Total Transactions</span>
-        <p id="metricBookings" class="font-bold text-2xl text-[#111827] font-mono mt-0.5">1,248</p>
+        <span class="text-xs" style="color: var(--text-muted);">Total Transactions</span>
+        <p id="metricBookings" class="font-bold text-2xl font-mono mt-0.5" style="color: var(--text-primary);">1,248</p>
         <span class="text-[10px] text-emerald-600 font-semibold">+18.4% live pace</span>
       </div>
       <div>
-        <span class="text-xs text-[#6B7280]">Average Order Value</span>
-        <p id="metricTicket" class="font-bold text-2xl text-[#111827] font-mono mt-0.5">$42.50</p>
-        <span class="text-[10px] text-[#6B7280]">Across all platforms</span>
+        <span class="text-xs" style="color: var(--text-muted);">Average Order Value</span>
+        <p id="metricTicket" class="font-bold text-2xl font-mono mt-0.5" style="color: var(--text-primary);">$42.50</p>
+        <span class="text-[10px]" style="color: var(--text-muted);">Across all platforms</span>
       </div>
       <div>
-        <span class="text-xs text-[#6B7280]">Take-Rate Fee</span>
-        <p id="metricFee" class="font-bold text-2xl text-[#111827] font-mono mt-0.5">$1,350</p>
-        <span class="text-[10px] text-[#6B7280]">1.75% + $0.30</span>
+        <span class="text-xs" style="color: var(--text-muted);">Take-Rate Fee</span>
+        <p id="metricFee" class="font-bold text-2xl font-mono mt-0.5" style="color: var(--text-primary);">$1,350</p>
+        <span class="text-[10px]" style="color: var(--text-muted);">1.75% + $0.30</span>
       </div>
       <div>
-        <span class="text-xs text-[#6B7280]">Monthly Recurring MRR</span>
+        <span class="text-xs" style="color: var(--text-muted);">Monthly Recurring MRR</span>
         <p id="metricMRR" class="font-bold text-2xl text-emerald-600 font-mono mt-0.5">$3,420</p>
         <span class="text-[10px] text-emerald-600/80">Active subscriptions</span>
       </div>
@@ -380,20 +398,19 @@
     <!-- 4. CONTROLS, PICKERS & SLIDERS WITH FLAWLESS SIRI FOCAL WHEEL -->
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 py-2">
       
-      <!-- ITEM 1: Siri 3-Item Focal Wheel with Flawless Center Box Alignment -->
+      <!-- ITEM 1: Siri 3-Item Focal Wheel -->
       <div class="space-y-2">
-        <span class="text-xs font-semibold text-[#111827]">Siri Focal Wheel</span>
-        <div class="p-3 rounded-2xl bg-[#F7F7F8] border border-[#ECECEC] flex items-center justify-between gap-1 relative">
-          <button onclick="stepSiri(-1)" class="w-8 h-8 rounded-full bg-white border border-[#ECECEC] hover:bg-[#F7F7F8] flex items-center justify-center text-[#111827] spring-press cursor-pointer shadow-2xs z-30 shrink-0">
+        <span class="text-xs font-semibold" style="color: var(--text-primary);">Siri Focal Wheel</span>
+        <div class="p-3 rounded-2xl border flex items-center justify-between gap-1 relative" style="background-color: var(--bg-surface); border-color: var(--border-hairline);">
+          <button onclick="stepSiri(-1)" class="w-8 h-8 rounded-full border flex items-center justify-center spring-press cursor-pointer shadow-2xs z-30 shrink-0" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-primary);">
             <svg class="w-3.5 h-3.5 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
           </button>
           
-          <!-- Viewport: exactly 180px wide (3 items of 60px) -->
           <div class="relative w-[180px] h-9 overflow-hidden rounded-xl">
-            <!-- Center Focus Box (centered exactly at x: 60px, width: 60px, behind text) -->
-            <div class="absolute left-[60px] top-0.5 bottom-0.5 w-[60px] rounded-xl bg-white border border-[#111827] shadow-2xs pointer-events-none z-0"></div>
+            <!-- Center Focus Box -->
+            <div class="absolute left-[60px] top-0.5 bottom-0.5 w-[60px] rounded-xl border shadow-2xs pointer-events-none z-0" style="background-color: var(--card-active); border-color: var(--text-primary);"></div>
             
-            <!-- Sliding Track: in front of focus box (z-10) with transparent text items -->
+            <!-- Sliding Track -->
             <div id="siriTrack" class="absolute top-0 bottom-0 left-0 flex items-center z-10">
               <div onclick="selectSiriIndex(0)" class="siri-wheel-item">1.00%</div>
               <div onclick="selectSiriIndex(1)" class="siri-wheel-item">1.25%</div>
@@ -406,7 +423,7 @@
             </div>
           </div>
 
-          <button onclick="stepSiri(1)" class="w-8 h-8 rounded-full bg-white border border-[#ECECEC] hover:bg-[#F7F7F8] flex items-center justify-center text-[#111827] spring-press cursor-pointer shadow-2xs z-30 shrink-0">
+          <button onclick="stepSiri(1)" class="w-8 h-8 rounded-full border flex items-center justify-center spring-press cursor-pointer shadow-2xs z-30 shrink-0" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-primary);">
             <svg class="w-3.5 h-3.5 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
           </button>
         </div>
@@ -415,12 +432,12 @@
       <!-- ITEM 2: Stroke-Free Slider with Live Value -->
       <div class="space-y-2">
         <div class="flex justify-between items-center text-xs">
-          <span class="font-semibold text-[#111827]">Stroke-Free Slider</span>
-          <span id="sliderValueText" class="font-bold text-xs text-[#111827]">500 Units</span>
+          <span class="font-semibold" style="color: var(--text-primary);">Stroke-Free Slider</span>
+          <span id="sliderValueText" class="font-bold text-xs" style="color: var(--text-primary);">500 Units</span>
         </div>
-        <div class="p-4 rounded-2xl bg-[#F7F7F8] border border-[#ECECEC] space-y-2">
+        <div class="p-4 rounded-2xl border space-y-2" style="background-color: var(--bg-surface); border-color: var(--border-hairline);">
           <input type="range" min="50" max="2000" step="50" value="500" oninput="updateSlider(this.value)" class="w-full cursor-pointer" />
-          <div class="flex justify-between text-[10px] text-[#9CA3AF]">
+          <div class="flex justify-between text-[10px]" style="color: var(--text-muted);">
             <span>50</span>
             <span>2,000</span>
           </div>
@@ -429,15 +446,15 @@
 
       <!-- ITEM 3: Quantity Stepper & iOS Switch -->
       <div class="space-y-2">
-        <span class="text-xs font-semibold text-[#111827]">Stepper & Switch</span>
-        <div class="p-3 rounded-2xl bg-[#F7F7F8] border border-[#ECECEC] flex items-center justify-between">
-          <div class="flex items-center gap-1.5 bg-white border border-[#ECECEC] rounded-full p-1 shadow-2xs">
-            <button onclick="stepCount(-1)" class="w-6 h-6 rounded-full hover:bg-[#F7F7F8] flex items-center justify-center text-xs font-bold text-[#111827] spring-press cursor-pointer">-</button>
-            <span id="counterVal" class="w-6 text-center text-xs font-bold font-mono text-[#111827]">4</span>
-            <button onclick="stepCount(1)" class="w-6 h-6 rounded-full hover:bg-[#F7F7F8] flex items-center justify-center text-xs font-bold text-[#111827] spring-press cursor-pointer">+</button>
+        <span class="text-xs font-semibold" style="color: var(--text-primary);">Stepper & Switch</span>
+        <div class="p-3 rounded-2xl border flex items-center justify-between" style="background-color: var(--bg-surface); border-color: var(--border-hairline);">
+          <div class="flex items-center gap-1.5 border rounded-full p-1 shadow-2xs" style="background-color: var(--bg-canvas); border-color: var(--border-hairline);">
+            <button onclick="stepCount(-1)" class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold spring-press cursor-pointer" style="color: var(--text-primary);">-</button>
+            <span id="counterVal" class="w-6 text-center text-xs font-bold font-mono" style="color: var(--text-primary);">4</span>
+            <button onclick="stepCount(1)" class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold spring-press cursor-pointer" style="color: var(--text-primary);">+</button>
           </div>
           <div class="flex items-center gap-2">
-            <span class="text-[11px] text-[#6B7280]">Live</span>
+            <span class="text-[11px]" style="color: var(--text-muted);">Live</span>
             <label class="ios-switch">
               <input type="checkbox" checked onchange="triggerToast(this.checked ? 'Sync Active' : 'Sync Paused')">
               <span class="ios-slider"></span>
@@ -448,15 +465,15 @@
 
       <!-- ITEM 4: Circular Progress Ring & Occupancy -->
       <div class="space-y-2">
-        <span class="text-xs font-semibold text-[#111827]">Progress Fill Ring</span>
-        <div class="p-3 rounded-2xl bg-[#F7F7F8] border border-[#ECECEC] flex items-center justify-between">
+        <span class="text-xs font-semibold" style="color: var(--text-primary);">Progress Fill Ring</span>
+        <div class="p-3 rounded-2xl border flex items-center justify-between" style="background-color: var(--bg-surface); border-color: var(--border-hairline);">
           <div class="space-y-0.5">
-            <p id="occupancyPercentText" class="font-bold text-sm text-[#111827] font-mono">92.4%</p>
+            <p id="occupancyPercentText" class="font-bold text-sm font-mono" style="color: var(--text-primary);">92.4%</p>
             <span class="text-[10px] text-emerald-600 font-medium">Optimal peak</span>
           </div>
           <svg class="w-11 h-11" viewBox="0 0 36 36">
-            <path class="text-[#EBECEE]" stroke-width="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-            <path id="occupancyRing" class="text-[#111827] progress-ring-circle" stroke-dasharray="92, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+            <path stroke="var(--bg-track)" stroke-width="3.5" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+            <path id="occupancyRing" stroke="var(--text-primary)" class="progress-ring-circle" stroke-dasharray="92, 100" stroke-width="3.5" stroke-linecap="round" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
           </svg>
         </div>
       </div>
@@ -464,42 +481,42 @@
     </section>
 
     <!-- 5. SERVICES LIST & FLOATING INPUTS (2 COLS) -->
-    <section class="grid grid-cols-1 md:grid-cols-2 gap-10 pt-2 border-t border-[#ECECEC]">
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-10 pt-2 border-t" style="border-color: var(--border-hairline);">
       
-      <!-- Services Divider List with Negative-Margin Fills -->
+      <!-- Services Divider List -->
       <div class="space-y-1">
-        <span class="text-xs font-semibold text-[#111827] block pb-1">Divider List Items</span>
-        <div class="divide-y divide-[#ECECEC]">
-          <div onclick="triggerToast('Selected Design System')" class="py-3 px-3 -mx-3 rounded-2xl hover:bg-[#F7F7F8] transition-colors cursor-pointer flex items-center justify-between spring-press">
+        <span class="text-xs font-semibold block pb-1" style="color: var(--text-primary);">Divider List Items</span>
+        <div class="divide-y" style="border-color: var(--border-hairline);">
+          <div onclick="triggerToast('Selected Design System')" class="py-3 px-3 -mx-3 rounded-2xl transition-colors cursor-pointer flex items-center justify-between spring-press" style="--hover-bg: var(--bg-surface);">
             <div class="space-y-0.5">
-              <h4 class="font-semibold text-xs text-[#111827]">Design System Architecture</h4>
-              <p class="text-[11px] text-[#6B7280]">Universal tokens, flat surfaces, fluid spring curves</p>
+              <h4 class="font-semibold text-xs" style="color: var(--text-primary);">Design System Architecture</h4>
+              <p class="text-[11px]" style="color: var(--text-muted);">Universal tokens, flat surfaces, fluid spring curves</p>
             </div>
             <div class="text-right shrink-0">
-              <span class="font-bold text-xs text-[#111827] font-mono">$450</span>
-              <p class="text-[10px] text-[#9CA3AF]">Core</p>
+              <span class="font-bold text-xs font-mono" style="color: var(--text-primary);">$450</span>
+              <p class="text-[10px]" style="color: var(--text-muted);">Core</p>
             </div>
           </div>
 
-          <div onclick="triggerToast('Selected iOS Component')" class="py-3 px-3 -mx-3 rounded-2xl hover:bg-[#F7F7F8] transition-colors cursor-pointer flex items-center justify-between spring-press">
+          <div onclick="triggerToast('Selected iOS Component')" class="py-3 px-3 -mx-3 rounded-2xl transition-colors cursor-pointer flex items-center justify-between spring-press">
             <div class="space-y-0.5">
-              <h4 class="font-semibold text-xs text-[#111827]">iOS SwiftUI Fluid Spring Physics</h4>
-              <p class="text-[11px] text-[#6B7280]">Interactive gestures and critically damped transitions</p>
+              <h4 class="font-semibold text-xs" style="color: var(--text-primary);">iOS SwiftUI Fluid Spring Physics</h4>
+              <p class="text-[11px]" style="color: var(--text-muted);">Interactive gestures and critically damped transitions</p>
             </div>
             <div class="text-right shrink-0">
-              <span class="font-bold text-xs text-[#111827] font-mono">$280</span>
-              <p class="text-[10px] text-[#9CA3AF]">Module</p>
+              <span class="font-bold text-xs font-mono" style="color: var(--text-primary);">$280</span>
+              <p class="text-[10px]" style="color: var(--text-muted);">Module</p>
             </div>
           </div>
 
-          <div onclick="triggerToast('Selected Web Components')" class="py-3 px-3 -mx-3 rounded-2xl hover:bg-[#F7F7F8] transition-colors cursor-pointer flex items-center justify-between spring-press">
+          <div onclick="triggerToast('Selected Web Components')" class="py-3 px-3 -mx-3 rounded-2xl transition-colors cursor-pointer flex items-center justify-between spring-press">
             <div class="space-y-0.5">
-              <h4 class="font-semibold text-xs text-[#111827]">Stroke-Free Web & Mobile Controls</h4>
-              <p class="text-[11px] text-[#6B7280]">Apple-inspired range sliders & Siri wheel pickers</p>
+              <h4 class="font-semibold text-xs" style="color: var(--text-primary);">Stroke-Free Web & Mobile Controls</h4>
+              <p class="text-[11px]" style="color: var(--text-muted);">Apple-inspired range sliders & Siri wheel pickers</p>
             </div>
             <div class="text-right shrink-0">
-              <span class="font-bold text-xs text-[#111827] font-mono">$650</span>
-              <p class="text-[10px] text-[#9CA3AF]">Full Kit</p>
+              <span class="font-bold text-xs font-mono" style="color: var(--text-primary);">$650</span>
+              <p class="text-[10px]" style="color: var(--text-muted);">Full Kit</p>
             </div>
           </div>
         </div>
@@ -507,25 +524,25 @@
 
       <!-- Floating Inputs, OTP Verification & Buttons -->
       <div class="space-y-3">
-        <span class="text-xs font-semibold text-[#111827] block pb-1">Input Elements</span>
+        <span class="text-xs font-semibold block pb-1" style="color: var(--text-primary);">Input Elements</span>
         
-        <div class="flex items-center border border-[#ECECEC] rounded-2xl px-3.5 h-10 bg-white focus-within:border-[#111827] transition-colors">
-          <input type="text" value="Alex Rivera" placeholder="Full Name..." class="w-full text-xs font-medium bg-transparent outline-none text-[#111827]" />
-          <svg class="w-4 h-4 text-emerald-600 shrink-0 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        <div class="flex items-center border rounded-2xl px-3.5 h-10 transition-colors" style="background-color: var(--input-bg); border-color: var(--border-hairline);">
+          <input type="text" value="Alex Rivera" placeholder="Full Name..." class="w-full text-xs font-medium bg-transparent outline-none" style="color: var(--text-primary);" />
+          <svg class="w-4 h-4 text-emerald-500 shrink-0 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
         </div>
 
         <div class="flex items-center gap-2 pt-0.5">
-          <input type="text" maxlength="1" value="7" class="w-10 h-10 text-center rounded-xl border border-[#ECECEC] font-mono text-sm font-bold text-[#111827] outline-none focus:border-[#111827] spring-press" />
-          <input type="text" maxlength="1" value="3" class="w-10 h-10 text-center rounded-xl border border-[#ECECEC] font-mono text-sm font-bold text-[#111827] outline-none focus:border-[#111827] spring-press" />
-          <input type="text" maxlength="1" value="9" class="w-10 h-10 text-center rounded-xl border border-[#ECECEC] font-mono text-sm font-bold text-[#111827] outline-none focus:border-[#111827] spring-press" />
-          <input type="text" maxlength="1" value="2" class="w-10 h-10 text-center rounded-xl border border-[#ECECEC] font-mono text-sm font-bold text-[#111827] outline-none focus:border-[#111827] spring-press" />
-          <span class="text-[11px] text-[#6B7280] ml-2">256-bit crypto auth</span>
+          <input type="text" maxlength="1" value="7" class="w-10 h-10 text-center rounded-xl border font-mono text-sm font-bold outline-none spring-press" style="background-color: var(--input-bg); border-color: var(--border-hairline); color: var(--text-primary);" />
+          <input type="text" maxlength="1" value="3" class="w-10 h-10 text-center rounded-xl border font-mono text-sm font-bold outline-none spring-press" style="background-color: var(--input-bg); border-color: var(--border-hairline); color: var(--text-primary);" />
+          <input type="text" maxlength="1" value="9" class="w-10 h-10 text-center rounded-xl border font-mono text-sm font-bold outline-none spring-press" style="background-color: var(--input-bg); border-color: var(--border-hairline); color: var(--text-primary);" />
+          <input type="text" maxlength="1" value="2" class="w-10 h-10 text-center rounded-xl border font-mono text-sm font-bold outline-none spring-press" style="background-color: var(--input-bg); border-color: var(--border-hairline); color: var(--text-primary);" />
+          <span class="text-[11px] ml-2" style="color: var(--text-muted);">256-bit crypto auth</span>
         </div>
 
         <div class="flex flex-wrap items-center gap-2 pt-2">
-          <button onclick="triggerToast('Primary action triggered')" class="h-9 px-4 rounded-full bg-[#111827] hover:bg-[#262626] text-white text-xs font-semibold spring-press cursor-pointer shadow-2xs">Primary</button>
-          <button onclick="triggerToast('Secondary action triggered')" class="h-9 px-4 rounded-full border border-[#ECECEC] hover:bg-[#F7F7F8] text-[#111827] text-xs font-semibold spring-press cursor-pointer">Secondary</button>
-          <button onclick="triggerToast('Link copied')" class="h-9 px-3 rounded-full hover:bg-[#F7F7F8] text-[#6B7280] hover:text-[#111827] text-xs font-medium spring-press cursor-pointer">Ghost</button>
+          <button onclick="triggerToast('Primary action triggered')" class="h-9 px-4 rounded-full text-xs font-semibold spring-press cursor-pointer shadow-2xs dark:bg-white dark:text-black bg-[#111827] text-white">Primary</button>
+          <button onclick="triggerToast('Secondary action triggered')" class="h-9 px-4 rounded-full border text-xs font-semibold spring-press cursor-pointer" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-primary);">Secondary</button>
+          <button onclick="copySkillPrompt()" class="h-9 px-3.5 rounded-full text-xs font-medium spring-press cursor-pointer" style="color: var(--text-muted);">Copy Prompt</button>
         </div>
       </div>
 
@@ -533,26 +550,8 @@
 
   </main>
 
-  <!-- SPRING MODAL -->
-  <div id="demoSpringModal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-3xl border border-[#E5E7EB] shadow-2xl max-w-sm w-full p-6 space-y-4 text-left transform scale-95 opacity-0 transition-all duration-200" id="demoModalContent">
-      <div class="flex items-center justify-between border-b border-[#ECECEC] pb-3">
-        <h3 class="font-semibold text-sm text-[#111827]">Single-Surface Modal</h3>
-        <button onclick="closeDemoModal()" class="p-1 rounded-full hover:bg-[#F7F7F8] text-[#6B7280] hover:text-[#111827] cursor-pointer">
-          <svg class="w-4 h-4 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-      </div>
-      <p class="text-xs text-[#6B7280] leading-relaxed">
-        Flat dialog sitting directly on pure #FFFFFF with Apple spring physics and zero nested frames.
-      </p>
-      <div class="flex justify-end gap-2 pt-1">
-        <button onclick="closeDemoModal()" class="h-9 px-4 rounded-full bg-[#111827] text-white text-xs font-semibold spring-press cursor-pointer">Dismiss</button>
-      </div>
-    </div>
-  </div>
-
   <!-- TOAST NOTIFICATION -->
-  <div id="toastNotification" class="fixed bottom-6 right-6 z-50 bg-[#111827] text-white text-xs font-semibold px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-2 transform translate-y-12 opacity-0 transition-all duration-200">
+  <div id="toastNotification" class="fixed bottom-6 right-6 z-50 text-xs font-semibold px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-2 transform translate-y-12 opacity-0 transition-all duration-200 dark:bg-white dark:text-black bg-[#111827] text-white">
     <svg class="w-4 h-4 text-emerald-400 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
     <span id="toastMessage">Done</span>
   </div>
@@ -575,10 +574,56 @@
       window.requestAnimationFrame(step);
     }
 
+    let isDarkMode = false;
+    function toggleTheme() {
+      isDarkMode = !isDarkMode;
+      const html = document.documentElement;
+      const sun = document.getElementById('themeSunIcon');
+      const moon = document.getElementById('themeMoonIcon');
+      const txt = document.getElementById('themeText');
+
+      if (isDarkMode) {
+        html.classList.add('dark');
+        sun.classList.remove('hidden');
+        moon.classList.add('hidden');
+        txt.innerText = 'Dark';
+        triggerToast('Dark mode activated');
+      } else {
+        html.classList.remove('dark');
+        sun.classList.add('hidden');
+        moon.classList.remove('hidden');
+        txt.innerText = 'Light';
+        triggerToast('Light mode activated');
+      }
+      setTimeout(() => {
+        setTrendMode(currentTrend);
+        updateChartPeriod(currentPeriod);
+        updateSearchPillPosition();
+      }, 50);
+    }
+
+    function copySkillCommand() {
+      const cmd = 'curl -sSL https://raw.githubusercontent.com/xlavreniuk/single-surface-design/main/SKILL.md -o .agents/skills/single-surface-design/SKILL.md';
+      navigator.clipboard.writeText(cmd);
+      
+      const txt = document.getElementById('copySkillText');
+      const icon = document.getElementById('copySkillIcon');
+      txt.innerText = 'Copied!';
+      triggerToast('Skill install command copied to clipboard!');
+      
+      setTimeout(() => {
+        txt.innerText = 'Copy Skill';
+      }, 2000);
+    }
+
+    function copySkillPrompt() {
+      const prompt = 'Follow the single-surface-design standard: flat canvas with zero nested card containers, hairline dividers, stroke-free sliders, Siri 3-item focal wheels, animated counting numerals, and Apple spring physics. Never use emojis in UI controls.';
+      navigator.clipboard.writeText(prompt);
+      triggerToast('AI System Prompt copied to clipboard!');
+    }
+
     let currentTrend = 'up';
     let currentPeriod = '30D';
-    let liveModeActive = true;
-    let liveInterval = null;
     let baseRevenue = 52100.00;
 
     let currentWhere = 'San Francisco, CA';
@@ -613,7 +658,7 @@
         '7D': {
           revenue: 12450.00,
           trend: '+14.2%',
-          badgeClass: 'text-emerald-600 bg-emerald-50 border-emerald-200/60',
+          badgeClass: 'text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200/60 dark:border-emerald-800/40',
           strokeColor: '#10B981',
           fillGrad: 'url(#chartGradGreen)',
           linePath: 'M0,135 Q100,110 200,90 T400,60 T600,25',
@@ -624,7 +669,7 @@
         '30D': {
           revenue: 52100.00,
           trend: '+24.6%',
-          badgeClass: 'text-emerald-600 bg-emerald-50 border-emerald-200/60',
+          badgeClass: 'text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200/60 dark:border-emerald-800/40',
           strokeColor: '#10B981',
           fillGrad: 'url(#chartGradGreen)',
           linePath: 'M0,130 Q100,100 200,80 T400,50 T600,20',
@@ -635,7 +680,7 @@
         '90D': {
           revenue: 154200.00,
           trend: '+38.4%',
-          badgeClass: 'text-emerald-600 bg-emerald-50 border-emerald-200/60',
+          badgeClass: 'text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200/60 dark:border-emerald-800/40',
           strokeColor: '#10B981',
           fillGrad: 'url(#chartGradGreen)',
           linePath: 'M0,140 Q100,90 200,70 T400,40 T600,15',
@@ -648,7 +693,7 @@
         '7D': {
           revenue: 9120.00,
           trend: '-11.4%',
-          badgeClass: 'text-rose-600 bg-rose-50 border-rose-200/60',
+          badgeClass: 'text-rose-600 bg-rose-50 dark:bg-rose-950/40 border-rose-200/60 dark:border-rose-800/40',
           strokeColor: '#F43F5E',
           fillGrad: 'url(#chartGradRed)',
           linePath: 'M0,25 Q100,50 200,85 T400,115 T600,145',
@@ -659,7 +704,7 @@
         '30D': {
           revenue: 36400.00,
           trend: '-8.3%',
-          badgeClass: 'text-rose-600 bg-rose-50 border-rose-200/60',
+          badgeClass: 'text-rose-600 bg-rose-50 dark:bg-rose-950/40 border-rose-200/60 dark:border-rose-800/40',
           strokeColor: '#F43F5E',
           fillGrad: 'url(#chartGradRed)',
           linePath: 'M0,20 Q100,45 200,75 T400,110 T600,140',
@@ -670,7 +715,7 @@
         '90D': {
           revenue: 104200.00,
           trend: '-14.8%',
-          badgeClass: 'text-rose-600 bg-rose-50 border-rose-200/60',
+          badgeClass: 'text-rose-600 bg-rose-50 dark:bg-rose-950/40 border-rose-200/60 dark:border-rose-800/40',
           strokeColor: '#F43F5E',
           fillGrad: 'url(#chartGradRed)',
           linePath: 'M0,15 Q100,40 200,80 T400,120 T600,150',
@@ -709,7 +754,6 @@
       xContainer.innerHTML = data.xLabels.map(l => `<span>${l}</span>`).join('');
     }
 
-    // Flawless Apple Segmented Control for Trend (Up/Down)
     function setTrendMode(mode) {
       currentTrend = mode;
       const pill = document.getElementById('appleSegPill');
@@ -721,16 +765,19 @@
       pill.style.width = `${targetBtn.offsetWidth}px`;
 
       if (mode === 'up') {
-        btnUp.className = 'relative z-10 px-3.5 py-1.5 text-xs font-semibold text-[#111827] flex items-center gap-1.5 cursor-pointer spring-press';
-        btnDown.className = 'relative z-10 px-3.5 py-1.5 text-xs font-medium text-[#6B7280] hover:text-[#111827] flex items-center gap-1.5 cursor-pointer spring-press';
+        btnUp.style.color = 'var(--text-primary)';
+        btnUp.style.fontWeight = '600';
+        btnDown.style.color = 'var(--text-muted)';
+        btnDown.style.fontWeight = '500';
       } else {
-        btnDown.className = 'relative z-10 px-3.5 py-1.5 text-xs font-semibold text-[#111827] flex items-center gap-1.5 cursor-pointer spring-press';
-        btnUp.className = 'relative z-10 px-3.5 py-1.5 text-xs font-medium text-[#6B7280] hover:text-[#111827] flex items-center gap-1.5 cursor-pointer spring-press';
+        btnDown.style.color = 'var(--text-primary)';
+        btnDown.style.fontWeight = '600';
+        btnUp.style.color = 'var(--text-muted)';
+        btnUp.style.fontWeight = '500';
       }
       renderChart();
     }
 
-    // Flawless Apple Segmented Control for Periods (7D / 30D / 90D)
     function updateChartPeriod(period) {
       currentPeriod = period;
       const pill = document.getElementById('applePeriodPill');
@@ -748,16 +795,17 @@
 
       [btn7, btn30, btn90].forEach(b => {
         if (b === targetBtn) {
-          b.className = 'relative z-10 px-3.5 py-1.5 text-xs font-semibold text-[#111827] spring-press cursor-pointer';
+          b.style.color = 'var(--text-primary)';
+          b.style.fontWeight = '600';
         } else {
-          b.className = 'relative z-10 px-3.5 py-1.5 text-xs font-medium text-[#6B7280] hover:text-[#111827] spring-press cursor-pointer';
+          b.style.color = 'var(--text-muted)';
+          b.style.fontWeight = '500';
         }
       });
 
       renderChart();
     }
 
-    // 100% Mathematically Exact Curve Tracking via SVG native getPointAtLength
     function handleChartHover(e) {
       const rect = e.currentTarget.getBoundingClientRect();
       const x = Math.max(0, Math.min(rect.width, e.clientX - rect.left));
@@ -773,11 +821,8 @@
       for (let i = 0; i < 24; i++) {
         const mid = (low + high) / 2;
         const pt = path.getPointAtLength(mid);
-        if (pt.x < svgX) {
-          low = mid;
-        } else {
-          high = mid;
-        }
+        if (pt.x < svgX) low = mid;
+        else high = mid;
         bestPt = pt;
       }
 
@@ -805,36 +850,6 @@
       document.getElementById('chartTooltip').classList.add('hidden');
     }
 
-    // Live Stream Simulator
-    function toggleLiveMode() {
-      liveModeActive = !liveModeActive;
-      const btn = document.getElementById('liveModeBtn');
-      if (liveModeActive) {
-        btn.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-500 live-pulse-dot"></span><span>Live: On</span>';
-        startLiveStream();
-        triggerToast('Live stream enabled (+real-time transactions)');
-      } else {
-        btn.innerHTML = '<span class="w-2 h-2 rounded-full bg-[#9CA3AF]"></span><span>Live: Paused</span>';
-        clearInterval(liveInterval);
-        triggerToast('Live stream paused');
-      }
-    }
-
-    function startLiveStream() {
-      clearInterval(liveInterval);
-      liveInterval = setInterval(() => {
-        if (!liveModeActive) return;
-        const delta = (Math.random() * 35 + 15);
-        const oldRev = baseRevenue;
-        baseRevenue += delta;
-        animateValue('chartRevenueText', oldRev, baseRevenue, 400, '$');
-
-        const curBookings = parseInt(document.getElementById('metricBookings').innerText.replace(/,/g, ''));
-        animateValue('metricBookings', curBookings, curBookings + 1, 300);
-      }, 4000);
-    }
-
-    // Search Capsule Sliding Pill & Flyout Animation
     function updateSearchPillPosition() {
       const pill = document.getElementById('searchSlidingPill');
       const targetBtn = document.getElementById('seg-' + activeSegment);
@@ -859,18 +874,18 @@
       const options = SEARCH_OPTIONS[seg] || [];
 
       container.innerHTML = `
-        <div class="flex items-center justify-between border-b border-[#ECECEC] pb-2 mb-2">
-          <span class="text-xs font-semibold text-[#111827]">Select ${seg === 'where' ? 'Destination' : seg === 'when' ? 'Date & Time' : 'Service Type'}</span>
-          <span class="text-[10px] text-[#6B7280]">Horizontal sliding transitions</span>
+        <div class="flex items-center justify-between border-b pb-2 mb-2" style="border-color: var(--border-hairline);">
+          <span class="text-xs font-semibold" style="color: var(--text-primary);">Select ${seg === 'where' ? 'Destination' : seg === 'when' ? 'Date & Time' : 'Service Type'}</span>
+          <span class="text-[10px]" style="color: var(--text-muted);">Horizontal sliding transitions</span>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
           ${options.map(opt => `
-            <div onclick="event.stopPropagation(); selectOption('${seg}', '${opt.label}')" class="p-2.5 rounded-xl hover:bg-[#F7F7F8] border border-transparent hover:border-[#ECECEC] cursor-pointer flex items-center justify-between spring-press">
+            <div onclick="event.stopPropagation(); selectOption('${seg}', '${opt.label}')" class="p-2.5 rounded-xl border border-transparent cursor-pointer flex items-center justify-between spring-press" style="hover:background-color: var(--bg-surface);">
               <div>
-                <p class="text-xs font-semibold text-[#111827]">${opt.label}</p>
-                <p class="text-[10px] text-[#6B7280]">${opt.sub}</p>
+                <p class="text-xs font-semibold" style="color: var(--text-primary);">${opt.label}</p>
+                <p class="text-[10px]" style="color: var(--text-muted);">${opt.sub}</p>
               </div>
-              <svg class="w-3.5 h-3.5 text-[#9CA3AF]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+              <svg class="w-3.5 h-3.5" style="color: var(--text-muted);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
             </div>
           `).join('')}
         </div>
@@ -920,17 +935,19 @@
 
     function setTabPill(btn) {
       document.querySelectorAll('.tab-pill').forEach(p => {
-        p.className = 'tab-pill h-8 px-4 rounded-full border border-[#ECECEC] hover:bg-[#F7F7F8] text-[#4B5563] text-xs font-medium spring-press cursor-pointer';
+        p.className = 'tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer';
+        p.style.backgroundColor = 'var(--bg-canvas)';
+        p.style.borderColor = 'var(--border-hairline)';
+        p.style.color = 'var(--text-secondary)';
       });
-      btn.className = 'tab-pill h-8 px-4 rounded-full bg-[#111827] text-white text-xs font-semibold spring-press cursor-pointer shadow-2xs';
+      btn.className = 'tab-pill h-8 px-4 rounded-full text-xs font-semibold spring-press cursor-pointer shadow-2xs dark:bg-white dark:text-black bg-[#111827] text-white';
+      btn.style.backgroundColor = '';
+      btn.style.borderColor = '';
+      btn.style.color = '';
     }
 
-    // Flawless Siri Focal Wheel Calculation
-    // Viewport width: 180px (3 items of 60px). Center box at left: 60px.
-    // Item i is at left: i * 60px.
-    // To position item i at x = 60px, track must translate to: 60 - (i * 60) = -(i - 1) * 60px.
     const SIRI_STEPS = [1.00, 1.25, 1.50, 1.75, 2.00, 2.25, 2.50, 3.00];
-    let siriActiveIndex = 3; // 1.75% default
+    let siriActiveIndex = 3;
 
     function stepSiri(delta) {
       siriActiveIndex = Math.max(0, Math.min(SIRI_STEPS.length - 1, siriActiveIndex + delta));
@@ -971,24 +988,6 @@
       document.getElementById('counterVal').innerText = count;
     }
 
-    function openDemoModal() {
-      const modal = document.getElementById('demoSpringModal');
-      const content = document.getElementById('demoModalContent');
-      modal.classList.remove('hidden');
-      setTimeout(() => {
-        content.classList.remove('scale-95', 'opacity-0');
-        content.classList.add('scale-100', 'opacity-100');
-      }, 10);
-    }
-
-    function closeDemoModal() {
-      const modal = document.getElementById('demoSpringModal');
-      const content = document.getElementById('demoModalContent');
-      content.classList.remove('scale-100', 'opacity-100');
-      content.classList.add('scale-95', 'opacity-0');
-      setTimeout(() => { modal.classList.add('hidden'); }, 150);
-    }
-
     function triggerToast(msg) {
       const toast = document.getElementById('toastNotification');
       document.getElementById('toastMessage').innerText = msg;
@@ -1006,7 +1005,6 @@
       updateChartPeriod('30D');
       renderSiriWheel();
       updateSearchPillPosition();
-      startLiveStream();
     });
     window.addEventListener('resize', () => {
       setTrendMode(currentTrend);
