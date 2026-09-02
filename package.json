@@ -1,0 +1,21 @@
+{
+  "name": "single-surface-design",
+  "version": "1.0.0",
+  "description": "Interactive design system playground & editor for Single-Surface Design",
+  "main": "server.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "bun run server.ts",
+    "start": "bun run server.ts"
+  },
+  "keywords": [
+    "design-system",
+    "single-surface",
+    "apple-design",
+    "linear-design",
+    "anti-slop",
+    "tailwind"
+  ],
+  "author": "Andrii Lavreniuk",
+  "license": "MIT"
+}
