@@ -1,22 +1,36 @@
 {
-  "name": "single-surface-design",
+  "name": "ramsian",
   "version": "1.0.0",
-  "description": "Interactive design system playground & editor for Single-Surface Design",
+  "description": "Universal Apple & Linear single-surface architecture, stroke-free controls, and fluid spring motion design system by rezervehere",
   "main": "server.ts",
   "type": "module",
+  "bin": {
+    "ramsian": "./bin/ramsian.js"
+  },
   "scripts": {
     "dev": "bun run server.ts",
     "start": "bun run server.ts",
     "screenshot": "bun scripts/screenshot.ts"
   },
   "keywords": [
+    "ramsian",
     "design-system",
     "single-surface",
     "apple-design",
     "linear-design",
     "anti-slop",
-    "tailwind"
+    "dieter-rams",
+    "tailwind",
+    "ui"
   ],
-  "author": "Andrii Lavreniuk",
-  "license": "MIT"
+  "author": "Andrii Lavreniuk <andrii@rezervehere.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xlavreniuk/ramsian.git"
+  },
+  "homepage": "https://xlavreniuk.github.io/ramsian/",
+  "bugs": {
+    "url": "https://github.com/xlavreniuk/ramsian/issues"
+  }
 }

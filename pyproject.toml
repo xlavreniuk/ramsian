@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ramsian"
+version = "1.0.0"
+authors = [
+  { name="Andrii Lavreniuk", email="andrii@rezervehere.com" },
+]
+description = "Universal Apple & Linear single-surface architecture, stroke-free controls, and fluid spring motion design system by rezervehere."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Software Development :: User Interfaces",
+]
+keywords = ["design-system", "single-surface", "apple-design", "linear-design", "ui", "dieter-rams", "ramsian"]
+
+[project.urls]
+"Homepage" = "https://xlavreniuk.github.io/ramsian/"
+"Repository" = "https://github.com/xlavreniuk/ramsian"
+"Bug Tracker" = "https://github.com/xlavreniuk/ramsian/issues"
+
+[project.scripts]
+ramsian = "ramsian.cli:main"

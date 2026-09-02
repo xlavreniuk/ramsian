@@ -1,24 +1,28 @@
-# Single-Surface Design System
+# ramsian — Single-Surface Design System
 
-> Universal Apple & Linear single-surface architecture, stroke-free controls, Siri focal pickers, and fluid spring motion design system by **[rezervehere](https://rezervehere.com)** for **Web**, **iOS (SwiftUI)**, **Android (Jetpack Compose)**, and **React Native** AI agents.
+> Universal Apple & Linear single-surface architecture, stroke-free controls, Siri focal pickers, and fluid spring motion design system by **[rezervehere](https://rezervehere.com)** for **Web**, **iOS (SwiftUI)**, **Android (Jetpack Compose)**, and **React Native** AI agents. Named in honor of **Dieter Rams** (*"Weniger, aber besser / Less, but better"*).
 
-[![Live Showroom](https://img.shields.io/badge/Live_Showroom-GitHub_Pages-black?style=flat-square&logo=github)](https://xlavreniuk.github.io/single-surface-design/)
-[![Skill Spec](https://img.shields.io/badge/AI_Skill-SKILL.md-emerald?style=flat-square)](SKILL.md)
+[![Live Showroom](https://img.shields.io/badge/Live_Showroom-GitHub_Pages-black?style=flat-square&logo=github)](https://xlavreniuk.github.io/ramsian/)
+[![AI Skill](https://img.shields.io/badge/AI_Skill-SKILL.md-emerald?style=flat-square)](SKILL.md)
+[![npm version](https://img.shields.io/badge/npm-ramsian-cb3837.svg?style=flat-square&logo=npm)](https://www.npmjs.com/package/ramsian)
+[![PyPI version](https://img.shields.io/badge/PyPI-ramsian-3775a9.svg?style=flat-square&logo=pypi)](https://pypi.org/project/ramsian/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 
 ---
 
-![Single-Surface Design System Preview](assets/preview.png)
+![ramsian design system preview](assets/preview.png)
 
 ---
 
 ## ⚡ 2-Command Quickstart
 
 ### 1. View Interactive Showroom (Instant)
-View live on GitHub Pages: **[https://xlavreniuk.github.io/single-surface-design/](https://xlavreniuk.github.io/single-surface-design/)**
+View live on GitHub Pages: **[https://xlavreniuk.github.io/ramsian/](https://xlavreniuk.github.io/ramsian/)**
 
-Or run locally with Bun:
+Or run locally with Bun / npx:
 ```bash
+npx ramsian preview
+# Or with Bun:
 bun run dev
 ```
 
@@ -29,19 +33,25 @@ bun run dev
 Install the master `SKILL.md` into any AI workspace (Antigravity, Claude Code, Cursor, Codex):
 
 ```bash
-# Antigravity / Gemini CLI
-curl -sSL https://raw.githubusercontent.com/xlavreniuk/single-surface-design/main/SKILL.md -o .agents/skills/single-surface-design/SKILL.md
+# 1-Line CLI Install (Recommended)
+npx ramsian install
 
-# Claude Code
-mkdir -p .claude/skills/single-surface-design && curl -sSL https://raw.githubusercontent.com/xlavreniuk/single-surface-design/main/SKILL.md -o .claude/skills/single-surface-design/SKILL.md
+# Or via cURL into Antigravity / Gemini CLI:
+curl -sSL https://raw.githubusercontent.com/xlavreniuk/ramsian/main/SKILL.md -o .agents/skills/ramsian/SKILL.md
+
+# Or via Claude Code:
+mkdir -p .claude/skills/ramsian && curl -sSL https://raw.githubusercontent.com/xlavreniuk/ramsian/main/SKILL.md -o .claude/skills/ramsian/SKILL.md
+
+# Or via Python (pip):
+pip install ramsian && ramsian install
 ```
 
-Once installed, prompt your AI agent:
-> *"Build the settings screen using the single-surface-design skill."*
+Once installed, prompt any AI agent:
+> *"Build the settings dashboard using the ramsian skill."*
 
 ---
 
-## 🏛️ Core Design Invariants & Strict Negative Constraints
+## 🏛️ Core Invariants & Negative Constraints
 
 ```
 +-------------------------------------------------------------------------+

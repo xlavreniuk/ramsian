@@ -1,11 +1,11 @@
 ---
-name: single-surface-design
+name: ramsian
 description: Universal Apple & Linear single-surface architecture, stroke-free controls, Siri focal pickers, and fluid spring motion design system by rezervehere. Use whenever building, styling, or refactoring UI components for Web, iOS, Android, or React Native.
 ---
 
-# Single-Surface Design System — Master Engineering Standard
+# Ramsian Design System — Master Engineering Standard
 
-> **Origin & Craft Standard**: Developed by **`rezervehere`** as the universal interface design standard for high-craft digital products across **Web (React/Next.js/Tailwind)**, **iOS (SwiftUI)**, **Android (Jetpack Compose)**, and **React Native**.
+> **Origin & Craft Standard**: Developed by **`rezervehere`** and named in honor of **Dieter Rams** (*"Weniger, aber besser / Less, but better"*). This is the universal interface design standard for high-craft digital products across **Web (React/Next.js/Tailwind)**, **iOS (SwiftUI)**, **Android (Jetpack Compose)**, and **React Native**.
 
 ```
 +-------------------------------------------------------------------------+
@@ -50,7 +50,7 @@ Any AI agent generating code under this skill must strictly obey these negative 
 
 | Role | Font Family | Weight | Casing & Tracking | Usage |
 | :--- | :--- | :--- | :--- | :--- |
-| **Brand Logo / Headers** | **`Cabinet Grotesk`** | **800 (ExtraBold) / 700 (Bold)** | Strictly all-lowercase, `-0.025em` tracking | Brand logos (`rezervehere`), editorial hero headers, page titles |
+| **Brand Logo / Headers** | **`Cabinet Grotesk`** | **800 (ExtraBold) / 700 (Bold)** | Strictly all-lowercase, `-0.025em` tracking | Brand logos (`rezervehere`, `ramsian`), editorial hero headers, page titles |
 | **UI Body & Controls** | **`Plus Jakarta Sans`** or **`Inter`** | **400 / 500 / 600** | Title/Sentence Case, normal tracking | Form labels, descriptions, button text, search segment prompts |
 | **Tabular Numerals** | **`JetBrains Mono`** | **500 (Medium) / 700 (Bold)** | Tabular Figures (`tnum`), `-0.03em` tracking | Financial metrics, GMV numbers, take rates, timestamps, OTP tokens |
 
@@ -264,7 +264,7 @@ function getExactCurvePoint(pathElement, targetSvgX) {
 ```swift
 import SwiftUI
 
-struct SingleSurfaceView: View {
+struct RamsianView: View {
     @State private var takeRateIndex: Int = 3
     let rates = [1.00, 1.25, 1.50, 1.75, 2.00, 2.25, 2.50, 3.00]
 
@@ -273,7 +273,7 @@ struct SingleSurfaceView: View {
             VStack(alignment: .leading, spacing: 24) {
                 // Brand Header
                 HStack(spacing: 6) {
-                    Text("single-surface-design")
+                    Text("ramsian")
                         .font(.system(size: 15, weight: .medium))
                     Text("by")
                         .font(.system(size: 12))
@@ -309,7 +309,7 @@ struct SingleSurfaceView: View {
 ### 2. Android (Jetpack Compose) Recipe
 ```kotlin
 @Composable
-fun SingleSurfaceScreen() {
+fun RamsianScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -323,7 +323,7 @@ fun SingleSurfaceScreen() {
             horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             Text(
-                text = "single-surface-design",
+                text = "ramsian",
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Medium,
                 color = Color(0xFF111827)
@@ -371,7 +371,7 @@ fun SingleSurfaceScreen() {
 Before outputting code, verify that:
 * [ ] The background is a single flat surface (`#FFFFFF` in light mode, `#09090B` in dark mode).
 * [ ] Zero containers are nested inside cards. All metrics and services sit directly on the flat surface.
-* [ ] Brand logo is strictly `rezervehere` in all-lowercase bold `Cabinet Grotesk`.
+* [ ] Brand logo is strictly `rezervehere` / `ramsian` in all-lowercase bold `Cabinet Grotesk`.
 * [ ] Zero emojis (🚀, 📈, ✨) appear anywhere in the UI.
 * [ ] All icons are monochrome vector strokes (`currentColor`).
 * [ ] Search capsule adheres to the 60px height with sliding highlight pill and auto-advance flow (`Where` ➡️ `When` ➡️ `Type of service`).
