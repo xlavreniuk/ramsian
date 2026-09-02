@@ -109,10 +109,12 @@
       position: absolute;
       top: 3px;
       bottom: 3px;
+      left: 0;
       background-color: #FFFFFF;
       border-radius: 9999px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.12);
       transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+      pointer-events: none;
     }
 
     /* Sliding Pill for Search Capsule Island */
@@ -120,30 +122,36 @@
       position: absolute;
       top: 0;
       bottom: 0;
+      left: 0;
       background-color: #FFFFFF;
       border-radius: 9999px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.12);
       transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
       z-index: 5;
+      pointer-events: none;
     }
 
-    /* Continuous Siri Focal Track */
+    /* Continuous Siri Focal Wheel Track */
     #siriTrack {
       display: flex;
       align-items: center;
-      transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
       will-change: transform;
     }
     .siri-wheel-item {
       width: 60px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex-shrink: 0;
-      text-align: center;
       font-family: 'JetBrains Mono', monospace;
       font-size: 11px;
       color: #9CA3AF;
       opacity: 0.45;
       transition: opacity 0.25s ease, transform 0.25s ease, color 0.25s ease, font-size 0.25s ease;
       user-select: none;
+      cursor: pointer;
     }
     .siri-wheel-item.active {
       color: #111827;
@@ -258,7 +266,7 @@
           
           <!-- Apple Segmented Trend Control (Sliding Smooth Pill) -->
           <div class="apple-seg-track relative" id="appleSegTrack">
-            <div class="apple-seg-pill" id="appleSegPill" style="left: 3px; width: 96px;"></div>
+            <div class="apple-seg-pill" id="appleSegPill"></div>
             <button onclick="setTrendMode('up')" id="trendBtnUp" class="relative z-10 px-3.5 py-1.5 text-xs font-semibold text-[#111827] flex items-center gap-1.5 cursor-pointer spring-press">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
               <span>Up Trend</span>
@@ -271,10 +279,10 @@
 
           <!-- Apple Segmented Period Control (7D / 30D / 90D Sliding Pill) -->
           <div class="apple-seg-track relative" id="applePeriodTrack">
-            <div class="apple-seg-pill" id="applePeriodPill" style="left: 45px; width: 42px;"></div>
-            <button onclick="updateChartPeriod('7D')" id="chartBtn7D" class="relative z-10 px-3 py-1.5 text-xs font-medium text-[#6B7280] hover:text-[#111827] spring-press cursor-pointer">7D</button>
-            <button onclick="updateChartPeriod('30D')" id="chartBtn30D" class="relative z-10 px-3 py-1.5 text-xs font-semibold text-[#111827] spring-press cursor-pointer">30D</button>
-            <button onclick="updateChartPeriod('90D')" id="chartBtn90D" class="relative z-10 px-3 py-1.5 text-xs font-medium text-[#6B7280] hover:text-[#111827] spring-press cursor-pointer">90D</button>
+            <div class="apple-seg-pill" id="applePeriodPill"></div>
+            <button onclick="updateChartPeriod('7D')" id="chartBtn7D" class="relative z-10 px-3.5 py-1.5 text-xs font-medium text-[#6B7280] hover:text-[#111827] spring-press cursor-pointer">7D</button>
+            <button onclick="updateChartPeriod('30D')" id="chartBtn30D" class="relative z-10 px-3.5 py-1.5 text-xs font-semibold text-[#111827] spring-press cursor-pointer">30D</button>
+            <button onclick="updateChartPeriod('90D')" id="chartBtn90D" class="relative z-10 px-3.5 py-1.5 text-xs font-medium text-[#6B7280] hover:text-[#111827] spring-press cursor-pointer">90D</button>
           </div>
         </div>
       </div>
@@ -369,36 +377,36 @@
       </div>
     </section>
 
-    <!-- 4. CONTROLS, PICKERS & SLIDERS WITH CONTINUOUS SLIDING SIRI WHEEL -->
+    <!-- 4. CONTROLS, PICKERS & SLIDERS WITH FLAWLESS SIRI FOCAL WHEEL -->
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 py-2">
       
-      <!-- ITEM 1: Siri 3-Item Focal Wheel with Continuous Sliding Animation -->
+      <!-- ITEM 1: Siri 3-Item Focal Wheel with Flawless Center Box Alignment -->
       <div class="space-y-2">
         <span class="text-xs font-semibold text-[#111827]">Siri Focal Wheel</span>
-        <div class="p-3 rounded-2xl bg-[#F7F7F8] border border-[#ECECEC] flex items-center justify-between gap-1 relative overflow-hidden">
-          <button onclick="stepSiri(-1)" class="w-8 h-8 rounded-full bg-white border border-[#ECECEC] hover:bg-[#F7F7F8] flex items-center justify-center text-[#111827] spring-press cursor-pointer shadow-2xs z-20 shrink-0">
+        <div class="p-3 rounded-2xl bg-[#F7F7F8] border border-[#ECECEC] flex items-center justify-between gap-1 relative">
+          <button onclick="stepSiri(-1)" class="w-8 h-8 rounded-full bg-white border border-[#ECECEC] hover:bg-[#F7F7F8] flex items-center justify-center text-[#111827] spring-press cursor-pointer shadow-2xs z-30 shrink-0">
             <svg class="w-3.5 h-3.5 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
           </button>
           
-          <!-- Focal Frame Viewport (Width = 180px: exactly 3 items of 60px) -->
-          <div class="relative w-[180px] h-9 overflow-hidden flex items-center justify-center z-10">
-            <!-- Center Focus Box (60px) -->
-            <div class="absolute w-[60px] h-8 rounded-xl bg-white border border-[#111827] shadow-2xs pointer-events-none"></div>
+          <!-- Viewport: exactly 180px wide (3 items of 60px) -->
+          <div class="relative w-[180px] h-9 overflow-hidden rounded-xl">
+            <!-- Center Focus Box (centered exactly at x: 60px, width: 60px) -->
+            <div class="absolute left-[60px] top-0.5 bottom-0.5 w-[60px] rounded-xl bg-white border border-[#111827] shadow-2xs pointer-events-none z-10"></div>
             
-            <!-- Sliding Track containing all percentage steps -->
-            <div id="siriTrack" style="transform: translateX(0px);">
-              <div class="siri-wheel-item">1.00%</div>
-              <div class="siri-wheel-item">1.25%</div>
-              <div class="siri-wheel-item">1.50%</div>
-              <div class="siri-wheel-item active">1.75%</div>
-              <div class="siri-wheel-item">2.00%</div>
-              <div class="siri-wheel-item">2.25%</div>
-              <div class="siri-wheel-item">2.50%</div>
-              <div class="siri-wheel-item">3.00%</div>
+            <!-- Sliding Track: absolute positioned, translates smoothly -->
+            <div id="siriTrack" class="absolute top-0 bottom-0 left-0 flex items-center">
+              <div onclick="selectSiriIndex(0)" class="siri-wheel-item">1.00%</div>
+              <div onclick="selectSiriIndex(1)" class="siri-wheel-item">1.25%</div>
+              <div onclick="selectSiriIndex(2)" class="siri-wheel-item">1.50%</div>
+              <div onclick="selectSiriIndex(3)" class="siri-wheel-item active">1.75%</div>
+              <div onclick="selectSiriIndex(4)" class="siri-wheel-item">2.00%</div>
+              <div onclick="selectSiriIndex(5)" class="siri-wheel-item">2.25%</div>
+              <div onclick="selectSiriIndex(6)" class="siri-wheel-item">2.50%</div>
+              <div onclick="selectSiriIndex(7)" class="siri-wheel-item">3.00%</div>
             </div>
           </div>
 
-          <button onclick="stepSiri(1)" class="w-8 h-8 rounded-full bg-white border border-[#ECECEC] hover:bg-[#F7F7F8] flex items-center justify-center text-[#111827] spring-press cursor-pointer shadow-2xs z-20 shrink-0">
+          <button onclick="stepSiri(1)" class="w-8 h-8 rounded-full bg-white border border-[#ECECEC] hover:bg-[#F7F7F8] flex items-center justify-center text-[#111827] spring-press cursor-pointer shadow-2xs z-30 shrink-0">
             <svg class="w-3.5 h-3.5 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
           </button>
         </div>
@@ -701,28 +709,28 @@
       xContainer.innerHTML = data.xLabels.map(l => `<span>${l}</span>`).join('');
     }
 
+    // Flawless Apple Segmented Control for Trend (Up/Down)
     function setTrendMode(mode) {
       currentTrend = mode;
       const pill = document.getElementById('appleSegPill');
       const btnUp = document.getElementById('trendBtnUp');
       const btnDown = document.getElementById('trendBtnDown');
+      const targetBtn = (mode === 'up') ? btnUp : btnDown;
+
+      pill.style.transform = `translateX(${targetBtn.offsetLeft}px)`;
+      pill.style.width = `${targetBtn.offsetWidth}px`;
 
       if (mode === 'up') {
-        pill.style.transform = 'translateX(0px)';
-        pill.style.width = btnUp.offsetWidth + 'px';
         btnUp.className = 'relative z-10 px-3.5 py-1.5 text-xs font-semibold text-[#111827] flex items-center gap-1.5 cursor-pointer spring-press';
         btnDown.className = 'relative z-10 px-3.5 py-1.5 text-xs font-medium text-[#6B7280] hover:text-[#111827] flex items-center gap-1.5 cursor-pointer spring-press';
       } else {
-        const offset = btnUp.offsetWidth;
-        pill.style.transform = `translateX(${offset}px)`;
-        pill.style.width = btnDown.offsetWidth + 'px';
         btnDown.className = 'relative z-10 px-3.5 py-1.5 text-xs font-semibold text-[#111827] flex items-center gap-1.5 cursor-pointer spring-press';
         btnUp.className = 'relative z-10 px-3.5 py-1.5 text-xs font-medium text-[#6B7280] hover:text-[#111827] flex items-center gap-1.5 cursor-pointer spring-press';
       }
       renderChart();
     }
 
-    // Apple Segmented Control for Periods with Smooth Sliding Background Pill
+    // Flawless Apple Segmented Control for Periods (7D / 30D / 90D)
     function updateChartPeriod(period) {
       currentPeriod = period;
       const pill = document.getElementById('applePeriodPill');
@@ -731,27 +739,18 @@
       const btn90 = document.getElementById('chartBtn90D');
 
       let targetBtn = btn30;
-      let leftOffset = btn7.offsetWidth;
+      if (period === '7D') targetBtn = btn7;
+      else if (period === '30D') targetBtn = btn30;
+      else if (period === '90D') targetBtn = btn90;
 
-      if (period === '7D') {
-        targetBtn = btn7;
-        leftOffset = 0;
-      } else if (period === '30D') {
-        targetBtn = btn30;
-        leftOffset = btn7.offsetWidth;
-      } else if (period === '90D') {
-        targetBtn = btn90;
-        leftOffset = btn7.offsetWidth + btn30.offsetWidth;
-      }
-
-      pill.style.transform = `translateX(${leftOffset}px)`;
-      pill.style.width = targetBtn.offsetWidth + 'px';
+      pill.style.transform = `translateX(${targetBtn.offsetLeft}px)`;
+      pill.style.width = `${targetBtn.offsetWidth}px`;
 
       [btn7, btn30, btn90].forEach(b => {
         if (b === targetBtn) {
-          b.className = 'relative z-10 px-3 py-1.5 text-xs font-semibold text-[#111827] spring-press cursor-pointer';
+          b.className = 'relative z-10 px-3.5 py-1.5 text-xs font-semibold text-[#111827] spring-press cursor-pointer';
         } else {
-          b.className = 'relative z-10 px-3 py-1.5 text-xs font-medium text-[#6B7280] hover:text-[#111827] spring-press cursor-pointer';
+          b.className = 'relative z-10 px-3.5 py-1.5 text-xs font-medium text-[#6B7280] hover:text-[#111827] spring-press cursor-pointer';
         }
       });
 
@@ -841,14 +840,9 @@
       const targetBtn = document.getElementById('seg-' + activeSegment);
       if (!pill || !targetBtn) return;
 
-      const capsule = document.getElementById('searchCapsule');
-      const left = targetBtn.offsetLeft;
-      const width = targetBtn.offsetWidth;
+      pill.style.transform = `translateX(${targetBtn.offsetLeft}px)`;
+      pill.style.width = `${targetBtn.offsetWidth}px`;
 
-      pill.style.transform = `translateX(${left}px)`;
-      pill.style.width = width + 'px';
-
-      // Update divider visibility smoothly
       document.getElementById('div-1').style.opacity = (activeSegment === 'where' || activeSegment === 'when') ? '0' : '1';
       document.getElementById('div-2').style.opacity = (activeSegment === 'when' || activeSegment === 'service') ? '0' : '1';
     }
@@ -893,7 +887,6 @@
       const labelId = seg + 'Label';
       const labelElem = document.getElementById(labelId);
       
-      // Animate text slide-in
       labelElem.classList.remove('text-slide-enter');
       void labelElem.offsetWidth;
       labelElem.innerText = val;
@@ -906,7 +899,6 @@
       triggerToast(`Selected ${val}`);
       closeFlyout();
 
-      // Auto-advance sliding flow (Where -> When -> Service)
       if (seg === 'where') setTimeout(() => toggleSearchSegment('when'), 280);
       else if (seg === 'when') setTimeout(() => toggleSearchSegment('service'), 280);
     }
@@ -933,9 +925,10 @@
       btn.className = 'tab-pill h-8 px-4 rounded-full bg-[#111827] text-white text-xs font-semibold spring-press cursor-pointer shadow-2xs';
     }
 
-    // Physical Continuous Siri Focal Wheel Slide
-    // Viewport width = 180px (3 items * 60px). Center box at 60px.
-    // To center item at index `i`, we translate track by: -(i - 1) * 60 px.
+    // Flawless Siri Focal Wheel Calculation
+    // Viewport width: 180px (3 items of 60px). Center box at left: 60px.
+    // Item i is at left: i * 60px.
+    // To position item i at x = 60px, track must translate to: 60 - (i * 60) = -(i - 1) * 60px.
     const SIRI_STEPS = [1.00, 1.25, 1.50, 1.75, 2.00, 2.25, 2.50, 3.00];
     let siriActiveIndex = 3; // 1.75% default
 
@@ -945,12 +938,19 @@
       triggerToast(`Take-rate: ${SIRI_STEPS[siriActiveIndex].toFixed(2)}%`);
     }
 
+    function selectSiriIndex(idx) {
+      siriActiveIndex = idx;
+      renderSiriWheel();
+      triggerToast(`Take-rate: ${SIRI_STEPS[siriActiveIndex].toFixed(2)}%`);
+    }
+
     function renderSiriWheel() {
       const track = document.getElementById('siriTrack');
-      const offset = -(siriActiveIndex - 1) * 60;
+      if (!track) return;
+      
+      const offset = 60 - (siriActiveIndex * 60);
       track.style.transform = `translateX(${offset}px)`;
 
-      // Update active classes for smooth focus magnification
       const items = track.querySelectorAll('.siri-wheel-item');
       items.forEach((item, idx) => {
         if (idx === siriActiveIndex) {
@@ -1002,11 +1002,15 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       renderChart();
+      setTrendMode('up');
+      updateChartPeriod('30D');
       renderSiriWheel();
       updateSearchPillPosition();
       startLiveStream();
     });
     window.addEventListener('resize', () => {
+      setTrendMode(currentTrend);
+      updateChartPeriod(currentPeriod);
       updateSearchPillPosition();
     });
   </script>
