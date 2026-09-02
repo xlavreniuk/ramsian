@@ -118,11 +118,15 @@ const momentumSpring = {
 
 ---
 
-## 6. Strict Anti-AI-Slop Checklist
+## 6. Strict Anti-AI-Slop Checklist (Zero Tolerance)
 
-* ❌ **No 3-Layer Boxed Nesting**: Drop outer gray wrapper cards. Keep views on flat `#FFFFFF`.
-* ❌ **No Screaming Uppercase Headers**: Change `1. CONTACT DETAILS` to `Your Details`.
+* ❌ **No 3-Layer Boxed Nesting**: Drop outer gray wrapper cards around inputs/forms. Controls sit directly on flat `#FFFFFF`.
+* ❌ **No Gimmicky Status Badges**: Never add fake "Engine Ready", pulsing green dots, "AI Powered", or "Radar Active" badges unless requested.
+* ❌ **No Cheesy Marketing Jargon / Slop Text**: Avoid fluff like "Live Radar & Lead Intelligence", "City Scanner & Live Radar", "Radar Idle". Use calm, minimal, human labels (`Scan`, `City`, `Market Overview`, `Salons`).
+* ❌ **No Boxed Metric Tiles**: Never put 4 separate gray cards side-by-side for numbers. Use a single flat divider row (`grid grid-cols-4 py-4 border-t border-b border-[#ECECEC]`).
+* ❌ **No Screaming Uppercase Headers**: Change `1. CONTACT DETAILS` to `Your details`.
 * ❌ **No Duplicated Subtitles**: Never show redundant label repetition (e.g. `Haircut · Haircut`).
 * ❌ **No Solid White Input Boxes**: Capsule search fields must include `!bg-transparent`.
 * ❌ **Zero Outer Padding (`p-0`) on Capsules**: Hover fills must touch 100% of height and curved edges.
 * ❌ **No Multi-Border Divides**: Avoid dividing floating popups with stacked borders.
+* ❌ **No Nested Accordion Cards**: Details/sub-items must expand into flat borderless divider lines (`divide-y divide-[#ECECEC]`), never inner boxed cards.
