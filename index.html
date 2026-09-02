@@ -96,7 +96,7 @@
       animation: pulse-live 1.6s infinite ease-in-out;
     }
 
-    /* Apple Segmented Control Slider */
+    /* Apple Segmented Control Slider Track & Pill */
     .apple-seg-track {
       position: relative;
       background-color: #EBECEE;
@@ -112,15 +112,52 @@
       background-color: #FFFFFF;
       border-radius: 9999px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Sliding Pill for Search Capsule Island */
+    #searchSlidingPill {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      background-color: #FFFFFF;
+      border-radius: 9999px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 5;
+    }
+
+    /* Continuous Siri Focal Track */
+    #siriTrack {
+      display: flex;
+      align-items: center;
+      transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+      will-change: transform;
+    }
+    .siri-wheel-item {
+      width: 60px;
+      flex-shrink: 0;
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #9CA3AF;
+      opacity: 0.45;
+      transition: opacity 0.25s ease, transform 0.25s ease, color 0.25s ease, font-size 0.25s ease;
+      user-select: none;
+    }
+    .siri-wheel-item.active {
+      color: #111827;
+      font-weight: 700;
+      font-size: 13px;
+      opacity: 1;
     }
 
     /* Text Slide Fade Animation */
     .text-slide-enter {
-      animation: textSlideIn 0.22s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      animation: textSlideIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     }
     @keyframes textSlideIn {
-      0% { opacity: 0; transform: translateY(4px); }
+      0% { opacity: 0; transform: translateY(6px); }
       100% { opacity: 1; transform: translateY(0); }
     }
   </style>
@@ -154,21 +191,25 @@
   <!-- Main Single Flat Canvas (Zero Nested Containers) -->
   <main class="flex-1 max-w-6xl w-full mx-auto px-6 md:px-12 pt-24 pb-28 space-y-12 text-left">
 
-    <!-- 1. SEARCH CAPSULE ISLAND WITH ANIMATED SELECTION FLYOUT -->
+    <!-- 1. SEARCH CAPSULE ISLAND WITH PHYSICAL SLIDING HIGHLIGHT PILL -->
     <section class="space-y-4 relative">
-      <!-- Search Capsule Bar -->
-      <div id="searchCapsule" class="w-full bg-[#EBECEE] p-0 rounded-full flex items-center relative transition-all shadow-sm">
-        <button onclick="event.stopPropagation(); toggleSearchSegment('where')" id="seg-where" class="flex-1 px-5 py-3.5 text-left rounded-full transition-all cursor-pointer relative z-10 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.12)] spring-press">
+      <!-- Search Capsule Bar with Smooth Sliding Background Pill -->
+      <div id="searchCapsule" class="w-full bg-[#EBECEE] p-0 rounded-full flex items-center relative transition-all shadow-sm overflow-hidden">
+        
+        <!-- Sliding White Pill Highlight -->
+        <div id="searchSlidingPill"></div>
+
+        <button onclick="event.stopPropagation(); toggleSearchSegment('where')" id="seg-where" class="flex-1 px-5 py-3.5 text-left rounded-full transition-all cursor-pointer relative z-10 spring-press">
           <span class="block text-[10px] font-semibold text-[#111827]">Destination</span>
           <span class="block text-xs font-normal text-[#4B5563]" id="whereLabel">San Francisco, CA</span>
         </button>
-        <div id="div-1" class="w-px h-6 bg-[#ECECEC] opacity-0 transition-opacity"></div>
-        <button onclick="event.stopPropagation(); toggleSearchSegment('when')" id="seg-when" class="flex-1 px-5 py-3.5 text-left rounded-full transition-all cursor-pointer relative z-10 hover:bg-[#F7F7F8] spring-press">
+        <div id="div-1" class="w-px h-6 bg-[#ECECEC] opacity-0 transition-opacity z-10"></div>
+        <button onclick="event.stopPropagation(); toggleSearchSegment('when')" id="seg-when" class="flex-1 px-5 py-3.5 text-left rounded-full transition-all cursor-pointer relative z-10 spring-press">
           <span class="block text-[10px] font-semibold text-[#111827]">Date & Time</span>
           <span class="block text-xs font-normal text-[#6B7280]" id="whenLabel">Tomorrow, 14:00</span>
         </button>
-        <div id="div-2" class="w-px h-6 bg-[#ECECEC] opacity-100 transition-opacity"></div>
-        <button onclick="event.stopPropagation(); toggleSearchSegment('service')" id="seg-service" class="flex-1 px-5 py-3.5 text-left rounded-full transition-all cursor-pointer relative z-10 hover:bg-[#F7F7F8] spring-press">
+        <div id="div-2" class="w-px h-6 bg-[#ECECEC] opacity-100 transition-opacity z-10"></div>
+        <button onclick="event.stopPropagation(); toggleSearchSegment('service')" id="seg-service" class="flex-1 px-5 py-3.5 text-left rounded-full transition-all cursor-pointer relative z-10 spring-press">
           <span class="block text-[10px] font-semibold text-[#111827]">Service Type</span>
           <span class="block text-xs font-normal text-[#6B7280]" id="serviceLabel">Product Strategy & Design</span>
         </button>
@@ -197,7 +238,7 @@
       </div>
     </section>
 
-    <!-- 2. INTERACTIVE FINANCIAL CHART WITH Y/X AXES, GREEN/RED TREND & EXACT HOVER DOT -->
+    <!-- 2. INTERACTIVE FINANCIAL CHART WITH Y/X AXES, SLIDING PERIOD SEGMENT & EXACT HOVER DOT -->
     <section class="space-y-4">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#ECECEC] pb-3">
         <div class="flex items-center gap-3">
@@ -212,7 +253,7 @@
           </div>
         </div>
 
-        <!-- Apple-Style Segmented Control & Time Ranges -->
+        <!-- Apple-Style Segmented Controls (Trend & Periods) -->
         <div class="flex items-center gap-3 flex-wrap">
           
           <!-- Apple Segmented Trend Control (Sliding Smooth Pill) -->
@@ -228,11 +269,12 @@
             </button>
           </div>
 
-          <!-- Period Buttons -->
-          <div class="flex items-center gap-1 p-0.5 rounded-full bg-[#F7F7F8] border border-[#ECECEC] text-xs">
-            <button onclick="updateChartPeriod('7D')" id="chartBtn7D" class="px-2.5 py-1 rounded-full font-medium text-[#6B7280] hover:text-[#111827] spring-press cursor-pointer">7D</button>
-            <button onclick="updateChartPeriod('30D')" id="chartBtn30D" class="px-2.5 py-1 rounded-full font-semibold bg-[#111827] text-white shadow-2xs spring-press cursor-pointer">30D</button>
-            <button onclick="updateChartPeriod('90D')" id="chartBtn90D" class="px-2.5 py-1 rounded-full font-medium text-[#6B7280] hover:text-[#111827] spring-press cursor-pointer">90D</button>
+          <!-- Apple Segmented Period Control (7D / 30D / 90D Sliding Pill) -->
+          <div class="apple-seg-track relative" id="applePeriodTrack">
+            <div class="apple-seg-pill" id="applePeriodPill" style="left: 45px; width: 42px;"></div>
+            <button onclick="updateChartPeriod('7D')" id="chartBtn7D" class="relative z-10 px-3 py-1.5 text-xs font-medium text-[#6B7280] hover:text-[#111827] spring-press cursor-pointer">7D</button>
+            <button onclick="updateChartPeriod('30D')" id="chartBtn30D" class="relative z-10 px-3 py-1.5 text-xs font-semibold text-[#111827] spring-press cursor-pointer">30D</button>
+            <button onclick="updateChartPeriod('90D')" id="chartBtn90D" class="relative z-10 px-3 py-1.5 text-xs font-medium text-[#6B7280] hover:text-[#111827] spring-press cursor-pointer">90D</button>
           </div>
         </div>
       </div>
@@ -327,22 +369,36 @@
       </div>
     </section>
 
-    <!-- 4. CONTROLS, PICKERS & SLIDERS (FLAT 4-COL GRID) -->
+    <!-- 4. CONTROLS, PICKERS & SLIDERS WITH CONTINUOUS SLIDING SIRI WHEEL -->
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 py-2">
       
-      <!-- ITEM 1: Siri 3-Item Focal Wheel -->
+      <!-- ITEM 1: Siri 3-Item Focal Wheel with Continuous Sliding Animation -->
       <div class="space-y-2">
         <span class="text-xs font-semibold text-[#111827]">Siri Focal Wheel</span>
-        <div class="p-3 rounded-2xl bg-[#F7F7F8] border border-[#ECECEC] flex items-center justify-between gap-1">
-          <button onclick="stepSiri(-1)" class="w-8 h-8 rounded-full bg-white border border-[#ECECEC] hover:bg-[#F7F7F8] flex items-center justify-center text-[#111827] spring-press cursor-pointer shadow-2xs">
+        <div class="p-3 rounded-2xl bg-[#F7F7F8] border border-[#ECECEC] flex items-center justify-between gap-1 relative overflow-hidden">
+          <button onclick="stepSiri(-1)" class="w-8 h-8 rounded-full bg-white border border-[#ECECEC] hover:bg-[#F7F7F8] flex items-center justify-center text-[#111827] spring-press cursor-pointer shadow-2xs z-20 shrink-0">
             <svg class="w-3.5 h-3.5 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
           </button>
-          <div class="flex items-center gap-2 font-mono text-xs overflow-hidden">
-            <span id="siriLeft" class="text-[#9CA3AF] opacity-50 transition-all">1.50%</span>
-            <div id="siriCenter" class="px-3 py-1.5 rounded-xl bg-white border border-[#111827] text-[#111827] font-bold text-sm shadow-2xs transition-transform">1.75%</div>
-            <span id="siriRight" class="text-[#9CA3AF] opacity-50 transition-all">2.00%</span>
+          
+          <!-- Focal Frame Viewport (Width = 180px: exactly 3 items of 60px) -->
+          <div class="relative w-[180px] h-9 overflow-hidden flex items-center justify-center z-10">
+            <!-- Center Focus Box (60px) -->
+            <div class="absolute w-[60px] h-8 rounded-xl bg-white border border-[#111827] shadow-2xs pointer-events-none"></div>
+            
+            <!-- Sliding Track containing all percentage steps -->
+            <div id="siriTrack" style="transform: translateX(0px);">
+              <div class="siri-wheel-item">1.00%</div>
+              <div class="siri-wheel-item">1.25%</div>
+              <div class="siri-wheel-item">1.50%</div>
+              <div class="siri-wheel-item active">1.75%</div>
+              <div class="siri-wheel-item">2.00%</div>
+              <div class="siri-wheel-item">2.25%</div>
+              <div class="siri-wheel-item">2.50%</div>
+              <div class="siri-wheel-item">3.00%</div>
+            </div>
           </div>
-          <button onclick="stepSiri(1)" class="w-8 h-8 rounded-full bg-white border border-[#ECECEC] hover:bg-[#F7F7F8] flex items-center justify-center text-[#111827] spring-press cursor-pointer shadow-2xs">
+
+          <button onclick="stepSiri(1)" class="w-8 h-8 rounded-full bg-white border border-[#ECECEC] hover:bg-[#F7F7F8] flex items-center justify-center text-[#111827] spring-press cursor-pointer shadow-2xs z-20 shrink-0">
             <svg class="w-3.5 h-3.5 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
           </button>
         </div>
@@ -666,16 +722,39 @@
       renderChart();
     }
 
+    // Apple Segmented Control for Periods with Smooth Sliding Background Pill
     function updateChartPeriod(period) {
       currentPeriod = period;
-      ['7D', '30D', '90D'].forEach(p => {
-        const b = document.getElementById('chartBtn' + p);
-        if (p === period) {
-          b.className = 'px-2.5 py-1 rounded-full font-semibold bg-[#111827] text-white shadow-2xs spring-press cursor-pointer';
+      const pill = document.getElementById('applePeriodPill');
+      const btn7 = document.getElementById('chartBtn7D');
+      const btn30 = document.getElementById('chartBtn30D');
+      const btn90 = document.getElementById('chartBtn90D');
+
+      let targetBtn = btn30;
+      let leftOffset = btn7.offsetWidth;
+
+      if (period === '7D') {
+        targetBtn = btn7;
+        leftOffset = 0;
+      } else if (period === '30D') {
+        targetBtn = btn30;
+        leftOffset = btn7.offsetWidth;
+      } else if (period === '90D') {
+        targetBtn = btn90;
+        leftOffset = btn7.offsetWidth + btn30.offsetWidth;
+      }
+
+      pill.style.transform = `translateX(${leftOffset}px)`;
+      pill.style.width = targetBtn.offsetWidth + 'px';
+
+      [btn7, btn30, btn90].forEach(b => {
+        if (b === targetBtn) {
+          b.className = 'relative z-10 px-3 py-1.5 text-xs font-semibold text-[#111827] spring-press cursor-pointer';
         } else {
-          b.className = 'px-2.5 py-1 rounded-full font-medium text-[#6B7280] hover:text-[#111827] spring-press cursor-pointer';
+          b.className = 'relative z-10 px-3 py-1.5 text-xs font-medium text-[#6B7280] hover:text-[#111827] spring-press cursor-pointer';
         }
       });
+
       renderChart();
     }
 
@@ -689,7 +768,6 @@
       const path = document.getElementById('chartLinePath');
       const totalLength = path.getTotalLength();
       
-      // Binary search to find the exact point on the SVG path where pt.x matches svgX
       let low = 0;
       let high = totalLength;
       let bestPt = path.getPointAtLength(0);
@@ -757,18 +835,27 @@
       }, 4000);
     }
 
-    // Search Capsule Flyout & Animated Selection
+    // Search Capsule Sliding Pill & Flyout Animation
+    function updateSearchPillPosition() {
+      const pill = document.getElementById('searchSlidingPill');
+      const targetBtn = document.getElementById('seg-' + activeSegment);
+      if (!pill || !targetBtn) return;
+
+      const capsule = document.getElementById('searchCapsule');
+      const left = targetBtn.offsetLeft;
+      const width = targetBtn.offsetWidth;
+
+      pill.style.transform = `translateX(${left}px)`;
+      pill.style.width = width + 'px';
+
+      // Update divider visibility smoothly
+      document.getElementById('div-1').style.opacity = (activeSegment === 'where' || activeSegment === 'when') ? '0' : '1';
+      document.getElementById('div-2').style.opacity = (activeSegment === 'when' || activeSegment === 'service') ? '0' : '1';
+    }
+
     function toggleSearchSegment(seg) {
       activeSegment = seg;
-      ['where', 'when', 'service'].forEach(s => {
-        const btn = document.getElementById('seg-' + s);
-        if (s === seg) {
-          btn.className = 'flex-1 px-5 py-3.5 text-left rounded-full transition-all cursor-pointer relative z-10 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.12)] spring-press';
-        } else {
-          btn.className = 'flex-1 px-5 py-3.5 text-left rounded-full transition-all cursor-pointer relative z-10 hover:bg-[#F7F7F8] spring-press';
-        }
-      });
-
+      updateSearchPillPosition();
       renderFlyoutOptions(seg);
     }
 
@@ -780,7 +867,7 @@
       container.innerHTML = `
         <div class="flex items-center justify-between border-b border-[#ECECEC] pb-2 mb-2">
           <span class="text-xs font-semibold text-[#111827]">Select ${seg === 'where' ? 'Destination' : seg === 'when' ? 'Date & Time' : 'Service Type'}</span>
-          <span class="text-[10px] text-[#6B7280]">Click to choose with spring animation</span>
+          <span class="text-[10px] text-[#6B7280]">Horizontal sliding transitions</span>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
           ${options.map(opt => `
@@ -806,9 +893,9 @@
       const labelId = seg + 'Label';
       const labelElem = document.getElementById(labelId);
       
-      // Animate text transition
+      // Animate text slide-in
       labelElem.classList.remove('text-slide-enter');
-      void labelElem.offsetWidth; // Trigger reflow
+      void labelElem.offsetWidth;
       labelElem.innerText = val;
       labelElem.classList.add('text-slide-enter');
 
@@ -819,9 +906,9 @@
       triggerToast(`Selected ${val}`);
       closeFlyout();
 
-      // Auto-advance flow (Where -> When -> Service)
-      if (seg === 'where') setTimeout(() => toggleSearchSegment('when'), 250);
-      else if (seg === 'when') setTimeout(() => toggleSearchSegment('service'), 250);
+      // Auto-advance sliding flow (Where -> When -> Service)
+      if (seg === 'where') setTimeout(() => toggleSearchSegment('when'), 280);
+      else if (seg === 'when') setTimeout(() => toggleSearchSegment('service'), 280);
     }
 
     function closeFlyout() {
@@ -846,14 +933,32 @@
       btn.className = 'tab-pill h-8 px-4 rounded-full bg-[#111827] text-white text-xs font-semibold spring-press cursor-pointer shadow-2xs';
     }
 
-    const siriSteps = [1.00, 1.25, 1.50, 1.75, 2.00, 2.25, 2.50, 3.00];
-    let siriIdx = 3;
+    // Physical Continuous Siri Focal Wheel Slide
+    // Viewport width = 180px (3 items * 60px). Center box at 60px.
+    // To center item at index `i`, we translate track by: -(i - 1) * 60 px.
+    const SIRI_STEPS = [1.00, 1.25, 1.50, 1.75, 2.00, 2.25, 2.50, 3.00];
+    let siriActiveIndex = 3; // 1.75% default
 
     function stepSiri(delta) {
-      siriIdx = Math.max(1, Math.min(siriSteps.length - 2, siriIdx + delta));
-      document.getElementById('siriLeft').innerText = siriSteps[siriIdx - 1].toFixed(2) + '%';
-      document.getElementById('siriCenter').innerText = siriSteps[siriIdx].toFixed(2) + '%';
-      document.getElementById('siriRight').innerText = siriSteps[siriIdx + 1].toFixed(2) + '%';
+      siriActiveIndex = Math.max(0, Math.min(SIRI_STEPS.length - 1, siriActiveIndex + delta));
+      renderSiriWheel();
+      triggerToast(`Take-rate: ${SIRI_STEPS[siriActiveIndex].toFixed(2)}%`);
+    }
+
+    function renderSiriWheel() {
+      const track = document.getElementById('siriTrack');
+      const offset = -(siriActiveIndex - 1) * 60;
+      track.style.transform = `translateX(${offset}px)`;
+
+      // Update active classes for smooth focus magnification
+      const items = track.querySelectorAll('.siri-wheel-item');
+      items.forEach((item, idx) => {
+        if (idx === siriActiveIndex) {
+          item.className = 'siri-wheel-item active';
+        } else {
+          item.className = 'siri-wheel-item';
+        }
+      });
     }
 
     function updateSlider(val) {
@@ -897,7 +1002,12 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       renderChart();
+      renderSiriWheel();
+      updateSearchPillPosition();
       startLiveStream();
+    });
+    window.addEventListener('resize', () => {
+      updateSearchPillPosition();
     });
   </script>
 </body>
