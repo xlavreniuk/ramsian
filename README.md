@@ -1,6 +1,6 @@
 # Single-Surface Design System
 
-> Universal Apple & Linear single-surface architecture, stroke-free controls, and fluid spring motion design system for **Web**, **iOS (SwiftUI)**, **Android (Jetpack Compose)**, and **React Native** AI agents.
+> Universal Apple & Linear single-surface architecture, stroke-free controls, Siri focal pickers, and fluid spring motion design system by **[rezervehere](https://rezervehere.com)** for **Web**, **iOS (SwiftUI)**, **Android (Jetpack Compose)**, and **React Native** AI agents.
 
 [![Live Showroom](https://img.shields.io/badge/Live_Showroom-GitHub_Pages-black?style=flat-square&logo=github)](https://xlavreniuk.github.io/single-surface-design/)
 [![Skill Spec](https://img.shields.io/badge/AI_Skill-SKILL.md-emerald?style=flat-square)](SKILL.md)
@@ -36,12 +36,12 @@ curl -sSL https://raw.githubusercontent.com/xlavreniuk/single-surface-design/mai
 mkdir -p .claude/skills/single-surface-design && curl -sSL https://raw.githubusercontent.com/xlavreniuk/single-surface-design/main/SKILL.md -o .claude/skills/single-surface-design/SKILL.md
 ```
 
-Once installed, simply prompt your AI agent:
+Once installed, prompt your AI agent:
 > *"Build the settings screen using the single-surface-design skill."*
 
 ---
 
-## 🏛️ Design Invariants
+## 🏛️ Core Design Invariants & Strict Negative Constraints
 
 ```
 +-------------------------------------------------------------------------+
@@ -57,14 +57,23 @@ Once installed, simply prompt your AI agent:
 +-------------------------------------------------------------------------+
 ```
 
-1. **Zero Container Nesting**: Never place cards inside cards. Everything rests directly on flat `#FFFFFF`.
-2. **Dividers Over Card Boxes**: Separate modules with subtle `#ECECEC` hairline dividers.
-3. **Negative-Margin Hover Fills**: Interactive rows expand into `-mx-3 px-3 py-3` rounded fills on hover/press.
-4. **Stroke-Free Modern Controls**: Sliders and progress bars have no heavy border strokes.
-5. **Dual-Trend Data Visualization**: Emerald green (`#10B981`) for growth; Rose red (`#F43F5E`) for downturns.
-6. **Live Animated Numbers**: Smooth cubic count-up transitions on all state updates.
-7. **Apple Spring Physics**: `cubic-bezier(0.34, 1.56, 0.64, 1)` and `active:scale-95` on all touch targets.
-8. **Strict Anti-Slop**: Zero emojis in UI controls; platform-native icons only (Lucide, SF Symbols, Material Symbols).
+1. 🚫 **Zero Container Nesting**: Never place gray cards inside white cards inside outer boxed cards. Controls sit directly on flat `#FFFFFF` (or dark `#09090B`).
+2. 🚫 **No Yapping / Zero-Slop Text**: Ban dramatic marketing fluff (*"Live Radar & Lead Intelligence"*). Use 1-word direct functional tokens (`Wheel`, `Slider`, `Controls`, `Where`, `When`, `Service`).
+3. 🚫 **Zero Emojis in UI**: Never use emojis in buttons, tabs, badges, or controls. Platform-native vector icons only (Lucide, SF Symbols, Material Symbols).
+4. 🚫 **Monochrome Icons Only**: 100% monochrome vector strokes (`currentColor`). Color is strictly reserved for functional state badges (emerald for growth, rose for downturns).
+5. 🔤 **Authentic Brand Typography**: Brand logo and display headers use **`Cabinet Grotesk`** (800/700 weight, strictly all-lowercase, `-0.025em` tracking). Tabular numerals use **`JetBrains Mono`**. UI body uses **`Plus Jakarta Sans`** or **`Inter`**.
+6. 🔍 **60px Search Bar Composer**: 3-step auto-advance sequence (`Where` ➡️ `When` ➡️ `Type of service`) with physical sliding highlight pill and interactive month calendar / city popups.
+7. 🎡 **Siri 3-Item Focal Wheel**: Centered $z\text{-index } 0$ focus box with $z\text{-index } 10$ sliding numeral track following $\text{translateX} = 60\text{px} - (i \times 60\text{px})$.
+8. 📈 **Dual-Trend High-Contrast Data**: Emerald (`#047857`) / Rose (`#BE123C`) status badges with subpixel precision hover curve tracking.
+
+---
+
+## 📸 Automated Screenshot Utility
+
+Capture pixel-perfect 2x Retina screenshots anytime:
+```bash
+bun run screenshot
+```
 
 ---
 
