@@ -390,11 +390,11 @@
           
           <!-- Viewport: exactly 180px wide (3 items of 60px) -->
           <div class="relative w-[180px] h-9 overflow-hidden rounded-xl">
-            <!-- Center Focus Box (centered exactly at x: 60px, width: 60px) -->
-            <div class="absolute left-[60px] top-0.5 bottom-0.5 w-[60px] rounded-xl bg-white border border-[#111827] shadow-2xs pointer-events-none z-10"></div>
+            <!-- Center Focus Box (centered exactly at x: 60px, width: 60px, behind text) -->
+            <div class="absolute left-[60px] top-0.5 bottom-0.5 w-[60px] rounded-xl bg-white border border-[#111827] shadow-2xs pointer-events-none z-0"></div>
             
-            <!-- Sliding Track: absolute positioned, translates smoothly -->
-            <div id="siriTrack" class="absolute top-0 bottom-0 left-0 flex items-center">
+            <!-- Sliding Track: in front of focus box (z-10) with transparent text items -->
+            <div id="siriTrack" class="absolute top-0 bottom-0 left-0 flex items-center z-10">
               <div onclick="selectSiriIndex(0)" class="siri-wheel-item">1.00%</div>
               <div onclick="selectSiriIndex(1)" class="siri-wheel-item">1.25%</div>
               <div onclick="selectSiriIndex(2)" class="siri-wheel-item">1.50%</div>
