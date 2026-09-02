@@ -1,58 +1,92 @@
 ---
 name: single-surface-design
-description: Master design engineering skill enforcing Apple & Linear single-surface architecture, stroke-free sliders, search capsules, Siri focal pickers, Emil Kowalski's craft animation principles, and strict anti-AI-slop frontend standards across all projects.
+description: Universal Apple & Linear single-surface architecture, stroke-free controls, Siri focal pickers, and fluid spring motion design system for Web, iOS, Android, and React Native AI agents.
 ---
 
-# Single-Surface Design & Fluid Motion Engineering
+# Single-Surface Design System — Master Engineering Standard
 
-A universal, opinionated design engineering standard for crafting interfaces that feel calm, physically grounded, responsive, and completely free of generic "AI slop".
+This skill is the universal interface design standard for high-craft digital products across **Web (React/Next.js/Tailwind)**, **iOS (SwiftUI)**, **Android (Jetpack Compose)**, and **Cross-Platform (React Native/Flutter)**.
 
-Whenever this skill is referenced in **ANY project**, the agent **MUST ALWAYS enforce this exact design standard** for all UI components, pages, forms, and layouts.
-
----
-
-## 🏛️ The 7 Core Architectural Invariants
-
-```mermaid
-graph TD
-    A["Single-Surface Design System"] --> B["1. Flat Surface Architecture"]
-    A --> C["2. Proportional Typography"]
-    A --> D["3. Stroke-Free Controls & Pickers"]
-    A --> E["4. Search Capsule & Island Patterns"]
-    A --> F["5. Fluid Spring Physics"]
-    A --> G["6. Anti-AI-Slop & Zero Emojis"]
-    A --> H["7. GPU Hardware Acceleration"]
+```
++-------------------------------------------------------------------------+
+|                       SINGLE FLAT SURFACE (#FFFFFF)                     |
+|                                                                         |
+|  [ Metric Stats ]  ------------------- Hairline Divider --------------  |
+|                                                                         |
+|  [ Dual-Trend SVG Chart with Numerical Axes & Live Animated Numerals ]  |
+|                                                                         |
+|  [ Stroke-Free Slider ]   [ Siri Focal Wheel ]   [ iOS Spring Toggle ]  |
+|                                                                         |
+|  [ Interactive List Rows with Negative-Margin Background Fills ]        |
++-------------------------------------------------------------------------+
 ```
 
 ---
 
-## 1. Single-Surface Architecture (Zero Box Nesting)
-* **The Fundamental Rule**: Never place gray cards inside white cards inside outer boxed card frames.
-* **Canvas Elevation**: Primary content sits directly on flat pure white `#FFFFFF`.
-* **Divider-First Structure**: Separate list items, metrics, and sections using subtle divider lines (`divide-y divide-[#ECECEC]` or `border-t border-b border-[#ECECEC]`).
-* **Negative-Margin Hover Expansion**: Interactive rows expand into outer container padding on hover:
-  ```tsx
-  <div className="group py-3.5 px-3 -mx-3 rounded-2xl hover:bg-[#F7F7F8] transition-colors flex items-center justify-between cursor-pointer">
-    <div className="space-y-0.5 text-left">
-      <h4 className="font-semibold text-xs text-[#111827]">{service.name}</h4>
-      <p className="text-xs font-normal text-[#6B7280]">{service.description}</p>
+## 1. Core Invariants (Zero Exceptions)
+
+1. **Flat Single-Surface Canvas**:
+   * Interfaces sit directly on pure `#FFFFFF` (or dark `#09090B`).
+   * **NEVER** nest containers inside containers (no gray cards inside white cards inside outer border cards).
+2. **Dividers Over Card Boxes**:
+   * Separate sections using hairline dividers (`border-[#ECECEC]` or `divide-y divide-[#ECECEC]`), never individual floating boxes.
+3. **Negative-Margin Interactive Rows**:
+   * Interactive list items sit edge-to-edge. On hover/press, they expand into negative padding fills (`py-3 px-3 -mx-3 rounded-2xl hover:bg-[#F7F7F8] active:scale-[0.98]`).
+4. **Stroke-Free Controls**:
+   * Sliders and progress tracks have **zero border strokes** (`border: none !important`).
+5. **Fluid Spring Motion**:
+   * Physical Apple spring curves on all interactive elements (`cubic-bezier(0.34, 1.56, 0.64, 1)` or SwiftUI `response: 0.35, dampingFraction: 1.0`).
+6. **Dual-Trend Data Visualization**:
+   * Upward growth: **Emerald Green (`#10B981`)** with glowing gradient fill and `+X%` badge.
+   * Downward trend: **Rose Red (`#F43F5E`)** with crimson gradient fill and `-X%` badge.
+   * Always include clear numerical Y-axis and X-axis markings.
+7. **Live Animated Numbers**:
+   * Numerical counters count smoothly between state changes using cubic interpolation (`requestAnimationFrame`).
+8. **No Emojis in Production UI**:
+   * Always use platform-native iconography (Lucide on Web, SF Symbols on iOS, Material Symbols on Android).
+
+---
+
+## 2. Universal Design Tokens
+
+| Token | Web / Tailwind | iOS (SwiftUI) | Android (Compose) | React Native |
+| :--- | :--- | :--- | :--- | :--- |
+| **Canvas Background** | `bg-[#FFFFFF]` | `Color.white` | `Color(0xFFFFFFFF)` | `#FFFFFF` |
+| **Primary Text** | `text-[#111827]` | `Color(uiColor: .label)` | `Color(0xFF111827)` | `#111827` |
+| **Secondary Text** | `text-[#4B5563]` | `Color(uiColor: .secondaryLabel)` | `Color(0xFF4B5563)` | `#4B5563` |
+| **Muted Text** | `text-[#6B7280]` | `Color(uiColor: .tertiaryLabel)` | `Color(0xFF6B7280)` | `#6B7280` |
+| **Subtle Hairline** | `border-[#ECECEC]` | `Color(uiColor: .systemGray5)` | `Color(0xFFECECEC)` | `#ECECEC` |
+| **Hover / Pill Fill** | `bg-[#F7F7F8]` | `Color(uiColor: .systemGray6)` | `Color(0xFFF7F7F8)` | `#F7F7F8` |
+| **Success / Trend Up**| `text-[#10B981]` | `Color.green` | `Color(0xFF10B981)` | `#10B981` |
+| **Danger / Trend Down**| `text-[#F43F5E]` | `Color.red` | `Color(0xFFF43F5E)` | `#F43F5E` |
+| **Standard Button** | `h-9 px-4 rounded-full text-xs font-semibold` | `.frame(height: 36).clipShape(Capsule())` | `Modifier.height(36.dp)` | `height: 36, borderRadius: 18` |
+
+---
+
+## 3. Platform Implementations
+
+### A. Web (React / Next.js / Tailwind CSS)
+
+#### 1. Interactive Flat Divider List
+```tsx
+<div className="divide-y divide-[#ECECEC] w-full">
+  {items.map((item) => (
+    <div
+      key={item.id}
+      onClick={() => handleSelect(item)}
+      className="py-3.5 px-3 -mx-3 rounded-2xl hover:bg-[#F7F7F8] active:scale-[0.98] transition-all duration-150 cursor-pointer flex items-center justify-between"
+    >
+      <div>
+        <h4 className="font-semibold text-xs text-[#111827]">{item.title}</h4>
+        <p className="text-[11px] text-[#6B7280]">{item.subtitle}</p>
+      </div>
+      <span className="font-mono font-bold text-xs text-[#111827]">{item.value}</span>
     </div>
-    <span className="font-semibold text-xs text-[#111827]">€{service.price}</span>
-  </div>
-  ```
+  ))}
+</div>
+```
 
----
-
-## 2. Proportional Typography Hierarchy
-* **Headings & Brand**: `font-semibold` (`600`) — 16px to 28px. Never use distorted `font-black` (900) or shouting uppercase labels.
-* **Buttons, Controls & Pills**: `font-medium` (`500`) or `font-semibold` (`600`) — 12px to 14px.
-* **Body, Subtitles & Metadata**: `font-normal` (`400`) — 12px to 14px text in `#4B5563` or `#6B7280`.
-* **Numerals, Pricing & Dates**: `font-mono` (`JetBrains Mono` / `Inter`) — Tabular figures for alignment.
-
----
-
-## 3. Stroke-Free Controls & Custom Apple Sliders
-Never render ugly native range slider borders, outlines, or heavy box shadows:
+#### 2. Stroke-Free Apple Range Slider
 ```css
 input[type=range] {
   -webkit-appearance: none;
@@ -62,7 +96,6 @@ input[type=range] {
   border-radius: 9999px;
   outline: none;
   border: none !important;
-  box-shadow: none !important;
 }
 input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -71,53 +104,186 @@ input[type=range]::-webkit-slider-thumb {
   height: 18px;
   background: #111827;
   border-radius: 50%;
-  cursor: pointer;
   border: 2px solid #FFFFFF !important;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.18);
-  transition: transform 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.15); }
-input[type=range]::-webkit-slider-thumb:active { transform: scale(0.95); }
+input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.18); }
+input[type=range]::-webkit-slider-thumb:active { transform: scale(0.92); }
+```
+
+#### 3. Live Animated Count-Up Number (TypeScript)
+```ts
+function animateValue(element: HTMLElement, start: number, end: number, duration = 400, prefix = '$') {
+  let startTimestamp: number | null = null;
+  const step = (timestamp: number) => {
+    if (!startTimestamp) startTimestamp = timestamp;
+    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+    const easeProgress = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+    const current = start + (end - start) * easeProgress;
+    element.innerText = prefix + (Number.isInteger(end) ? Math.round(current).toLocaleString() : current.toFixed(2));
+    if (progress < 1) window.requestAnimationFrame(step);
+  };
+  window.requestAnimationFrame(step);
+}
 ```
 
 ---
 
-## 4. Search Island Capsule Pattern
-* Form wrapper uses `p-0` so hover fills cover 100% of capsule height and curved ends.
-* Active segment is highlighted with **pure white background and elevation shadow**:
-  `bg-white shadow-[0_4px_20px_rgba(0,0,0,0.12)] rounded-full z-10`
-* Dividing lines automatically hide (`opacity-0`) when an adjacent segment is active.
-* Horizontal auto-advance flow: `Where` ➡️ `When` ➡️ `Service`.
+### B. iOS (SwiftUI)
 
----
+#### 1. Flat Single-Surface List Row
+```swift
+struct SingleSurfaceRow: View {
+    let title: String
+    let subtitle: String
+    let value: String
 
-## 5. Siri 3-Item Windowed Focal Wheel Pickers
-* Displays exactly 3 items at a time: previous step (muted), center focus pill (bold/active), next step (muted).
-* Physical directional sliding animation: slides right-to-left when stepping forward, left-to-right when stepping backward.
-* Spring physics: `stiffness: 480, damping: 34`.
-
----
-
-## 6. Anti-AI-Slop & Zero Emojis Standard
-* **Zero Emojis**: Never use emojis in button labels, tables, dialogs, or generated outreach templates. Always use clean vector **Lucide SVG icons**.
-* **Zero Gimmicky Badges**: Never add artificial "AI Powered", "Radar Active", or "Engine Ready" pulsating badges.
-* **No Screaming Uppercase**: Replace uppercase micro-headers (`SUGGESTED DESTINATIONS`, `WHAT'S INCLUDED`) with natural sentence/title case.
-* **No Boxed Metric Tiles**: Replace 4-5 side-by-side gray boxed tiles with a single flat divider row (`grid grid-cols-4 py-4 border-t border-b border-[#ECECEC]`).
-
----
-
-## 7. GPU Hardware Acceleration & Mobile 60fps
-* All sticky or fixed frosted glass topbars must include `[transform:translateZ(0)]`:
-  ```html
-  <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md [transform:translateZ(0)] border-b border-[#ECECEC] h-16">
-  ```
-* Prevents mobile scroll jitter and forces GPU rasterization.
-
----
-
-## Interactive Playground & Live Web Editor
-To preview, inspect, edit tokens, and export components live in your browser:
-```bash
-bun run server.ts
-# Open http://localhost:3002
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundColor(Color(uiColor: .label))
+                Text(subtitle)
+                    .font(.system(size: 11, weight: .regular))
+                    .foregroundColor(Color(uiColor: .secondaryLabel))
+            }
+            Spacer()
+            Text(value)
+                .font(.system(size: 13, weight: .bold, design: .monospaced))
+                .foregroundColor(Color(uiColor: .label))
+        }
+        .padding(.vertical, 10)
+        .padding(.horizontal, 12)
+        .background(Color.white)
+        .contentShape(Rectangle())
+    }
+}
 ```
+
+#### 2. Apple Spring Scale Button Style
+```swift
+struct SpringScaleButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+            .animation(.spring(response: 0.35, dampingFraction: 1.0), value: configuration.isPressed)
+    }
+}
+
+// Usage:
+Button("Confirm") {
+    // Action
+}
+.buttonStyle(SpringScaleButtonStyle())
+.frame(height: 36)
+.padding(.horizontal, 16)
+.background(Color(uiColor: .label))
+.foregroundColor(.white)
+.clipShape(Capsule())
+```
+
+---
+
+### C. Android (Jetpack Compose)
+
+#### 1. Single-Surface Divider Row
+```kotlin
+@Composable
+fun SingleSurfaceItemRow(
+    title: String,
+    subtitle: String,
+    value: String,
+    onClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = ripple(color = Color(0xFFF7F7F8)),
+                onClick = onClick
+            )
+            .padding(horizontal = 12.dp, vertical = 10.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Text(
+                text = title,
+                fontSize = 13.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = Color(0xFF111827)
+            )
+            Text(
+                text = subtitle,
+                fontSize = 11.sp,
+                fontWeight = FontWeight.Normal,
+                color = Color(0xFF6B7280)
+            )
+        }
+        Text(
+            text = value,
+            fontSize = 13.sp,
+            fontWeight = FontWeight.Bold,
+            fontFamily = FontFamily.Monospace,
+            color = Color(0xFF111827)
+        )
+    }
+}
+```
+
+---
+
+### D. React Native / Expo
+
+```tsx
+import React from 'react';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
+
+export function SingleSurfaceButton({ title, onPress }: { title: string; onPress: () => void }) {
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+
+  return (
+    <Pressable
+      onPressIn={() => (scale.value = withSpring(0.95, { damping: 15, stiffness: 200 }))}
+      onPressOut={() => (scale.value = withSpring(1, { damping: 15, stiffness: 200 }))}
+      onPress={onPress}
+    >
+      <Animated.View style={[styles.button, animatedStyle]}>
+        <Text style={styles.buttonText}>{title}</Text>
+      </Animated.View>
+    </Pressable>
+  );
+}
+
+const styles = StyleSheet.create({
+  button: {
+    height: 36,
+    paddingHorizontal: 16,
+    borderRadius: 18,
+    backgroundColor: '#111827',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+});
+```
+
+---
+
+## 4. Prompting Guide for Other AI Agents
+
+When instructing another AI coding agent (e.g. Gemini, Claude, Cursor, Copilot, ChatGPT) to design an interface, prompt it with:
+
+> *"Follow the single-surface-design standard: flat #FFFFFF canvas with zero nested card containers, hairline dividers, stroke-free sliders, Siri 3-item focal wheels, animated counting numerals, and Apple spring physics. Never use emojis in UI controls."*
