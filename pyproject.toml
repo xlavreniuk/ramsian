@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -11,12 +11,7 @@ authors = [
 description = "Universal Apple & Linear single-surface architecture, stroke-free controls, and fluid spring motion design system by rezervehere."
 readme = "README.md"
 requires-python = ">=3.8"
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-    "Topic :: Software Development :: User Interfaces",
-]
+license = { text = "MIT" }
 keywords = ["design-system", "single-surface", "apple-design", "linear-design", "ui", "dieter-rams", "ramsian"]
 
 [project.urls]
@@ -26,3 +21,6 @@ keywords = ["design-system", "single-surface", "apple-design", "linear-design", 
 
 [project.scripts]
 ramsian = "ramsian.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["ramsian*"]
