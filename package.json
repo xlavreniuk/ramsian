@@ -5,7 +5,7 @@
   "main": "server.ts",
   "type": "module",
   "bin": {
-    "ramsian": "./bin/ramsian.js"
+    "ramsian": "bin/ramsian.js"
   },
   "scripts": {
     "dev": "bun run server.ts",

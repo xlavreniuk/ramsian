@@ -1,0 +1,11 @@
+node_modules/
+dist/
+build/
+*.egg-info/
+__pycache__/
+*.pyc
+.git/
+.DS_Store
+scripts/
+pyproject.toml
+ramsian/
