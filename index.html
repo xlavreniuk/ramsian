@@ -95,9 +95,37 @@
     .live-pulse-dot {
       animation: pulse-live 1.6s infinite ease-in-out;
     }
+
+    /* Apple Segmented Control Slider */
+    .apple-seg-track {
+      position: relative;
+      background-color: #EBECEE;
+      border-radius: 9999px;
+      padding: 3px;
+      display: inline-flex;
+      align-items: center;
+    }
+    .apple-seg-pill {
+      position: absolute;
+      top: 3px;
+      bottom: 3px;
+      background-color: #FFFFFF;
+      border-radius: 9999px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Text Slide Fade Animation */
+    .text-slide-enter {
+      animation: textSlideIn 0.22s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    @keyframes textSlideIn {
+      0% { opacity: 0; transform: translateY(4px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
-<body class="bg-[#FFFFFF] text-[#111827] min-h-screen flex flex-col antialiased selection:bg-[#111827] selection:text-white">
+<body class="bg-[#FFFFFF] text-[#111827] min-h-screen flex flex-col antialiased selection:bg-[#111827] selection:text-white" onclick="handleGlobalClick(event)">
 
   <!-- Fixed Topbar (Single-Surface Standard) -->
   <header class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md [transform:translateZ(0)] border-b border-[#ECECEC] h-16 flex items-center px-6 md:px-12">
@@ -126,28 +154,35 @@
   <!-- Main Single Flat Canvas (Zero Nested Containers) -->
   <main class="flex-1 max-w-6xl w-full mx-auto px-6 md:px-12 pt-24 pb-28 space-y-12 text-left">
 
-    <!-- 1. SEARCH CAPSULE ISLAND & SLIDING TAB PILLS -->
-    <section class="space-y-4">
-      <!-- Search Capsule -->
-      <div class="w-full bg-[#EBECEE] p-0 rounded-full flex items-center relative transition-all shadow-sm">
-        <button onclick="setActiveSegment('where')" id="seg-where" class="flex-1 px-5 py-3.5 text-left rounded-full transition-all cursor-pointer relative z-10 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.12)]">
+    <!-- 1. SEARCH CAPSULE ISLAND WITH ANIMATED SELECTION FLYOUT -->
+    <section class="space-y-4 relative">
+      <!-- Search Capsule Bar -->
+      <div id="searchCapsule" class="w-full bg-[#EBECEE] p-0 rounded-full flex items-center relative transition-all shadow-sm">
+        <button onclick="event.stopPropagation(); toggleSearchSegment('where')" id="seg-where" class="flex-1 px-5 py-3.5 text-left rounded-full transition-all cursor-pointer relative z-10 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.12)] spring-press">
           <span class="block text-[10px] font-semibold text-[#111827]">Destination</span>
           <span class="block text-xs font-normal text-[#4B5563]" id="whereLabel">San Francisco, CA</span>
         </button>
         <div id="div-1" class="w-px h-6 bg-[#ECECEC] opacity-0 transition-opacity"></div>
-        <button onclick="setActiveSegment('when')" id="seg-when" class="flex-1 px-5 py-3.5 text-left rounded-full transition-all cursor-pointer relative z-10 hover:bg-[#F7F7F8]">
+        <button onclick="event.stopPropagation(); toggleSearchSegment('when')" id="seg-when" class="flex-1 px-5 py-3.5 text-left rounded-full transition-all cursor-pointer relative z-10 hover:bg-[#F7F7F8] spring-press">
           <span class="block text-[10px] font-semibold text-[#111827]">Date & Time</span>
           <span class="block text-xs font-normal text-[#6B7280]" id="whenLabel">Tomorrow, 14:00</span>
         </button>
         <div id="div-2" class="w-px h-6 bg-[#ECECEC] opacity-100 transition-opacity"></div>
-        <button onclick="setActiveSegment('service')" id="seg-service" class="flex-1 px-5 py-3.5 text-left rounded-full transition-all cursor-pointer relative z-10 hover:bg-[#F7F7F8]">
+        <button onclick="event.stopPropagation(); toggleSearchSegment('service')" id="seg-service" class="flex-1 px-5 py-3.5 text-left rounded-full transition-all cursor-pointer relative z-10 hover:bg-[#F7F7F8] spring-press">
           <span class="block text-[10px] font-semibold text-[#111827]">Service Type</span>
           <span class="block text-xs font-normal text-[#6B7280]" id="serviceLabel">Product Strategy & Design</span>
         </button>
         <div class="pr-2 z-20">
-          <button onclick="triggerToast('Searching catalog...')" class="w-10 h-10 rounded-full bg-[#111827] hover:bg-[#262626] text-white flex items-center justify-center spring-press cursor-pointer shadow-2xs">
+          <button onclick="event.stopPropagation(); triggerToast('Searching catalog for ' + currentWhere)" class="w-10 h-10 rounded-full bg-[#111827] hover:bg-[#262626] text-white flex items-center justify-center spring-press cursor-pointer shadow-2xs">
             <svg class="w-4 h-4 stroke-[2.2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
           </button>
+        </div>
+      </div>
+
+      <!-- Interactive Flyout Picker for Active Segment -->
+      <div id="segmentFlyout" class="hidden absolute top-16 left-0 right-0 z-30 bg-white rounded-2xl border border-[#ECECEC] shadow-xl p-4 transition-all duration-200 transform scale-98 opacity-0">
+        <div id="flyoutContent" class="space-y-2">
+          <!-- Dynamic options populated by JS -->
         </div>
       </div>
 
@@ -162,7 +197,7 @@
       </div>
     </section>
 
-    <!-- 2. INTERACTIVE FINANCIAL CHART WITH Y/X AXES & GREEN/RED TREND -->
+    <!-- 2. INTERACTIVE FINANCIAL CHART WITH Y/X AXES, GREEN/RED TREND & EXACT HOVER DOT -->
     <section class="space-y-4">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#ECECEC] pb-3">
         <div class="flex items-center gap-3">
@@ -177,15 +212,19 @@
           </div>
         </div>
 
-        <!-- Trend Toggle & Time Ranges -->
-        <div class="flex items-center gap-2">
-          <!-- Trend Mode (Up Green vs Down Red) -->
-          <div class="flex items-center gap-1 p-0.5 rounded-full bg-[#F7F7F8] border border-[#ECECEC] text-xs">
-            <button onclick="setTrendMode('up')" id="trendBtnUp" class="px-3 py-1 rounded-full font-semibold bg-emerald-600 text-white shadow-2xs spring-press cursor-pointer">
-              Up Trend
+        <!-- Apple-Style Segmented Control & Time Ranges -->
+        <div class="flex items-center gap-3 flex-wrap">
+          
+          <!-- Apple Segmented Trend Control (Sliding Smooth Pill) -->
+          <div class="apple-seg-track relative" id="appleSegTrack">
+            <div class="apple-seg-pill" id="appleSegPill" style="left: 3px; width: 96px;"></div>
+            <button onclick="setTrendMode('up')" id="trendBtnUp" class="relative z-10 px-3.5 py-1.5 text-xs font-semibold text-[#111827] flex items-center gap-1.5 cursor-pointer spring-press">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              <span>Up Trend</span>
             </button>
-            <button onclick="setTrendMode('down')" id="trendBtnDown" class="px-3 py-1 rounded-full font-medium text-[#6B7280] hover:text-[#111827] spring-press cursor-pointer">
-              Down Trend
+            <button onclick="setTrendMode('down')" id="trendBtnDown" class="relative z-10 px-3.5 py-1.5 text-xs font-medium text-[#6B7280] hover:text-[#111827] flex items-center gap-1.5 cursor-pointer spring-press">
+              <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+              <span>Down Trend</span>
             </button>
           </div>
 
@@ -220,7 +259,7 @@
               <div class="border-b border-[#ECECEC] w-full"></div>
             </div>
 
-            <svg class="w-full h-full overflow-visible relative z-10" viewBox="0 0 600 160" preserveAspectRatio="none">
+            <svg id="mainSvgCanvas" class="w-full h-full overflow-visible relative z-10" viewBox="0 0 600 160" preserveAspectRatio="none">
               <defs>
                 <linearGradient id="chartGradGreen" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stop-color="#10B981" stop-opacity="0.22"/>
@@ -234,14 +273,15 @@
               <path id="chartAreaPath" d="M0,130 Q100,100 200,80 T400,50 T600,20 L600,160 L0,160 Z" fill="url(#chartGradGreen)" class="transition-all duration-300"/>
               <path id="chartLinePath" d="M0,130 Q100,100 200,80 T400,50 T600,20" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" class="transition-all duration-300"/>
               
-              <!-- Vertical Crosshair Hairline -->
+              <!-- Exact Vertical Crosshair Hairline -->
               <line id="chartCrossLine" x1="400" y1="0" x2="400" y2="160" stroke="#ECECEC" stroke-width="1.5" stroke-dasharray="3 3" class="hidden"/>
-              <circle id="chartDot" cx="400" cy="50" r="5" fill="#FFFFFF" stroke="#10B981" stroke-width="3" class="hidden transition-transform duration-75 shadow-lg"/>
+              <!-- Exact Anchored Dot Sitting 100% on the SVG Path -->
+              <circle id="chartDot" cx="400" cy="50" r="5.5" fill="#FFFFFF" stroke="#10B981" stroke-width="3" class="hidden shadow-md"/>
             </svg>
 
             <!-- Floating Hover Tooltip -->
-            <div id="chartTooltip" class="absolute top-1 right-2 text-right hidden bg-white/95 backdrop-blur-xs px-3 py-1.5 rounded-xl border border-[#ECECEC] shadow-sm z-20">
-              <span id="tooltipDate" class="text-[10px] text-[#6B7280] block font-medium">Aug 28</span>
+            <div id="chartTooltip" class="absolute top-1 right-2 text-right hidden bg-white/95 backdrop-blur-xs px-3 py-1.5 rounded-xl border border-[#ECECEC] shadow-sm z-20 pointer-events-none">
+              <span id="tooltipDate" class="text-[10px] text-[#6B7280] block font-medium">Point Tracking</span>
               <span id="tooltipVal" class="font-mono font-bold text-xs text-[#111827]">$1,840.00</span>
             </div>
           </div>
@@ -477,6 +517,33 @@
     let liveInterval = null;
     let baseRevenue = 52100.00;
 
+    let currentWhere = 'San Francisco, CA';
+    let currentWhen = 'Tomorrow, 14:00';
+    let currentService = 'Product Strategy & Design';
+    let activeSegment = 'where';
+
+    const SEARCH_OPTIONS = {
+      where: [
+        { label: 'San Francisco, CA', sub: 'Silicon Valley Hub' },
+        { label: 'New York, NY', sub: 'Manhattan & Brooklyn' },
+        { label: 'London, UK', sub: 'Soho & Shoreditch' },
+        { label: 'Tokyo, Japan', sub: 'Shibuya & Roppongi' },
+        { label: 'Bratislava, SK', sub: 'Old Town & Ružinov' }
+      ],
+      when: [
+        { label: 'Tomorrow, 14:00', sub: 'Standard afternoon slot' },
+        { label: 'Friday, 18:00', sub: 'Evening peak availability' },
+        { label: 'Saturday, 11:00', sub: 'Weekend morning session' },
+        { label: 'Next Monday, 10:00', sub: 'Early week opening' }
+      ],
+      service: [
+        { label: 'Product Strategy & Design', sub: 'Architecture & Token Specs' },
+        { label: 'iOS SwiftUI Fluid Motion', sub: 'Apple Spring Interactions' },
+        { label: 'Android Jetpack Compose Kit', sub: 'Material3 Single-Surface' },
+        { label: 'Full Web React Component Suite', sub: 'Stroke-free Controls & SVG' }
+      ]
+    };
+
     const CHART_DATA = {
       up: {
         '7D': {
@@ -580,12 +647,21 @@
 
     function setTrendMode(mode) {
       currentTrend = mode;
+      const pill = document.getElementById('appleSegPill');
+      const btnUp = document.getElementById('trendBtnUp');
+      const btnDown = document.getElementById('trendBtnDown');
+
       if (mode === 'up') {
-        document.getElementById('trendBtnUp').className = 'px-3 py-1 rounded-full font-semibold bg-emerald-600 text-white shadow-2xs spring-press cursor-pointer';
-        document.getElementById('trendBtnDown').className = 'px-3 py-1 rounded-full font-medium text-[#6B7280] hover:text-[#111827] spring-press cursor-pointer';
+        pill.style.transform = 'translateX(0px)';
+        pill.style.width = btnUp.offsetWidth + 'px';
+        btnUp.className = 'relative z-10 px-3.5 py-1.5 text-xs font-semibold text-[#111827] flex items-center gap-1.5 cursor-pointer spring-press';
+        btnDown.className = 'relative z-10 px-3.5 py-1.5 text-xs font-medium text-[#6B7280] hover:text-[#111827] flex items-center gap-1.5 cursor-pointer spring-press';
       } else {
-        document.getElementById('trendBtnDown').className = 'px-3 py-1 rounded-full font-semibold bg-rose-600 text-white shadow-2xs spring-press cursor-pointer';
-        document.getElementById('trendBtnUp').className = 'px-3 py-1 rounded-full font-medium text-[#6B7280] hover:text-[#111827] spring-press cursor-pointer';
+        const offset = btnUp.offsetWidth;
+        pill.style.transform = `translateX(${offset}px)`;
+        pill.style.width = btnDown.offsetWidth + 'px';
+        btnDown.className = 'relative z-10 px-3.5 py-1.5 text-xs font-semibold text-[#111827] flex items-center gap-1.5 cursor-pointer spring-press';
+        btnUp.className = 'relative z-10 px-3.5 py-1.5 text-xs font-medium text-[#6B7280] hover:text-[#111827] flex items-center gap-1.5 cursor-pointer spring-press';
       }
       renderChart();
     }
@@ -603,27 +679,39 @@
       renderChart();
     }
 
+    // 100% Mathematically Exact Curve Tracking via SVG native getPointAtLength
     function handleChartHover(e) {
       const rect = e.currentTarget.getBoundingClientRect();
       const x = Math.max(0, Math.min(rect.width, e.clientX - rect.left));
       const pct = x / rect.width;
       const svgX = pct * 600;
+
+      const path = document.getElementById('chartLinePath');
+      const totalLength = path.getTotalLength();
       
-      let svgY;
-      if (currentTrend === 'up') {
-        svgY = 130 - Math.sin(pct * Math.PI * 0.8) * 105;
-      } else {
-        svgY = 20 + Math.sin(pct * Math.PI * 0.8) * 120;
+      // Binary search to find the exact point on the SVG path where pt.x matches svgX
+      let low = 0;
+      let high = totalLength;
+      let bestPt = path.getPointAtLength(0);
+      for (let i = 0; i < 24; i++) {
+        const mid = (low + high) / 2;
+        const pt = path.getPointAtLength(mid);
+        if (pt.x < svgX) {
+          low = mid;
+        } else {
+          high = mid;
+        }
+        bestPt = pt;
       }
 
       const dot = document.getElementById('chartDot');
-      dot.setAttribute('cx', svgX);
-      dot.setAttribute('cy', svgY);
+      dot.setAttribute('cx', bestPt.x);
+      dot.setAttribute('cy', bestPt.y);
       dot.classList.remove('hidden');
 
       const crossLine = document.getElementById('chartCrossLine');
-      crossLine.setAttribute('x1', svgX);
-      crossLine.setAttribute('x2', svgX);
+      crossLine.setAttribute('x1', bestPt.x);
+      crossLine.setAttribute('x2', bestPt.x);
       crossLine.classList.remove('hidden');
 
       const tooltip = document.getElementById('chartTooltip');
@@ -640,6 +728,7 @@
       document.getElementById('chartTooltip').classList.add('hidden');
     }
 
+    // Live Stream Simulator
     function toggleLiveMode() {
       liveModeActive = !liveModeActive;
       const btn = document.getElementById('liveModeBtn');
@@ -668,15 +757,86 @@
       }, 4000);
     }
 
-    function setActiveSegment(seg) {
+    // Search Capsule Flyout & Animated Selection
+    function toggleSearchSegment(seg) {
+      activeSegment = seg;
       ['where', 'when', 'service'].forEach(s => {
         const btn = document.getElementById('seg-' + s);
         if (s === seg) {
-          btn.className = 'flex-1 px-5 py-3.5 text-left rounded-full transition-all cursor-pointer relative z-10 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.12)]';
+          btn.className = 'flex-1 px-5 py-3.5 text-left rounded-full transition-all cursor-pointer relative z-10 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.12)] spring-press';
         } else {
-          btn.className = 'flex-1 px-5 py-3.5 text-left rounded-full transition-all cursor-pointer relative z-10 hover:bg-[#F7F7F8]';
+          btn.className = 'flex-1 px-5 py-3.5 text-left rounded-full transition-all cursor-pointer relative z-10 hover:bg-[#F7F7F8] spring-press';
         }
       });
+
+      renderFlyoutOptions(seg);
+    }
+
+    function renderFlyoutOptions(seg) {
+      const flyout = document.getElementById('segmentFlyout');
+      const container = document.getElementById('flyoutContent');
+      const options = SEARCH_OPTIONS[seg] || [];
+
+      container.innerHTML = `
+        <div class="flex items-center justify-between border-b border-[#ECECEC] pb-2 mb-2">
+          <span class="text-xs font-semibold text-[#111827]">Select ${seg === 'where' ? 'Destination' : seg === 'when' ? 'Date & Time' : 'Service Type'}</span>
+          <span class="text-[10px] text-[#6B7280]">Click to choose with spring animation</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          ${options.map(opt => `
+            <div onclick="event.stopPropagation(); selectOption('${seg}', '${opt.label}')" class="p-2.5 rounded-xl hover:bg-[#F7F7F8] border border-transparent hover:border-[#ECECEC] cursor-pointer flex items-center justify-between spring-press">
+              <div>
+                <p class="text-xs font-semibold text-[#111827]">${opt.label}</p>
+                <p class="text-[10px] text-[#6B7280]">${opt.sub}</p>
+              </div>
+              <svg class="w-3.5 h-3.5 text-[#9CA3AF]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            </div>
+          `).join('')}
+        </div>
+      `;
+
+      flyout.classList.remove('hidden');
+      setTimeout(() => {
+        flyout.classList.remove('scale-98', 'opacity-0');
+        flyout.classList.add('scale-100', 'opacity-100');
+      }, 10);
+    }
+
+    function selectOption(seg, val) {
+      const labelId = seg + 'Label';
+      const labelElem = document.getElementById(labelId);
+      
+      // Animate text transition
+      labelElem.classList.remove('text-slide-enter');
+      void labelElem.offsetWidth; // Trigger reflow
+      labelElem.innerText = val;
+      labelElem.classList.add('text-slide-enter');
+
+      if (seg === 'where') currentWhere = val;
+      if (seg === 'when') currentWhen = val;
+      if (seg === 'service') currentService = val;
+
+      triggerToast(`Selected ${val}`);
+      closeFlyout();
+
+      // Auto-advance flow (Where -> When -> Service)
+      if (seg === 'where') setTimeout(() => toggleSearchSegment('when'), 250);
+      else if (seg === 'when') setTimeout(() => toggleSearchSegment('service'), 250);
+    }
+
+    function closeFlyout() {
+      const flyout = document.getElementById('segmentFlyout');
+      flyout.classList.remove('scale-100', 'opacity-100');
+      flyout.classList.add('scale-98', 'opacity-0');
+      setTimeout(() => { flyout.classList.add('hidden'); }, 150);
+    }
+
+    function handleGlobalClick(e) {
+      const flyout = document.getElementById('segmentFlyout');
+      const capsule = document.getElementById('searchCapsule');
+      if (!capsule.contains(e.target) && !flyout.contains(e.target)) {
+        closeFlyout();
+      }
     }
 
     function setTabPill(btn) {
