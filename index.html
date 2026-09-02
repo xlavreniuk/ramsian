@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500,400&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg-canvas: #FFFFFF;
@@ -21,7 +22,13 @@
       --card-active: #FFFFFF;
       --header-bg: rgba(255, 255, 255, 0.92);
       --input-bg: #FFFFFF;
-      --search-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      --search-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      --badge-up-text: #047857;
+      --badge-up-bg: #ECFDF5;
+      --badge-up-border: rgba(167, 243, 208, 0.8);
+      --badge-down-text: #BE123C;
+      --badge-down-bg: #FFF1F2;
+      --badge-down-border: rgba(254, 205, 211, 0.8);
     }
 
     html.dark {
@@ -35,7 +42,13 @@
       --card-active: #18181B;
       --header-bg: rgba(9, 9, 11, 0.92);
       --input-bg: #18181B;
-      --search-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+      --search-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+      --badge-up-text: #34D399;
+      --badge-up-bg: rgba(6, 78, 59, 0.4);
+      --badge-up-border: rgba(6, 95, 70, 0.6);
+      --badge-down-text: #FB7185;
+      --badge-down-bg: rgba(136, 19, 55, 0.4);
+      --badge-down-border: rgba(159, 18, 57, 0.6);
     }
 
     body {
@@ -44,6 +57,7 @@
       color: var(--text-primary);
       transition: background-color 0.3s ease, color 0.3s ease;
     }
+    .font-display { font-family: 'Cabinet Grotesk', -apple-system, sans-serif; }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
 
     /* Minimalist Apple Range Slider (Stroke-Free) */
@@ -137,7 +151,7 @@
       pointer-events: none;
     }
 
-    /* Sliding Pill for Search Capsule Island */
+    /* Sliding Active Pill for RezerveHere Search Capsule Island */
     #searchSlidingPill {
       position: absolute;
       top: 0;
@@ -145,8 +159,8 @@
       left: 0;
       background-color: var(--card-active);
       border-radius: 9999px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.14);
+      transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
       z-index: 5;
       pointer-events: none;
     }
@@ -193,31 +207,32 @@
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-[#111827] selection:text-white dark:selection:bg-white dark:selection:text-black" onclick="handleGlobalClick(event)">
 
-  <!-- Fixed Topbar (Single-Surface Standard) -->
+  <!-- Fixed Topbar (Single-Surface Standard with Cabinet Grotesk Brand) -->
   <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md [transform:translateZ(0)] border-b h-16 flex items-center px-6 md:px-12 transition-colors" style="background-color: var(--header-bg); border-color: var(--border-hairline);">
     <div class="max-w-6xl w-full mx-auto flex items-center justify-between gap-4">
-      <div class="flex items-center gap-2">
-        <span class="font-bold text-base sm:text-lg tracking-tight" style="color: var(--text-primary);">single-surface-design</span>
-        <span class="text-xs" style="color: var(--text-muted);">by</span>
-        <a href="https://rezervehere.com" target="_blank" class="font-semibold text-xs sm:text-sm hover:underline tracking-tight transition-opacity hover:opacity-80" style="color: var(--text-primary);">rezervehere</a>
+      <div class="flex items-center gap-2.5">
+        <a href="https://rezervehere.com" target="_blank" class="flex items-center select-none gap-2 hover:opacity-85 transition-opacity">
+          <span class="font-display font-extrabold text-2xl tracking-tight lowercase" style="color: var(--text-primary);">rezervehere</span>
+        </a>
+        <span class="text-[11px] font-medium hidden sm:inline" style="color: var(--text-muted);">/ single-surface-design</span>
       </div>
 
       <div class="flex items-center gap-2">
-        <!-- 1. Monochrome Theme Toggle -->
+        <!-- 1. Theme Toggle Button (Unified Pill Border) -->
         <button onclick="toggleTheme()" id="themeToggleBtn" class="h-9 px-3.5 rounded-full border text-xs font-semibold spring-press flex items-center gap-2 cursor-pointer shadow-2xs" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-primary);">
           <svg id="themeSunIcon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
           <svg id="themeMoonIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
           <span id="themeText">Theme</span>
         </button>
 
-        <!-- 2. GitHub Link -->
+        <!-- 2. GitHub Link (Unified Pill Border) -->
         <a href="https://github.com/xlavreniuk/single-surface-design" target="_blank" class="h-9 px-3.5 sm:px-4 rounded-full border text-xs font-semibold spring-press flex items-center gap-1.5 cursor-pointer shadow-2xs" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-primary);">
           <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
           <span class="hidden sm:inline">GitHub</span>
         </a>
 
-        <!-- 3. Copy Skill Button (with Crisp Border) -->
-        <button onclick="copySkillCommand()" id="copySkillBtn" class="h-9 px-4 rounded-full text-xs font-semibold shadow-2xs spring-press flex items-center gap-1.5 cursor-pointer border dark:border-[#3F3F46] border-[#111827] dark:bg-white dark:text-black bg-[#111827] text-white">
+        <!-- 3. Copy Skill Button (Unified Pill Border) -->
+        <button onclick="copySkillCommand()" id="copySkillBtn" class="h-9 px-4 rounded-full text-xs font-semibold shadow-2xs spring-press flex items-center gap-1.5 cursor-pointer border dark:bg-white dark:text-black bg-[#111827] text-white" style="border-color: var(--border-hairline);">
           <svg id="copySkillIcon" class="w-3.5 h-3.5 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
           <span id="copySkillText">Copy Skill</span>
         </button>
@@ -225,87 +240,107 @@
     </div>
   </header>
 
-  <!-- Main Single Flat Canvas (Zero Nested Containers) -->
+  <!-- Main Single Flat Canvas -->
   <main class="flex-1 max-w-6xl w-full mx-auto px-6 md:px-12 pt-24 pb-28 space-y-12 text-left">
 
-    <!-- 1. SEARCH CAPSULE ISLAND WITH RESTORED SHADOW & CLOSE FLYOUT -->
+    <!-- 1. AUTHENTIC REZERVEHERE SEARCH BAR COMPOSER (60PX) WITH REAL CALENDAR & POPUPS -->
     <section class="space-y-4 relative">
-      <div id="searchCapsule" class="w-full p-0 rounded-full flex items-center relative transition-all overflow-hidden border" style="background-color: var(--bg-track); border-color: var(--border-hairline); box-shadow: var(--search-shadow);">
+      <!-- 60px Search Capsule Bar -->
+      <div id="searchCapsule" class="w-full h-[60px] p-0 rounded-full flex items-center relative transition-all overflow-hidden border" style="background-color: var(--bg-track); border-color: var(--border-hairline); box-shadow: var(--search-shadow);">
         
+        <!-- Sliding Highlight Pill -->
         <div id="searchSlidingPill"></div>
 
-        <button onclick="event.stopPropagation(); toggleSearchSegment('where')" id="seg-where" class="flex-1 px-5 py-3.5 text-left rounded-full transition-all cursor-pointer relative z-10 spring-press">
-          <span class="block text-[10px] font-semibold" style="color: var(--text-primary);">Where</span>
-          <span class="block text-xs font-normal" style="color: var(--text-secondary);" id="whereLabel">San Francisco, CA</span>
+        <!-- Segment 1: Where -->
+        <button onclick="event.stopPropagation(); toggleSearchSegment('where')" id="seg-where" class="flex-1 self-stretch flex flex-col justify-center px-6 text-left rounded-full transition-all cursor-pointer relative z-10 spring-press">
+          <span class="block text-[11px] font-semibold leading-tight" style="color: var(--text-primary);">Where</span>
+          <span class="block text-xs font-normal truncate mt-0.5" style="color: var(--text-secondary);" id="whereLabel">San Francisco, CA</span>
         </button>
-        <div id="div-1" class="w-px h-6 opacity-0 transition-opacity z-10" style="background-color: var(--border-hairline);"></div>
-        <button onclick="event.stopPropagation(); toggleSearchSegment('when')" id="seg-when" class="flex-1 px-5 py-3.5 text-left rounded-full transition-all cursor-pointer relative z-10 spring-press">
-          <span class="block text-[10px] font-semibold" style="color: var(--text-primary);">When</span>
-          <span class="block text-xs font-normal" style="color: var(--text-muted);" id="whenLabel">Tomorrow, 14:00</span>
+        
+        <div id="div-1" class="w-px h-6 opacity-0 transition-opacity z-10 my-auto" style="background-color: var(--border-hairline);"></div>
+        
+        <!-- Segment 2: When -->
+        <button onclick="event.stopPropagation(); toggleSearchSegment('when')" id="seg-when" class="flex-1 self-stretch flex flex-col justify-center px-6 text-left rounded-full transition-all cursor-pointer relative z-10 spring-press">
+          <span class="block text-[11px] font-semibold leading-tight" style="color: var(--text-primary);">When</span>
+          <span class="block text-xs font-normal truncate mt-0.5" style="color: var(--text-muted);" id="whenLabel">Tomorrow, 14:00</span>
         </button>
-        <div id="div-2" class="w-px h-6 opacity-100 transition-opacity z-10" style="background-color: var(--border-hairline);"></div>
-        <button onclick="event.stopPropagation(); toggleSearchSegment('service')" id="seg-service" class="flex-1 px-5 py-3.5 text-left rounded-full transition-all cursor-pointer relative z-10 spring-press">
-          <span class="block text-[10px] font-semibold" style="color: var(--text-primary);">Service</span>
-          <span class="block text-xs font-normal" style="color: var(--text-muted);" id="serviceLabel">Product Strategy & Design</span>
+        
+        <div id="div-2" class="w-px h-6 opacity-100 transition-opacity z-10 my-auto" style="background-color: var(--border-hairline);"></div>
+        
+        <!-- Segment 3: Service -->
+        <button onclick="event.stopPropagation(); toggleSearchSegment('service')" id="seg-service" class="flex-1 self-stretch flex flex-col justify-center px-6 text-left rounded-full transition-all cursor-pointer relative z-10 spring-press">
+          <span class="block text-[11px] font-semibold leading-tight" style="color: var(--text-primary);">Type of service</span>
+          <span class="block text-xs font-normal truncate mt-0.5" style="color: var(--text-muted);" id="serviceLabel">Product Strategy & Design</span>
         </button>
+        
+        <!-- Search Magnifier Icon Capsule -->
         <div class="pr-2 z-20">
-          <button onclick="event.stopPropagation(); triggerToast('Searching for ' + currentWhere)" class="w-10 h-10 rounded-full flex items-center justify-center spring-press cursor-pointer shadow-2xs dark:bg-white dark:text-black bg-[#111827] text-white">
+          <button onclick="event.stopPropagation(); triggerToast('Searching for ' + currentWhere)" class="w-11 h-11 rounded-full flex items-center justify-center spring-press cursor-pointer shadow-sm dark:bg-white dark:text-black bg-[#111827] text-white">
             <svg class="w-4 h-4 stroke-[2.2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
           </button>
         </div>
       </div>
 
-      <!-- Interactive Flyout Picker with Dedicated Close Button -->
-      <div id="segmentFlyout" class="hidden absolute top-16 left-0 right-0 z-30 rounded-2xl border shadow-xl p-4 transition-all duration-200 transform scale-98 opacity-0" style="background-color: var(--card-active); border-color: var(--border-hairline);">
-        <div id="flyoutContent" class="space-y-2">
-          <!-- Dynamic options with close button rendered by JS -->
-        </div>
+      <!-- Real Interactive Popups (Where / When / Service) -->
+      <div id="segmentFlyout" class="hidden absolute top-[68px] left-0 right-0 z-40 rounded-2xl border shadow-xl p-4 transition-all duration-200 transform scale-98 opacity-0" style="background-color: var(--card-active); border-color: var(--border-hairline);">
+        <div id="flyoutContent"></div>
       </div>
 
-      <!-- Category Pill Bar -->
-      <div class="flex items-center gap-1.5 overflow-x-auto py-1">
+      <!-- Category Filter Pills -->
+      <div class="flex items-center gap-2 overflow-x-auto py-1">
         <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full text-xs font-semibold spring-press cursor-pointer shadow-2xs dark:bg-white dark:text-black bg-[#111827] text-white">All</button>
-        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-secondary);">Design</button>
-        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-secondary);">iOS</button>
-        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-secondary);">Android</button>
-        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-secondary);">Web</button>
-        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-secondary);">Mobile</button>
+        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer flex items-center gap-1.5" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-secondary);">
+          <span>Women's Hair</span>
+        </button>
+        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer flex items-center gap-1.5" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-secondary);">
+          <span>Barbershop</span>
+        </button>
+        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer flex items-center gap-1.5" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-secondary);">
+          <span>Gel Nails</span>
+        </button>
+        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer flex items-center gap-1.5" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-secondary);">
+          <span>Facial & Skincare</span>
+        </button>
+        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer flex items-center gap-1.5" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-secondary);">
+          <span>Massage & Spa</span>
+        </button>
       </div>
     </section>
 
-    <!-- 2. INTERACTIVE FINANCIAL CHART WITH Y/X AXES, SLIDING PERIOD SEGMENT & EXACT HOVER DOT -->
+    <!-- 2. INTERACTIVE FINANCIAL CHART WITH REZERVEHERE HIGH-CONTRAST BADGE -->
     <section class="space-y-4">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b pb-3" style="border-color: var(--border-hairline);">
         <div class="flex items-center gap-3">
           <div>
-            <span class="text-xs font-medium block" style="color: var(--text-muted);">Volume</span>
+            <span class="text-xs font-medium block" style="color: var(--text-muted);">Gross Merchandise Volume</span>
             <div class="flex items-baseline gap-2 mt-0.5">
               <span id="chartRevenueText" class="font-bold text-2xl sm:text-3xl font-mono tracking-tight" style="color: var(--text-primary);">$52,100.00</span>
-              <!-- Crisp High-Contrast Trend Badge -->
-              <span id="trendBadge" class="text-xs font-bold px-2 py-0.5 rounded-full transition-all text-emerald-800 dark:text-emerald-300 bg-emerald-100/90 dark:bg-emerald-950/80 border border-emerald-300 dark:border-emerald-700/80">
+              
+              <!-- RezerveHere High-Contrast Trend Badge -->
+              <span id="trendBadge" class="text-xs font-bold px-2.5 py-0.5 rounded-full transition-all" style="color: var(--badge-up-text); background-color: var(--badge-up-bg); border: 1px solid var(--badge-up-border);">
                 +24.6%
               </span>
             </div>
           </div>
         </div>
 
-        <!-- Apple-Style Segmented Controls (Trend & Periods) -->
+        <!-- Apple Segmented Controls -->
         <div class="flex items-center gap-3 flex-wrap">
           
-          <!-- Apple Segmented Trend Control (Sliding Smooth Pill) -->
+          <!-- Apple Segmented Trend Control (Up / Down) -->
           <div class="apple-seg-track relative" id="appleSegTrack">
             <div class="apple-seg-pill" id="appleSegPill"></div>
             <button onclick="setTrendMode('up')" id="trendBtnUp" class="relative z-10 px-3.5 py-1.5 text-xs font-semibold flex items-center gap-1.5 cursor-pointer spring-press" style="color: var(--text-primary);">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-              <span>Up</span>
+              <span>Up Trend</span>
             </button>
             <button onclick="setTrendMode('down')" id="trendBtnDown" class="relative z-10 px-3.5 py-1.5 text-xs font-medium flex items-center gap-1.5 cursor-pointer spring-press" style="color: var(--text-muted);">
               <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
-              <span>Down</span>
+              <span>Down Trend</span>
             </button>
           </div>
 
-          <!-- Apple Segmented Period Control (7D / 30D / 90D Sliding Pill) -->
+          <!-- Apple Segmented Period Control (7D / 30D / 90D) -->
           <div class="apple-seg-track relative" id="applePeriodTrack">
             <div class="apple-seg-pill" id="applePeriodPill"></div>
             <button onclick="updateChartPeriod('7D')" id="chartBtn7D" class="relative z-10 px-3 py-1.5 text-xs font-medium spring-press cursor-pointer" style="color: var(--text-muted);">7D</button>
@@ -492,34 +527,34 @@
         <div class="divide-y" style="border-color: var(--border-hairline);">
           <div class="py-3 flex items-center justify-between">
             <div class="space-y-0.5">
-              <h4 class="font-semibold text-xs" style="color: var(--text-primary);">Architecture Specs</h4>
-              <p class="text-[11px]" style="color: var(--text-muted);">Tokens, single surfaces, fluid spring curves</p>
+              <h4 class="font-semibold text-xs" style="color: var(--text-primary);">Women's Haircut & Styling</h4>
+              <p class="text-[11px]" style="color: var(--text-muted);">Consultation, wash, haircut and salon blowdry · 45 min</p>
             </div>
             <div class="text-right shrink-0">
-              <span class="font-bold text-xs font-mono" style="color: var(--text-primary);">$450</span>
-              <p class="text-[10px]" style="color: var(--text-muted);">Core</p>
+              <span class="font-bold text-xs font-mono" style="color: var(--text-primary);">$45.00</span>
+              <p class="text-[10px] text-emerald-600 font-semibold">-15% off</p>
             </div>
           </div>
 
           <div class="py-3 flex items-center justify-between">
             <div class="space-y-0.5">
-              <h4 class="font-semibold text-xs" style="color: var(--text-primary);">iOS Fluid Motion</h4>
-              <p class="text-[11px]" style="color: var(--text-muted);">Interactive gestures & spring transitions</p>
+              <h4 class="font-semibold text-xs" style="color: var(--text-primary);">Gentlemen's Beard Trim & Cut</h4>
+              <p class="text-[11px]" style="color: var(--text-muted);">Precision scissors, razor fade and hot towel · 30 min</p>
             </div>
             <div class="text-right shrink-0">
-              <span class="font-bold text-xs font-mono" style="color: var(--text-primary);">$280</span>
-              <p class="text-[10px]" style="color: var(--text-muted);">Module</p>
+              <span class="font-bold text-xs font-mono" style="color: var(--text-primary);">$28.00</span>
+              <p class="text-[10px]" style="color: var(--text-muted);">Standard</p>
             </div>
           </div>
 
           <div class="py-3 flex items-center justify-between">
             <div class="space-y-0.5">
-              <h4 class="font-semibold text-xs" style="color: var(--text-primary);">Controls & SVG Suite</h4>
-              <p class="text-[11px]" style="color: var(--text-muted);">Sliders, focal wheels & interactive charts</p>
+              <h4 class="font-semibold text-xs" style="color: var(--text-primary);">HydraFacial Deep Cleanse</h4>
+              <p class="text-[11px]" style="color: var(--text-muted);">Vortex infusion, extraction & hyaluronic mask · 60 min</p>
             </div>
             <div class="text-right shrink-0">
-              <span class="font-bold text-xs font-mono" style="color: var(--text-primary);">$650</span>
-              <p class="text-[10px]" style="color: var(--text-muted);">Full Kit</p>
+              <span class="font-bold text-xs font-mono" style="color: var(--text-primary);">$75.00</span>
+              <p class="text-[10px] text-emerald-600 font-semibold">-20% off</p>
             </div>
           </div>
         </div>
@@ -554,7 +589,7 @@
   </main>
 
   <!-- TOAST NOTIFICATION -->
-  <div id="toastNotification" class="fixed bottom-6 right-6 z-50 text-xs font-semibold px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-2 transform translate-y-12 opacity-0 transition-all duration-200 border dark:border-[#3F3F46] border-[#111827] dark:bg-white dark:text-black bg-[#111827] text-white">
+  <div id="toastNotification" class="fixed bottom-6 right-6 z-50 text-xs font-semibold px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-2 transform translate-y-12 opacity-0 transition-all duration-200 border dark:bg-white dark:text-black bg-[#111827] text-white" style="border-color: var(--border-hairline);">
     <svg class="w-4 h-4 text-emerald-400 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
     <span id="toastMessage">Done</span>
   </div>
@@ -633,34 +668,36 @@
     let currentService = 'Product Strategy & Design';
     let activeSegment = 'where';
 
-    const SEARCH_OPTIONS = {
-      where: [
-        { label: 'San Francisco, CA', sub: 'Silicon Valley Hub' },
-        { label: 'New York, NY', sub: 'Manhattan & Brooklyn' },
-        { label: 'London, UK', sub: 'Soho & Shoreditch' },
-        { label: 'Tokyo, Japan', sub: 'Shibuya & Roppongi' },
-        { label: 'Bratislava, SK', sub: 'Old Town & Ružinov' }
-      ],
-      when: [
-        { label: 'Tomorrow, 14:00', sub: 'Standard afternoon slot' },
-        { label: 'Friday, 18:00', sub: 'Evening peak availability' },
-        { label: 'Saturday, 11:00', sub: 'Weekend morning session' },
-        { label: 'Next Monday, 10:00', sub: 'Early week opening' }
-      ],
-      service: [
-        { label: 'Product Strategy & Design', sub: 'Architecture & Token Specs' },
-        { label: 'iOS SwiftUI Fluid Motion', sub: 'Apple Spring Interactions' },
-        { label: 'Android Jetpack Compose Kit', sub: 'Material3 Single-Surface' },
-        { label: 'Full Web React Component Suite', sub: 'Stroke-free Controls & SVG' }
-      ]
-    };
+    // Real RezerveHere Popups Data
+    const CITIES = [
+      { name: 'Bratislava', country: 'Slovakia', sub: 'Old Town & Ružinov' },
+      { name: 'Vienna', country: 'Austria', sub: 'Innere Stadt & Neubau' },
+      { name: 'Prague', country: 'Czech Republic', sub: 'Staré Město & Vinohrady' },
+      { name: 'Budapest', country: 'Hungary', sub: 'Belváros & District V' },
+      { name: 'San Francisco', country: 'United States', sub: 'Silicon Valley Hub' },
+      { name: 'London', country: 'United Kingdom', sub: 'Soho & Shoreditch' }
+    ];
+
+    const SERVICES = [
+      { name: "Women's Haircut & Styling", cat: 'Hair Salons', sub: 'Wash, precision cut & blowdry' },
+      { name: "Gentlemen's Beard Trim & Fade", cat: 'Barbershops', sub: 'Razor taper, scissor trim & towel' },
+      { name: 'Gel Nails & Manicure', cat: 'Nail Studios', sub: 'Cuticle care, gel coating & shape' },
+      { name: 'HydraFacial Deep Cleanse', cat: 'Skincare', sub: 'Exfoliation, vortex peel & serum' },
+      { name: 'Deep Tissue Full Body Massage', cat: 'Massage & Spa', sub: '60 min therapeutic tension release' },
+      { name: 'Full Leg & Brow Waxing', cat: 'Waxing & Brow', sub: 'Organic wax & smoothing lotion' }
+    ];
+
+    const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    let calDate = new Date();
+    let selectedCalDay = 15;
+    let selectedTime = '14:00';
 
     const CHART_DATA = {
       up: {
         '7D': {
           revenue: 12450.00,
           trend: '+14.2%',
-          badgeClass: 'text-emerald-800 dark:text-emerald-300 bg-emerald-100/90 dark:bg-emerald-950/80 border border-emerald-300 dark:border-emerald-700/80',
+          badgeUp: true,
           strokeColor: '#10B981',
           fillGrad: 'url(#chartGradGreen)',
           linePath: 'M0,135 Q100,110 200,90 T400,60 T600,25',
@@ -671,7 +708,7 @@
         '30D': {
           revenue: 52100.00,
           trend: '+24.6%',
-          badgeClass: 'text-emerald-800 dark:text-emerald-300 bg-emerald-100/90 dark:bg-emerald-950/80 border border-emerald-300 dark:border-emerald-700/80',
+          badgeUp: true,
           strokeColor: '#10B981',
           fillGrad: 'url(#chartGradGreen)',
           linePath: 'M0,130 Q100,100 200,80 T400,50 T600,20',
@@ -682,7 +719,7 @@
         '90D': {
           revenue: 154200.00,
           trend: '+38.4%',
-          badgeClass: 'text-emerald-800 dark:text-emerald-300 bg-emerald-100/90 dark:bg-emerald-950/80 border border-emerald-300 dark:border-emerald-700/80',
+          badgeUp: true,
           strokeColor: '#10B981',
           fillGrad: 'url(#chartGradGreen)',
           linePath: 'M0,140 Q100,90 200,70 T400,40 T600,15',
@@ -695,7 +732,7 @@
         '7D': {
           revenue: 9120.00,
           trend: '-11.4%',
-          badgeClass: 'text-rose-800 dark:text-rose-300 bg-rose-100/90 dark:bg-rose-950/80 border border-rose-300 dark:border-rose-700/80',
+          badgeUp: false,
           strokeColor: '#F43F5E',
           fillGrad: 'url(#chartGradRed)',
           linePath: 'M0,25 Q100,50 200,85 T400,115 T600,145',
@@ -706,7 +743,7 @@
         '30D': {
           revenue: 36400.00,
           trend: '-8.3%',
-          badgeClass: 'text-rose-800 dark:text-rose-300 bg-rose-100/90 dark:bg-rose-950/80 border border-rose-300 dark:border-rose-700/80',
+          badgeUp: false,
           strokeColor: '#F43F5E',
           fillGrad: 'url(#chartGradRed)',
           linePath: 'M0,20 Q100,45 200,75 T400,110 T600,140',
@@ -717,7 +754,7 @@
         '90D': {
           revenue: 104200.00,
           trend: '-14.8%',
-          badgeClass: 'text-rose-800 dark:text-rose-300 bg-rose-100/90 dark:bg-rose-950/80 border border-rose-300 dark:border-rose-700/80',
+          badgeUp: false,
           strokeColor: '#F43F5E',
           fillGrad: 'url(#chartGradRed)',
           linePath: 'M0,15 Q100,40 200,80 T400,120 T600,150',
@@ -736,7 +773,15 @@
 
       const badge = document.getElementById('trendBadge');
       badge.innerText = data.trend;
-      badge.className = 'text-xs font-bold px-2 py-0.5 rounded-full transition-all ' + data.badgeClass;
+      if (data.badgeUp) {
+        badge.style.color = 'var(--badge-up-text)';
+        badge.style.backgroundColor = 'var(--badge-up-bg)';
+        badge.style.borderColor = 'var(--badge-up-border)';
+      } else {
+        badge.style.color = 'var(--badge-down-text)';
+        badge.style.backgroundColor = 'var(--badge-down-bg)';
+        badge.style.borderColor = 'var(--badge-down-border)';
+      }
 
       const line = document.getElementById('chartLinePath');
       const area = document.getElementById('chartAreaPath');
@@ -867,33 +912,143 @@
     function toggleSearchSegment(seg) {
       activeSegment = seg;
       updateSearchPillPosition();
-      renderFlyoutOptions(seg);
+      renderFlyout(seg);
     }
 
-    function renderFlyoutOptions(seg) {
+    // Authentic RezerveHere Popups Rendering
+    function renderFlyout(seg) {
       const flyout = document.getElementById('segmentFlyout');
       const container = document.getElementById('flyoutContent');
-      const options = SEARCH_OPTIONS[seg] || [];
 
-      container.innerHTML = `
-        <div class="flex items-center justify-between border-b pb-2 mb-2" style="border-color: var(--border-hairline);">
-          <span class="text-xs font-semibold" style="color: var(--text-primary);">Select ${seg === 'where' ? 'Where' : seg === 'when' ? 'When' : 'Service'}</span>
-          <button onclick="event.stopPropagation(); closeFlyout()" class="p-1 rounded-full hover:bg-[#F7F7F8] dark:hover:bg-[#27272A] transition-colors cursor-pointer" style="color: var(--text-muted);" aria-label="Close">
-            <svg class="w-4 h-4 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-          </button>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          ${options.map(opt => `
-            <div onclick="event.stopPropagation(); selectOption('${seg}', '${opt.label}')" class="p-2.5 rounded-xl border border-transparent cursor-pointer flex items-center justify-between spring-press" style="hover:background-color: var(--bg-surface);">
-              <div>
-                <p class="text-xs font-semibold" style="color: var(--text-primary);">${opt.label}</p>
-                <p class="text-[10px]" style="color: var(--text-muted);">${opt.sub}</p>
-              </div>
-              <svg class="w-3.5 h-3.5" style="color: var(--text-muted);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      if (seg === 'where') {
+        container.innerHTML = `
+          <div class="flex items-center justify-between border-b pb-2.5 mb-2.5" style="border-color: var(--border-hairline);">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold" style="color: var(--text-primary);">Suggested Destinations</span>
+              <span class="text-[10px]" style="color: var(--text-muted);">Auto-advances to When</span>
             </div>
-          `).join('')}
-        </div>
-      `;
+            <button onclick="event.stopPropagation(); closeFlyout()" class="p-1 rounded-full hover:opacity-75 transition-opacity cursor-pointer" style="color: var(--text-muted);">
+              <svg class="w-4 h-4 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+          </div>
+          <div class="space-y-1">
+            <button onclick="event.stopPropagation(); selectOption('where', 'Current Location')" class="w-full flex items-center gap-3 px-3 py-2 rounded-xl text-left hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer">
+              <svg class="w-4 h-4 shrink-0 text-emerald-500 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+              <div>
+                <p class="text-xs font-semibold" style="color: var(--text-primary);">Detect current location</p>
+                <p class="text-[10px]" style="color: var(--text-muted);">Nearest salons with instant availability</p>
+              </div>
+            </button>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-1 pt-1">
+              ${CITIES.map(c => `
+                <button onclick="event.stopPropagation(); selectOption('where', '${c.name}, ${c.country}')" class="flex items-center justify-between p-2.5 rounded-xl text-left hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer">
+                  <div class="flex items-center gap-2.5">
+                    <svg class="w-3.5 h-3.5 shrink-0" style="color: var(--text-muted);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
+                    <div>
+                      <p class="text-xs font-semibold" style="color: var(--text-primary);">${c.name}</p>
+                      <p class="text-[10px]" style="color: var(--text-muted);">${c.sub}</p>
+                    </div>
+                  </div>
+                  <span class="text-[10px] font-mono" style="color: var(--text-muted);">${c.country}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      } else if (seg === 'when') {
+        const currentMonth = MONTHS[calDate.getMonth()];
+        const year = calDate.getFullYear();
+        container.innerHTML = `
+          <div class="flex items-center justify-between border-b pb-2.5 mb-2.5" style="border-color: var(--border-hairline);">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold" style="color: var(--text-primary);">${currentMonth} ${year}</span>
+              <span class="text-[10px]" style="color: var(--text-muted);">Select date & time slot</span>
+            </div>
+            <button onclick="event.stopPropagation(); closeFlyout()" class="p-1 rounded-full hover:opacity-75 transition-opacity cursor-pointer" style="color: var(--text-muted);">
+              <svg class="w-4 h-4 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+          </div>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Calendar Days Grid -->
+            <div>
+              <div class="grid grid-cols-7 gap-1 text-center font-bold text-[10px] pb-1 select-none" style="color: var(--text-muted);">
+                <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+              </div>
+              <div class="grid grid-cols-7 gap-1 text-center">
+                ${Array.from({ length: 4 }).map(() => '<div class="h-6"></div>').join('')}
+                ${Array.from({ length: 28 }).map((_, i) => {
+                  const d = i + 1;
+                  const isSel = d === selectedCalDay;
+                  return `
+                    <button onclick="event.stopPropagation(); selectedCalDay = ${d}; renderFlyout('when');" class="h-6 rounded-full text-xs font-semibold flex items-center justify-center cursor-pointer transition-colors ${
+                      isSel 
+                        ? 'dark:bg-white dark:text-black bg-[#111827] text-white shadow-xs' 
+                        : 'hover:bg-black/5 dark:hover:bg-white/5'
+                    }" style="${isSel ? '' : 'color: var(--text-primary);'}">
+                      ${d}
+                    </button>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+
+            <!-- Time Slots -->
+            <div class="space-y-2 flex flex-col justify-between">
+              <div>
+                <span class="text-[11px] font-semibold block mb-1.5" style="color: var(--text-primary);">Time Slot</span>
+                <div class="grid grid-cols-3 gap-1.5">
+                  ${['09:00', '10:00', '11:30', '14:00', '16:30', '18:00'].map(t => {
+                    const isSel = t === selectedTime;
+                    return `
+                      <button onclick="event.stopPropagation(); selectedTime = '${t}'; renderFlyout('when');" class="py-1.5 rounded-xl text-xs font-semibold text-center border cursor-pointer transition-colors ${
+                        isSel 
+                          ? 'dark:bg-white dark:text-black bg-[#111827] text-white border-transparent' 
+                          : 'border-transparent hover:bg-black/5 dark:hover:bg-white/5'
+                      }" style="${isSel ? '' : 'background-color: var(--bg-surface); color: var(--text-secondary);'}">
+                        ${t}
+                      </button>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+
+              <!-- Footer Actions -->
+              <div class="flex items-center justify-between pt-2 border-t" style="border-color: var(--border-hairline);">
+                <button onclick="event.stopPropagation(); selectOption('when', 'Any week, Any time')" class="text-xs font-medium hover:underline cursor-pointer" style="color: var(--text-muted);">
+                  Flexible
+                </button>
+                <button onclick="event.stopPropagation(); selectOption('when', '${currentMonth} ${selectedCalDay}, ${selectedTime}')" class="h-8 px-4 rounded-full text-xs font-bold dark:bg-white dark:text-black bg-[#111827] text-white shadow-xs cursor-pointer spring-press">
+                  Apply
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (seg === 'service') {
+        container.innerHTML = `
+          <div class="flex items-center justify-between border-b pb-2.5 mb-2.5" style="border-color: var(--border-hairline);">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-semibold" style="color: var(--text-primary);">Select Service</span>
+              <span class="text-[10px]" style="color: var(--text-muted);">RezerveHere Directory Catalog</span>
+            </div>
+            <button onclick="event.stopPropagation(); closeFlyout()" class="p-1 rounded-full hover:opacity-75 transition-opacity cursor-pointer" style="color: var(--text-muted);">
+              <svg class="w-4 h-4 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+            ${SERVICES.map(s => `
+              <button onclick="event.stopPropagation(); selectOption('service', '${s.name}')" class="flex items-center justify-between p-2.5 rounded-xl text-left hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer">
+                <div>
+                  <p class="text-xs font-semibold" style="color: var(--text-primary);">${s.name}</p>
+                  <p class="text-[10px]" style="color: var(--text-muted);">${s.sub}</p>
+                </div>
+                <span class="text-[10px] font-mono px-2 py-0.5 rounded-full border" style="background-color: var(--bg-surface); border-color: var(--border-hairline); color: var(--text-muted);">${s.cat}</span>
+              </button>
+            `).join('')}
+          </div>
+        `;
+      }
 
       flyout.classList.remove('hidden');
       setTimeout(() => {
