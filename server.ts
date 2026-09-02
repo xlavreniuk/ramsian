@@ -14,7 +14,7 @@ function getEditorHTML(tokens: any) {
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -79,21 +79,27 @@ function getEditorHTML(tokens: any) {
 
     /* Circular Progress Ring */
     .progress-ring-circle {
-      transition: stroke-dashoffset 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: stroke-dashoffset 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
       transform: rotate(-90deg);
       transform-origin: 50% 50%;
     }
 
     /* Spring Animation Utilities */
     .spring-press {
-      transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.15s ease;
+      transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.15s ease, border-color 0.15s ease;
     }
     .spring-press:active {
       transform: scale(0.95);
     }
 
-    .pill-spring {
-      transition: all 0.24s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* Pulse Glow for Live Mode */
+    @keyframes pulse-live {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.08); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .live-pulse-dot {
+      animation: pulse-live 1.6s infinite ease-in-out;
     }
   </style>
 </head>
@@ -107,19 +113,25 @@ function getEditorHTML(tokens: any) {
         <span class="text-[11px] font-medium text-[#6B7280]">/ single-surface</span>
       </div>
 
+      <!-- Proper Sized Action Buttons -->
       <div class="flex items-center gap-2">
-        <button onclick="triggerToast('Copied design tokens')" class="h-8.5 px-3.5 rounded-full border border-[#ECECEC] hover:bg-[#F7F7F8] text-[#111827] text-xs font-medium spring-press flex items-center gap-1.5 cursor-pointer">
+        <!-- Live Mode Stream Toggle -->
+        <button onclick="toggleLiveMode()" id="liveModeBtn" class="h-9 px-3.5 rounded-full border border-[#ECECEC] bg-white hover:bg-[#F7F7F8] text-[#111827] text-xs font-semibold spring-press flex items-center gap-2 cursor-pointer shadow-2xs">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 live-pulse-dot"></span>
+          <span id="liveModeText">Live: On</span>
+        </button>
+        <button onclick="triggerToast('Tokens copied to clipboard')" class="h-9 px-4 rounded-full border border-[#ECECEC] bg-white hover:bg-[#F7F7F8] text-[#111827] text-xs font-semibold spring-press flex items-center gap-1.5 cursor-pointer shadow-2xs">
           <svg class="w-3.5 h-3.5 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
           <span>Tokens</span>
         </button>
-        <button onclick="openDemoModal()" class="h-8.5 px-4 rounded-full bg-[#111827] hover:bg-[#262626] text-white text-xs font-semibold shadow-2xs spring-press flex items-center gap-1.5 cursor-pointer">
+        <button onclick="openDemoModal()" class="h-9 px-4 rounded-full bg-[#111827] hover:bg-[#262626] text-white text-xs font-semibold shadow-2xs spring-press flex items-center gap-1.5 cursor-pointer">
           <span>Modal</span>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Main Single Flat Canvas (Zero Nested Boxes) -->
+  <!-- Main Single Flat Canvas (Zero Nested Containers) -->
   <main class="flex-1 max-w-6xl w-full mx-auto px-6 md:px-12 pt-24 pb-28 space-y-12 text-left">
 
     <!-- 1. SEARCH CAPSULE ISLAND & SLIDING TAB PILLS -->
@@ -147,9 +159,9 @@ function getEditorHTML(tokens: any) {
         </div>
       </div>
 
-      <!-- Sliding Segmented Pill Filter Bar -->
+      <!-- Sliding Category Pill Bar -->
       <div class="flex items-center gap-1.5 overflow-x-auto py-1">
-        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full bg-[#111827] text-white text-xs font-medium spring-press cursor-pointer shadow-2xs">All</button>
+        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full bg-[#111827] text-white text-xs font-semibold spring-press cursor-pointer shadow-2xs">All</button>
         <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border border-[#ECECEC] hover:bg-[#F7F7F8] text-[#4B5563] text-xs font-medium spring-press cursor-pointer">Haircut</button>
         <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border border-[#ECECEC] hover:bg-[#F7F7F8] text-[#4B5563] text-xs font-medium spring-press cursor-pointer">Barbershop</button>
         <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border border-[#ECECEC] hover:bg-[#F7F7F8] text-[#4B5563] text-xs font-medium spring-press cursor-pointer">Nails</button>
@@ -158,7 +170,132 @@ function getEditorHTML(tokens: any) {
       </div>
     </section>
 
-    <!-- 2. INTERACTIVE SLIDERS, SIRI WHEEL, STEPPER & TOGGLES (FLAT ROW) -->
+    <!-- 2. INTERACTIVE FINANCIAL CHART WITH Y/X AXES & GREEN/RED TREND -->
+    <section class="space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#ECECEC] pb-3">
+        <div class="flex items-center gap-3">
+          <div>
+            <span class="text-xs text-[#6B7280] block">Gross Platform Volume</span>
+            <div class="flex items-baseline gap-2 mt-0.5">
+              <span id="chartRevenueText" class="font-bold text-2xl sm:text-3xl text-[#111827] font-mono tracking-tight">€48,620.00</span>
+              <span id="trendBadge" class="text-xs font-bold text-emerald-600 bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded-full transition-all">
+                +24.6%
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trend Toggle & Time Ranges -->
+        <div class="flex items-center gap-2">
+          <!-- Trend Mode (Up Green vs Down Red) -->
+          <div class="flex items-center gap-1 p-0.5 rounded-full bg-[#F7F7F8] border border-[#ECECEC] text-xs">
+            <button onclick="setTrendMode('up')" id="trendBtnUp" class="px-3 py-1 rounded-full font-semibold bg-emerald-600 text-white shadow-2xs spring-press cursor-pointer">
+              Up Trend
+            </button>
+            <button onclick="setTrendMode('down')" id="trendBtnDown" class="px-3 py-1 rounded-full font-medium text-[#6B7280] hover:text-[#111827] spring-press cursor-pointer">
+              Down Trend
+            </button>
+          </div>
+
+          <!-- Period Buttons -->
+          <div class="flex items-center gap-1 p-0.5 rounded-full bg-[#F7F7F8] border border-[#ECECEC] text-xs">
+            <button onclick="updateChartPeriod('7D')" id="chartBtn7D" class="px-2.5 py-1 rounded-full font-medium text-[#6B7280] hover:text-[#111827] spring-press cursor-pointer">7D</button>
+            <button onclick="updateChartPeriod('30D')" id="chartBtn30D" class="px-2.5 py-1 rounded-full font-semibold bg-[#111827] text-white shadow-2xs spring-press cursor-pointer">30D</button>
+            <button onclick="updateChartPeriod('90D')" id="chartBtn90D" class="px-2.5 py-1 rounded-full font-medium text-[#6B7280] hover:text-[#111827] spring-press cursor-pointer">90D</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chart Canvas with Y-Axis & X-Axis Numbers -->
+      <div class="relative w-full pt-2">
+        <div class="grid grid-cols-12 gap-2 items-center">
+          
+          <!-- Y-Axis Labels (1 col) -->
+          <div class="col-span-1 flex flex-col justify-between h-44 text-[10px] font-mono text-[#9CA3AF] text-right pr-2 select-none">
+            <span id="yAxisMax">€60k</span>
+            <span id="yAxisMidHigh">€45k</span>
+            <span id="yAxisMidLow">€30k</span>
+            <span id="yAxisMin">€0k</span>
+          </div>
+
+          <!-- SVG Area & Line (11 cols) -->
+          <div class="col-span-11 relative h-44 cursor-crosshair" onmousemove="handleChartHover(event)" onmouseleave="handleChartLeave()">
+            <!-- Background Grid Hairlines -->
+            <div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-40">
+              <div class="border-b border-dashed border-[#ECECEC] w-full"></div>
+              <div class="border-b border-dashed border-[#ECECEC] w-full"></div>
+              <div class="border-b border-dashed border-[#ECECEC] w-full"></div>
+              <div class="border-b border-[#ECECEC] w-full"></div>
+            </div>
+
+            <svg class="w-full h-full overflow-visible relative z-10" viewBox="0 0 600 160" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="chartGradGreen" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#10B981" stop-opacity="0.22"/>
+                  <stop offset="100%" stop-color="#10B981" stop-opacity="0.00"/>
+                </linearGradient>
+                <linearGradient id="chartGradRed" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#F43F5E" stop-opacity="0.22"/>
+                  <stop offset="100%" stop-color="#F43F5E" stop-opacity="0.00"/>
+                </linearGradient>
+              </defs>
+              <path id="chartAreaPath" d="M0,130 Q100,100 200,80 T400,50 T600,20 L600,160 L0,160 Z" fill="url(#chartGradGreen)" class="transition-all duration-300"/>
+              <path id="chartLinePath" d="M0,130 Q100,100 200,80 T400,50 T600,20" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" class="transition-all duration-300"/>
+              
+              <!-- Vertical Crosshair Hairline -->
+              <line id="chartCrossLine" x1="400" y1="0" x2="400" y2="160" stroke="#ECECEC" stroke-width="1.5" stroke-dasharray="3 3" class="hidden"/>
+              <circle id="chartDot" cx="400" cy="50" r="5" fill="#FFFFFF" stroke="#10B981" stroke-width="3" class="hidden transition-transform duration-75 shadow-lg"/>
+            </svg>
+
+            <!-- Floating Hover Tooltip -->
+            <div id="chartTooltip" class="absolute top-1 right-2 text-right hidden bg-white/95 backdrop-blur-xs px-3 py-1.5 rounded-xl border border-[#ECECEC] shadow-sm z-20">
+              <span id="tooltipDate" class="text-[10px] text-[#6B7280] block font-medium">Aug 28, 2026</span>
+              <span id="tooltipVal" class="font-mono font-bold text-xs text-[#111827]">€1,840.00</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- X-Axis Labels -->
+        <div class="grid grid-cols-12 gap-2 pt-1 text-[10px] font-mono text-[#9CA3AF] select-none">
+          <div class="col-span-1"></div>
+          <div class="col-span-11 flex justify-between px-1" id="xAxisLabels">
+            <span>Mon</span>
+            <span>Tue</span>
+            <span>Wed</span>
+            <span>Thu</span>
+            <span>Fri</span>
+            <span>Sat</span>
+            <span>Sun</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. FLAT DIVIDER METRIC STATS ROW WITH COUNT-UP NUMBERS -->
+    <section class="grid grid-cols-2 sm:grid-cols-4 gap-4 py-4 border-t border-b border-[#ECECEC]">
+      <div>
+        <span class="text-xs text-[#6B7280]">Bookings</span>
+        <p id="metricBookings" class="font-bold text-2xl text-[#111827] font-mono mt-0.5">1,248</p>
+        <span class="text-[10px] text-emerald-600 font-semibold">+18.4% live pace</span>
+      </div>
+      <div>
+        <span class="text-xs text-[#6B7280]">Average Ticket</span>
+        <p id="metricTicket" class="font-bold text-2xl text-[#111827] font-mono mt-0.5">€38.50</p>
+        <span class="text-[10px] text-[#6B7280]">Median basket</span>
+      </div>
+      <div>
+        <span class="text-xs text-[#6B7280]">Take-Rate Fee</span>
+        <p id="metricFee" class="font-bold text-2xl text-[#111827] font-mono mt-0.5">€1,225</p>
+        <span class="text-[10px] text-[#6B7280]">1.75% + €0.30</span>
+      </div>
+      <div>
+        <span class="text-xs text-[#6B7280]">SaaS MRR</span>
+        <p id="metricMRR" class="font-bold text-2xl text-emerald-600 font-mono mt-0.5">€2,970</p>
+        <span class="text-[10px] text-emerald-600/80">Active Pro salons</span>
+      </div>
+    </section>
+
+    <!-- 4. CONTROLS, PICKERS & SLIDERS (FLAT 4-COL GRID) -->
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 py-2">
       
       <!-- ITEM 1: Siri 3-Item Focal Wheel -->
@@ -218,65 +355,20 @@ function getEditorHTML(tokens: any) {
         <span class="text-xs font-semibold text-[#111827]">Occupancy Fill</span>
         <div class="p-3 rounded-2xl bg-[#F7F7F8] border border-[#ECECEC] flex items-center justify-between">
           <div class="space-y-0.5">
-            <p class="font-bold text-sm text-[#111827]">92.4%</p>
+            <p id="occupancyPercentText" class="font-bold text-sm text-[#111827] font-mono">92.4%</p>
             <span class="text-[10px] text-emerald-600 font-medium">Optimal peak</span>
           </div>
           <!-- SVG Radial Ring -->
           <svg class="w-11 h-11" viewBox="0 0 36 36">
             <path class="text-[#EBECEE]" stroke-width="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-            <path class="text-[#111827] progress-ring-circle" stroke-dasharray="92, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+            <path id="occupancyRing" class="text-[#111827] progress-ring-circle" stroke-dasharray="92, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
           </svg>
         </div>
       </div>
 
     </section>
 
-    <!-- 3. INTERACTIVE FINANCIAL CHART & METRIC STRIP (FLAT CANVAS) -->
-    <section class="space-y-4">
-      <!-- 4-Column Flat Divider Row -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 py-4 border-t border-b border-[#ECECEC]">
-        <div>
-          <span class="text-xs text-[#6B7280]">Gross Revenue (GMV)</span>
-          <p class="font-semibold text-2xl text-[#111827] mt-0.5">€48,620</p>
-          <span class="text-[10px] text-emerald-600 font-medium">+24.6% vs last mo</span>
-        </div>
-        <div>
-          <span class="text-xs text-[#6B7280]">Total Bookings</span>
-          <p class="font-semibold text-2xl text-[#111827] mt-0.5">1,248</p>
-          <span class="text-[10px] text-[#6B7280]">38 avg/day</span>
-        </div>
-        <div>
-          <span class="text-xs text-[#6B7280]">Take-Rate Revenue</span>
-          <p class="font-semibold text-2xl text-[#111827] mt-0.5">€1,225</p>
-          <span class="text-[10px] text-[#6B7280]">1.75% + €0.30</span>
-        </div>
-        <div>
-          <span class="text-xs text-[#6B7280]">SaaS MRR</span>
-          <p class="font-semibold text-2xl text-emerald-600 mt-0.5">€2,970</p>
-          <span class="text-[10px] text-emerald-600/80">Pro salon tiers</span>
-        </div>
-      </div>
-
-      <!-- Interactive SVG Line & Area Curve -->
-      <div class="relative w-full h-36 pt-2 cursor-crosshair" onmousemove="handleChartHover(event)" onmouseleave="handleChartLeave()">
-        <svg class="w-full h-full overflow-visible" viewBox="0 0 600 140" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#111827" stop-opacity="0.10"/>
-              <stop offset="100%" stop-color="#111827" stop-opacity="0.00"/>
-            </linearGradient>
-          </defs>
-          <path d="M0,110 Q100,80 200,60 T400,40 T600,15 L600,140 L0,140 Z" fill="url(#chartGradient)"/>
-          <path d="M0,110 Q100,80 200,60 T400,40 T600,15" fill="none" stroke="#111827" stroke-width="2.5" stroke-linecap="round"/>
-          <circle id="chartDot" cx="400" cy="40" r="4.5" fill="#FFFFFF" stroke="#111827" stroke-width="2.5" class="hidden"/>
-        </svg>
-        <div id="chartTooltip" class="absolute top-0 right-2 text-right hidden">
-          <span id="tooltipVal" class="font-mono font-bold text-xs text-[#111827]">€1,840</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- 4. FLAT DIVIDER SERVICES LIST & INPUT CAPSULES (2 COLS) -->
+    <!-- 5. SERVICES LIST & FLOATING INPUTS (2 COLS) -->
     <section class="grid grid-cols-1 md:grid-cols-2 gap-10 pt-2 border-t border-[#ECECEC]">
       
       <!-- Services Divider List with Negative-Margin Fills -->
@@ -289,7 +381,7 @@ function getEditorHTML(tokens: any) {
               <p class="text-[11px] text-[#6B7280]">Organic wash, scalp massage & custom blowout</p>
             </div>
             <div class="text-right shrink-0">
-              <span class="font-bold text-xs text-[#111827]">€45</span>
+              <span class="font-bold text-xs text-[#111827] font-mono">€45</span>
               <p class="text-[10px] text-[#9CA3AF]">45 min</p>
             </div>
           </div>
@@ -300,7 +392,7 @@ function getEditorHTML(tokens: any) {
               <p class="text-[11px] text-[#6B7280]">Straight razor line-up & cold compress</p>
             </div>
             <div class="text-right shrink-0">
-              <span class="font-bold text-xs text-[#111827]">€28</span>
+              <span class="font-bold text-xs text-[#111827] font-mono">€28</span>
               <p class="text-[10px] text-[#9CA3AF]">30 min</p>
             </div>
           </div>
@@ -311,7 +403,7 @@ function getEditorHTML(tokens: any) {
               <p class="text-[11px] text-[#6B7280]">Hyaluronic moisture infusion & firming</p>
             </div>
             <div class="text-right shrink-0">
-              <span class="font-bold text-xs text-[#111827]">€65</span>
+              <span class="font-bold text-xs text-[#111827] font-mono">€65</span>
               <p class="text-[10px] text-[#9CA3AF]">60 min</p>
             </div>
           </div>
@@ -322,25 +414,22 @@ function getEditorHTML(tokens: any) {
       <div class="space-y-3">
         <span class="text-xs font-semibold text-[#111827] block pb-1">Input Elements</span>
         
-        <!-- Clean Floating Input -->
         <div class="flex items-center border border-[#ECECEC] rounded-2xl px-3.5 h-10 bg-white focus-within:border-[#111827] transition-colors">
           <input type="text" value="Andrii Lavreniuk" placeholder="Your name..." class="w-full text-xs font-medium bg-transparent outline-none text-[#111827]" />
           <svg class="w-4 h-4 text-emerald-600 shrink-0 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
         </div>
 
-        <!-- 4-Digit Security OTP Pin Input -->
         <div class="flex items-center gap-2 pt-0.5">
-          <input type="text" maxlength="1" value="7" class="w-10 h-10 text-center rounded-xl border border-[#ECECEC] font-mono text-sm font-bold text-[#111827] outline-none focus:border-[#111827]" />
-          <input type="text" maxlength="1" value="3" class="w-10 h-10 text-center rounded-xl border border-[#ECECEC] font-mono text-sm font-bold text-[#111827] outline-none focus:border-[#111827]" />
-          <input type="text" maxlength="1" value="9" class="w-10 h-10 text-center rounded-xl border border-[#ECECEC] font-mono text-sm font-bold text-[#111827] outline-none focus:border-[#111827]" />
-          <input type="text" maxlength="1" value="2" class="w-10 h-10 text-center rounded-xl border border-[#ECECEC] font-mono text-sm font-bold text-[#111827] outline-none focus:border-[#111827]" />
+          <input type="text" maxlength="1" value="7" class="w-10 h-10 text-center rounded-xl border border-[#ECECEC] font-mono text-sm font-bold text-[#111827] outline-none focus:border-[#111827] spring-press" />
+          <input type="text" maxlength="1" value="3" class="w-10 h-10 text-center rounded-xl border border-[#ECECEC] font-mono text-sm font-bold text-[#111827] outline-none focus:border-[#111827] spring-press" />
+          <input type="text" maxlength="1" value="9" class="w-10 h-10 text-center rounded-xl border border-[#ECECEC] font-mono text-sm font-bold text-[#111827] outline-none focus:border-[#111827] spring-press" />
+          <input type="text" maxlength="1" value="2" class="w-10 h-10 text-center rounded-xl border border-[#ECECEC] font-mono text-sm font-bold text-[#111827] outline-none focus:border-[#111827] spring-press" />
           <span class="text-[11px] text-[#6B7280] ml-2">256-bit crypto auth</span>
         </div>
 
-        <!-- Button States Row -->
         <div class="flex flex-wrap items-center gap-2 pt-2">
-          <button onclick="triggerToast('Confirmed booking')" class="h-9 px-4 rounded-full bg-[#111827] hover:bg-[#262626] text-white text-xs font-semibold spring-press cursor-pointer shadow-2xs">Primary</button>
-          <button onclick="triggerToast('Added to saved')" class="h-9 px-4 rounded-full border border-[#ECECEC] hover:bg-[#F7F7F8] text-[#111827] text-xs font-semibold spring-press cursor-pointer">Secondary</button>
+          <button onclick="triggerToast('Confirmed appointment')" class="h-9 px-4 rounded-full bg-[#111827] hover:bg-[#262626] text-white text-xs font-semibold spring-press cursor-pointer shadow-2xs">Primary</button>
+          <button onclick="triggerToast('Saved to bookmarks')" class="h-9 px-4 rounded-full border border-[#ECECEC] hover:bg-[#F7F7F8] text-[#111827] text-xs font-semibold spring-press cursor-pointer">Secondary</button>
           <button onclick="triggerToast('Link copied')" class="h-9 px-3 rounded-full hover:bg-[#F7F7F8] text-[#6B7280] hover:text-[#111827] text-xs font-medium spring-press cursor-pointer">Ghost</button>
         </div>
       </div>
@@ -362,7 +451,7 @@ function getEditorHTML(tokens: any) {
         Flat dialog sitting directly on pure #FFFFFF with Apple spring physics and zero nested frames.
       </p>
       <div class="flex justify-end gap-2 pt-1">
-        <button onclick="closeDemoModal()" class="h-8 px-4 rounded-full bg-[#111827] text-white text-xs font-semibold spring-press cursor-pointer">Dismiss</button>
+        <button onclick="closeDemoModal()" class="h-9 px-4 rounded-full bg-[#111827] text-white text-xs font-semibold spring-press cursor-pointer">Dismiss</button>
       </div>
     </div>
   </div>
@@ -374,6 +463,226 @@ function getEditorHTML(tokens: any) {
   </div>
 
   <script>
+    // Smooth Count-Up Animation Function
+    function animateValue(id, start, end, duration, prefix = '', suffix = '') {
+      const obj = document.getElementById(id);
+      if (!obj) return;
+      let startTimestamp = null;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const easeProgress = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+        const current = start + (end - start) * easeProgress;
+        obj.innerText = prefix + (Number.isInteger(end) ? Math.round(current).toLocaleString() : current.toFixed(2).toLocaleString()) + suffix;
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        }
+      };
+      window.requestAnimationFrame(step);
+    }
+
+    let currentTrend = 'up';
+    let currentPeriod = '30D';
+    let liveModeActive = true;
+    let liveInterval = null;
+    let baseRevenue = 48620.00;
+
+    const CHART_DATA = {
+      up: {
+        '7D': {
+          revenue: 11240.00,
+          trend: '+14.2%',
+          badgeClass: 'text-emerald-600 bg-emerald-50 border-emerald-200/60',
+          strokeColor: '#10B981',
+          fillGrad: 'url(#chartGradGreen)',
+          linePath: 'M0,135 Q100,110 200,90 T400,60 T600,25',
+          areaPath: 'M0,135 Q100,110 200,90 T400,60 T600,25 L600,160 L0,160 Z',
+          yMax: '€15k', yMidHigh: '€10k', yMidLow: '€5k', yMin: '€0k',
+          xLabels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        '30D': {
+          revenue: 48620.00,
+          trend: '+24.6%',
+          badgeClass: 'text-emerald-600 bg-emerald-50 border-emerald-200/60',
+          strokeColor: '#10B981',
+          fillGrad: 'url(#chartGradGreen)',
+          linePath: 'M0,130 Q100,100 200,80 T400,50 T600,20',
+          areaPath: 'M0,130 Q100,100 200,80 T400,50 T600,20 L600,160 L0,160 Z',
+          yMax: '€60k', yMidHigh: '€45k', yMidLow: '€30k', yMin: '€0k',
+          xLabels: ['Week 1', 'Week 2', 'Week 3', 'Week 4']
+        },
+        '90D': {
+          revenue: 142800.00,
+          trend: '+38.4%',
+          badgeClass: 'text-emerald-600 bg-emerald-50 border-emerald-200/60',
+          strokeColor: '#10B981',
+          fillGrad: 'url(#chartGradGreen)',
+          linePath: 'M0,140 Q100,90 200,70 T400,40 T600,15',
+          areaPath: 'M0,140 Q100,90 200,70 T400,40 T600,15 L600,160 L0,160 Z',
+          yMax: '€180k', yMidHigh: '€120k', yMidLow: '€60k', yMin: '€0k',
+          xLabels: ['Month 1', 'Month 2', 'Month 3']
+        }
+      },
+      down: {
+        '7D': {
+          revenue: 8420.00,
+          trend: '-11.4%',
+          badgeClass: 'text-rose-600 bg-rose-50 border-rose-200/60',
+          strokeColor: '#F43F5E',
+          fillGrad: 'url(#chartGradRed)',
+          linePath: 'M0,25 Q100,50 200,85 T400,115 T600,145',
+          areaPath: 'M0,25 Q100,50 200,85 T400,115 T600,145 L600,160 L0,160 Z',
+          yMax: '€15k', yMidHigh: '€10k', yMidLow: '€5k', yMin: '€0k',
+          xLabels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        '30D': {
+          revenue: 34120.00,
+          trend: '-8.3%',
+          badgeClass: 'text-rose-600 bg-rose-50 border-rose-200/60',
+          strokeColor: '#F43F5E',
+          fillGrad: 'url(#chartGradRed)',
+          linePath: 'M0,20 Q100,45 200,75 T400,110 T600,140',
+          areaPath: 'M0,20 Q100,45 200,75 T400,110 T600,140 L600,160 L0,160 Z',
+          yMax: '€60k', yMidHigh: '€45k', yMidLow: '€30k', yMin: '€0k',
+          xLabels: ['Week 1', 'Week 2', 'Week 3', 'Week 4']
+        },
+        '90D': {
+          revenue: 96400.00,
+          trend: '-14.8%',
+          badgeClass: 'text-rose-600 bg-rose-50 border-rose-200/60',
+          strokeColor: '#F43F5E',
+          fillGrad: 'url(#chartGradRed)',
+          linePath: 'M0,15 Q100,40 200,80 T400,120 T600,150',
+          areaPath: 'M0,15 Q100,40 200,80 T400,120 T600,150 L600,160 L0,160 Z',
+          yMax: '€180k', yMidHigh: '€120k', yMidLow: '€60k', yMin: '€0k',
+          xLabels: ['Month 1', 'Month 2', 'Month 3']
+        }
+      }
+    };
+
+    function renderChart() {
+      const data = CHART_DATA[currentTrend][currentPeriod];
+      const prevVal = baseRevenue;
+      baseRevenue = data.revenue;
+      animateValue('chartRevenueText', prevVal, baseRevenue, 450, '€');
+
+      // Update Trend Badge
+      const badge = document.getElementById('trendBadge');
+      badge.innerText = data.trend;
+      badge.className = 'text-xs font-bold px-2 py-0.5 rounded-full transition-all ' + data.badgeClass;
+
+      // Update Chart SVG Paths & Colors
+      const line = document.getElementById('chartLinePath');
+      const area = document.getElementById('chartAreaPath');
+      const dot = document.getElementById('chartDot');
+      line.setAttribute('d', data.linePath);
+      line.setAttribute('stroke', data.strokeColor);
+      area.setAttribute('d', data.areaPath);
+      area.setAttribute('fill', data.fillGrad);
+      dot.setAttribute('stroke', data.strokeColor);
+
+      // Update Axes
+      document.getElementById('yAxisMax').innerText = data.yMax;
+      document.getElementById('yAxisMidHigh').innerText = data.yMidHigh;
+      document.getElementById('yAxisMidLow').innerText = data.yMidLow;
+      document.getElementById('yAxisMin').innerText = data.yMin;
+
+      const xContainer = document.getElementById('xAxisLabels');
+      xContainer.innerHTML = data.xLabels.map(l => \`<span>\${l}</span>\`).join('');
+    }
+
+    function setTrendMode(mode) {
+      currentTrend = mode;
+      if (mode === 'up') {
+        document.getElementById('trendBtnUp').className = 'px-3 py-1 rounded-full font-semibold bg-emerald-600 text-white shadow-2xs spring-press cursor-pointer';
+        document.getElementById('trendBtnDown').className = 'px-3 py-1 rounded-full font-medium text-[#6B7280] hover:text-[#111827] spring-press cursor-pointer';
+      } else {
+        document.getElementById('trendBtnDown').className = 'px-3 py-1 rounded-full font-semibold bg-rose-600 text-white shadow-2xs spring-press cursor-pointer';
+        document.getElementById('trendBtnUp').className = 'px-3 py-1 rounded-full font-medium text-[#6B7280] hover:text-[#111827] spring-press cursor-pointer';
+      }
+      renderChart();
+    }
+
+    function updateChartPeriod(period) {
+      currentPeriod = period;
+      ['7D', '30D', '90D'].forEach(p => {
+        const b = document.getElementById('chartBtn' + p);
+        if (p === period) {
+          b.className = 'px-2.5 py-1 rounded-full font-semibold bg-[#111827] text-white shadow-2xs spring-press cursor-pointer';
+        } else {
+          b.className = 'px-2.5 py-1 rounded-full font-medium text-[#6B7280] hover:text-[#111827] spring-press cursor-pointer';
+        }
+      });
+      renderChart();
+    }
+
+    function handleChartHover(e) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = Math.max(0, Math.min(rect.width, e.clientX - rect.left));
+      const pct = x / rect.width;
+      const svgX = pct * 600;
+      
+      let svgY;
+      if (currentTrend === 'up') {
+        svgY = 130 - Math.sin(pct * Math.PI * 0.8) * 105;
+      } else {
+        svgY = 20 + Math.sin(pct * Math.PI * 0.8) * 120;
+      }
+
+      const dot = document.getElementById('chartDot');
+      dot.setAttribute('cx', svgX);
+      dot.setAttribute('cy', svgY);
+      dot.classList.remove('hidden');
+
+      const crossLine = document.getElementById('chartCrossLine');
+      crossLine.setAttribute('x1', svgX);
+      crossLine.setAttribute('x2', svgX);
+      crossLine.classList.remove('hidden');
+
+      const tooltip = document.getElementById('chartTooltip');
+      tooltip.classList.remove('hidden');
+      const val = currentTrend === 'up' 
+        ? Math.round(1200 + pct * (baseRevenue * 0.12))
+        : Math.round(baseRevenue * 0.12 - pct * (baseRevenue * 0.08));
+      document.getElementById('tooltipVal').innerText = '€' + val.toLocaleString() + '.00';
+    }
+
+    function handleChartLeave() {
+      document.getElementById('chartDot').classList.add('hidden');
+      document.getElementById('chartCrossLine').classList.add('hidden');
+      document.getElementById('chartTooltip').classList.add('hidden');
+    }
+
+    function toggleLiveMode() {
+      liveModeActive = !liveModeActive;
+      const btn = document.getElementById('liveModeBtn');
+      const txt = document.getElementById('liveModeText');
+      if (liveModeActive) {
+        btn.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-500 live-pulse-dot"></span><span>Live: On</span>';
+        startLiveStream();
+        triggerToast('Live stream enabled (+real-time transactions)');
+      } else {
+        btn.innerHTML = '<span class="w-2 h-2 rounded-full bg-[#9CA3AF]"></span><span>Live: Paused</span>';
+        clearInterval(liveInterval);
+        triggerToast('Live stream paused');
+      }
+    }
+
+    function startLiveStream() {
+      clearInterval(liveInterval);
+      liveInterval = setInterval(() => {
+        if (!liveModeActive) return;
+        const delta = (Math.random() * 35 + 15);
+        const oldRev = baseRevenue;
+        baseRevenue += delta;
+        animateValue('chartRevenueText', oldRev, baseRevenue, 400, '€');
+
+        // Increment bookings
+        const curBookings = parseInt(document.getElementById('metricBookings').innerText.replace(/,/g, ''));
+        animateValue('metricBookings', curBookings, curBookings + 1, 300);
+      }, 4000);
+    }
+
     function setActiveSegment(seg) {
       ['where', 'when', 'service'].forEach(s => {
         const btn = document.getElementById('seg-' + s);
@@ -389,7 +698,7 @@ function getEditorHTML(tokens: any) {
       document.querySelectorAll('.tab-pill').forEach(p => {
         p.className = 'tab-pill h-8 px-4 rounded-full border border-[#ECECEC] hover:bg-[#F7F7F8] text-[#4B5563] text-xs font-medium spring-press cursor-pointer';
       });
-      btn.className = 'tab-pill h-8 px-4 rounded-full bg-[#111827] text-white text-xs font-medium spring-press cursor-pointer shadow-2xs';
+      btn.className = 'tab-pill h-8 px-4 rounded-full bg-[#111827] text-white text-xs font-semibold spring-press cursor-pointer shadow-2xs';
     }
 
     const siriSteps = [1.00, 1.25, 1.50, 1.75, 2.00, 2.25, 2.50, 3.00];
@@ -410,29 +719,6 @@ function getEditorHTML(tokens: any) {
     function stepCount(delta) {
       count = Math.max(1, count + delta);
       document.getElementById('counterVal').innerText = count;
-    }
-
-    function handleChartHover(e) {
-      const rect = e.currentTarget.getBoundingClientRect();
-      const x = Math.max(0, Math.min(rect.width, e.clientX - rect.left));
-      const pct = x / rect.width;
-      const svgX = pct * 600;
-      const svgY = 110 - Math.sin(pct * Math.PI * 0.8) * 85;
-
-      const dot = document.getElementById('chartDot');
-      dot.setAttribute('cx', svgX);
-      dot.setAttribute('cy', svgY);
-      dot.classList.remove('hidden');
-
-      const tooltip = document.getElementById('chartTooltip');
-      tooltip.classList.remove('hidden');
-      const val = Math.round(1200 + pct * 2400);
-      document.getElementById('tooltipVal').innerText = '€' + val.toLocaleString();
-    }
-
-    function handleChartLeave() {
-      document.getElementById('chartDot').classList.add('hidden');
-      document.getElementById('chartTooltip').classList.add('hidden');
     }
 
     function openDemoModal() {
@@ -463,6 +749,11 @@ function getEditorHTML(tokens: any) {
         toast.classList.add('translate-y-12', 'opacity-0');
       }, 2000);
     }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderChart();
+      startLiveStream();
+    });
   </script>
 </body>
 </html>`;
