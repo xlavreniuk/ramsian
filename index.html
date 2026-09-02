@@ -19,9 +19,8 @@
       --bg-surface: #F7F7F8;
       --bg-track: #EBECEE;
       --card-active: #FFFFFF;
-      --header-bg: rgba(255, 255, 255, 0.9);
+      --header-bg: rgba(255, 255, 255, 0.92);
       --input-bg: #FFFFFF;
-      --slider-thumb-border: #FFFFFF;
       --search-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     }
 
@@ -34,9 +33,8 @@
       --bg-surface: #18181B;
       --bg-track: #27272A;
       --card-active: #18181B;
-      --header-bg: rgba(9, 9, 11, 0.9);
+      --header-bg: rgba(9, 9, 11, 0.92);
       --input-bg: #18181B;
-      --slider-thumb-border: #09090B;
       --search-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
     }
 
@@ -48,7 +46,7 @@
     }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
 
-    /* Custom Stroke-Free Apple Range Slider */
+    /* Minimalist Apple Range Slider (Stroke-Free) */
     input[type=range] {
       -webkit-appearance: none;
       appearance: none;
@@ -63,13 +61,13 @@
     input[type=range]::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       background: var(--text-primary);
       border-radius: 50%;
       cursor: pointer;
-      border: 2px solid var(--slider-thumb-border) !important;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+      border: none !important;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.25);
       transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     input[type=range]::-webkit-slider-thumb:hover {
@@ -205,10 +203,10 @@
       </div>
 
       <div class="flex items-center gap-2">
-        <!-- 1. Theme Toggle -->
+        <!-- 1. Monochrome Theme Toggle -->
         <button onclick="toggleTheme()" id="themeToggleBtn" class="h-9 px-3.5 rounded-full border text-xs font-semibold spring-press flex items-center gap-2 cursor-pointer shadow-2xs" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-primary);">
-          <svg id="themeSunIcon" class="w-4 h-4 text-amber-500 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-          <svg id="themeMoonIcon" class="w-4 h-4 text-indigo-500 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+          <svg id="themeSunIcon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          <svg id="themeMoonIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
           <span id="themeText">Theme</span>
         </button>
 
@@ -218,8 +216,8 @@
           <span class="hidden sm:inline">GitHub</span>
         </a>
 
-        <!-- 3. Copy Skill Button -->
-        <button onclick="copySkillCommand()" id="copySkillBtn" class="h-9 px-4 rounded-full text-xs font-semibold shadow-2xs spring-press flex items-center gap-1.5 cursor-pointer dark:bg-white dark:text-black bg-[#111827] text-white">
+        <!-- 3. Copy Skill Button (with Crisp Border) -->
+        <button onclick="copySkillCommand()" id="copySkillBtn" class="h-9 px-4 rounded-full text-xs font-semibold shadow-2xs spring-press flex items-center gap-1.5 cursor-pointer border dark:border-[#3F3F46] border-[#111827] dark:bg-white dark:text-black bg-[#111827] text-white">
           <svg id="copySkillIcon" class="w-3.5 h-3.5 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
           <span id="copySkillText">Copy Skill</span>
         </button>
@@ -232,7 +230,6 @@
 
     <!-- 1. SEARCH CAPSULE ISLAND WITH RESTORED SHADOW & CLOSE FLYOUT -->
     <section class="space-y-4 relative">
-      <!-- Search Capsule Bar with Restored Floating Shadow -->
       <div id="searchCapsule" class="w-full p-0 rounded-full flex items-center relative transition-all overflow-hidden border" style="background-color: var(--bg-track); border-color: var(--border-hairline); box-shadow: var(--search-shadow);">
         
         <div id="searchSlidingPill"></div>
@@ -284,7 +281,8 @@
             <span class="text-xs font-medium block" style="color: var(--text-muted);">Volume</span>
             <div class="flex items-baseline gap-2 mt-0.5">
               <span id="chartRevenueText" class="font-bold text-2xl sm:text-3xl font-mono tracking-tight" style="color: var(--text-primary);">$52,100.00</span>
-              <span id="trendBadge" class="text-xs font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/60 dark:border-emerald-800/40 px-2 py-0.5 rounded-full transition-all">
+              <!-- Crisp High-Contrast Trend Badge -->
+              <span id="trendBadge" class="text-xs font-bold px-2 py-0.5 rounded-full transition-all text-emerald-800 dark:text-emerald-300 bg-emerald-100/90 dark:bg-emerald-950/80 border border-emerald-300 dark:border-emerald-700/80">
                 +24.6%
               </span>
             </div>
@@ -321,7 +319,7 @@
       <div class="relative w-full pt-2">
         <div class="grid grid-cols-12 gap-2 items-center">
           
-          <div class="col-span-1 flex flex-col justify-between h-44 text-[10.5px] font-mono text-right pr-2 select-none font-medium" style="color: var(--text-muted);">
+          <div class="col-span-1 flex flex-col justify-between h-44 text-[10.5px] font-mono text-right pr-2 select-none font-semibold" style="color: var(--text-muted);">
             <span id="yAxisMax">$60k</span>
             <span id="yAxisMidHigh">$45k</span>
             <span id="yAxisMidLow">$30k</span>
@@ -361,7 +359,7 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-12 gap-2 pt-1 text-[10.5px] font-mono select-none font-medium" style="color: var(--text-muted);">
+        <div class="grid grid-cols-12 gap-2 pt-1 text-[10.5px] font-mono select-none font-semibold" style="color: var(--text-muted);">
           <div class="col-span-1"></div>
           <div class="col-span-11 flex justify-between px-1" id="xAxisLabels">
             <span>Mon</span>
@@ -400,7 +398,7 @@
       </div>
     </section>
 
-    <!-- 4. CONTROLS, PICKERS & SLIDERS (HIGH CONTRAST & STREAMLINED) -->
+    <!-- 4. CONTROLS, PICKERS & SLIDERS (MINIMALIST & HIGH CONTRAST) -->
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 py-2">
       
       <!-- ITEM 1: Wheel -->
@@ -434,7 +432,7 @@
         </div>
       </div>
 
-      <!-- ITEM 2: Slider -->
+      <!-- ITEM 2: Slider (Stroke-Free Minimalist) -->
       <div class="space-y-2">
         <div class="flex justify-between items-center text-xs">
           <span class="font-semibold" style="color: var(--text-primary);">Slider</span>
@@ -442,7 +440,7 @@
         </div>
         <div class="p-4 rounded-2xl border space-y-2" style="background-color: var(--bg-surface); border-color: var(--border-hairline);">
           <input type="range" min="50" max="2000" step="50" value="500" oninput="updateSlider(this.value)" class="w-full cursor-pointer" />
-          <div class="flex justify-between text-[10.5px] font-mono font-medium" style="color: var(--text-muted);">
+          <div class="flex justify-between text-[10.5px] font-mono font-semibold" style="color: var(--text-muted);">
             <span>50</span>
             <span>2,000</span>
           </div>
@@ -459,7 +457,7 @@
             <button onclick="stepCount(1)" class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold spring-press cursor-pointer" style="color: var(--text-primary);">+</button>
           </div>
           <div class="flex items-center gap-2">
-            <span class="text-[11px] font-medium" style="color: var(--text-muted);">Live</span>
+            <span class="text-[11px] font-semibold" style="color: var(--text-muted);">Live</span>
             <label class="ios-switch">
               <input type="checkbox" checked onchange="triggerToast(this.checked ? 'Sync Active' : 'Sync Paused')">
               <span class="ios-slider"></span>
@@ -474,7 +472,7 @@
         <div class="p-3 rounded-2xl border flex items-center justify-between" style="background-color: var(--bg-surface); border-color: var(--border-hairline);">
           <div class="space-y-0.5">
             <p id="occupancyPercentText" class="font-bold text-sm font-mono" style="color: var(--text-primary);">92.4%</p>
-            <span class="text-[10px] text-emerald-600 font-medium">Optimal peak</span>
+            <span class="text-[10px] text-emerald-600 font-semibold">Optimal peak</span>
           </div>
           <svg class="w-11 h-11" viewBox="0 0 36 36">
             <path stroke="var(--bg-track)" stroke-width="3.5" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
@@ -485,14 +483,14 @@
 
     </section>
 
-    <!-- 5. SERVICES & INPUTS (2 COLS) -->
+    <!-- 5. SERVICES & INPUTS (PURE APPLE DIVIDER LIST) -->
     <section class="grid grid-cols-1 md:grid-cols-2 gap-10 pt-2 border-t" style="border-color: var(--border-hairline);">
       
-      <!-- Services -->
+      <!-- Services (Clean Divider Rows, Zero Clunky Buttons) -->
       <div class="space-y-1">
         <span class="text-xs font-semibold block pb-1" style="color: var(--text-primary);">Services</span>
         <div class="divide-y" style="border-color: var(--border-hairline);">
-          <div onclick="triggerToast('Selected Architecture')" class="py-3 px-3 -mx-3 rounded-2xl transition-colors cursor-pointer flex items-center justify-between spring-press">
+          <div class="py-3 flex items-center justify-between">
             <div class="space-y-0.5">
               <h4 class="font-semibold text-xs" style="color: var(--text-primary);">Architecture Specs</h4>
               <p class="text-[11px]" style="color: var(--text-muted);">Tokens, single surfaces, fluid spring curves</p>
@@ -503,7 +501,7 @@
             </div>
           </div>
 
-          <div onclick="triggerToast('Selected Motion')" class="py-3 px-3 -mx-3 rounded-2xl transition-colors cursor-pointer flex items-center justify-between spring-press">
+          <div class="py-3 flex items-center justify-between">
             <div class="space-y-0.5">
               <h4 class="font-semibold text-xs" style="color: var(--text-primary);">iOS Fluid Motion</h4>
               <p class="text-[11px]" style="color: var(--text-muted);">Interactive gestures & spring transitions</p>
@@ -514,7 +512,7 @@
             </div>
           </div>
 
-          <div onclick="triggerToast('Selected Kit')" class="py-3 px-3 -mx-3 rounded-2xl transition-colors cursor-pointer flex items-center justify-between spring-press">
+          <div class="py-3 flex items-center justify-between">
             <div class="space-y-0.5">
               <h4 class="font-semibold text-xs" style="color: var(--text-primary);">Controls & SVG Suite</h4>
               <p class="text-[11px]" style="color: var(--text-muted);">Sliders, focal wheels & interactive charts</p>
@@ -556,7 +554,7 @@
   </main>
 
   <!-- TOAST NOTIFICATION -->
-  <div id="toastNotification" class="fixed bottom-6 right-6 z-50 text-xs font-semibold px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-2 transform translate-y-12 opacity-0 transition-all duration-200 dark:bg-white dark:text-black bg-[#111827] text-white">
+  <div id="toastNotification" class="fixed bottom-6 right-6 z-50 text-xs font-semibold px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-2 transform translate-y-12 opacity-0 transition-all duration-200 border dark:border-[#3F3F46] border-[#111827] dark:bg-white dark:text-black bg-[#111827] text-white">
     <svg class="w-4 h-4 text-emerald-400 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
     <span id="toastMessage">Done</span>
   </div>
@@ -662,7 +660,7 @@
         '7D': {
           revenue: 12450.00,
           trend: '+14.2%',
-          badgeClass: 'text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200/60 dark:border-emerald-800/40',
+          badgeClass: 'text-emerald-800 dark:text-emerald-300 bg-emerald-100/90 dark:bg-emerald-950/80 border border-emerald-300 dark:border-emerald-700/80',
           strokeColor: '#10B981',
           fillGrad: 'url(#chartGradGreen)',
           linePath: 'M0,135 Q100,110 200,90 T400,60 T600,25',
@@ -673,7 +671,7 @@
         '30D': {
           revenue: 52100.00,
           trend: '+24.6%',
-          badgeClass: 'text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200/60 dark:border-emerald-800/40',
+          badgeClass: 'text-emerald-800 dark:text-emerald-300 bg-emerald-100/90 dark:bg-emerald-950/80 border border-emerald-300 dark:border-emerald-700/80',
           strokeColor: '#10B981',
           fillGrad: 'url(#chartGradGreen)',
           linePath: 'M0,130 Q100,100 200,80 T400,50 T600,20',
@@ -684,7 +682,7 @@
         '90D': {
           revenue: 154200.00,
           trend: '+38.4%',
-          badgeClass: 'text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200/60 dark:border-emerald-800/40',
+          badgeClass: 'text-emerald-800 dark:text-emerald-300 bg-emerald-100/90 dark:bg-emerald-950/80 border border-emerald-300 dark:border-emerald-700/80',
           strokeColor: '#10B981',
           fillGrad: 'url(#chartGradGreen)',
           linePath: 'M0,140 Q100,90 200,70 T400,40 T600,15',
@@ -697,7 +695,7 @@
         '7D': {
           revenue: 9120.00,
           trend: '-11.4%',
-          badgeClass: 'text-rose-600 bg-rose-50 dark:bg-rose-950/40 border-rose-200/60 dark:border-rose-800/40',
+          badgeClass: 'text-rose-800 dark:text-rose-300 bg-rose-100/90 dark:bg-rose-950/80 border border-rose-300 dark:border-rose-700/80',
           strokeColor: '#F43F5E',
           fillGrad: 'url(#chartGradRed)',
           linePath: 'M0,25 Q100,50 200,85 T400,115 T600,145',
@@ -708,7 +706,7 @@
         '30D': {
           revenue: 36400.00,
           trend: '-8.3%',
-          badgeClass: 'text-rose-600 bg-rose-50 dark:bg-rose-950/40 border-rose-200/60 dark:border-rose-800/40',
+          badgeClass: 'text-rose-800 dark:text-rose-300 bg-rose-100/90 dark:bg-rose-950/80 border border-rose-300 dark:border-rose-700/80',
           strokeColor: '#F43F5E',
           fillGrad: 'url(#chartGradRed)',
           linePath: 'M0,20 Q100,45 200,75 T400,110 T600,140',
@@ -719,7 +717,7 @@
         '90D': {
           revenue: 104200.00,
           trend: '-14.8%',
-          badgeClass: 'text-rose-600 bg-rose-50 dark:bg-rose-950/40 border-rose-200/60 dark:border-rose-800/40',
+          badgeClass: 'text-rose-800 dark:text-rose-300 bg-rose-100/90 dark:bg-rose-950/80 border border-rose-300 dark:border-rose-700/80',
           strokeColor: '#F43F5E',
           fillGrad: 'url(#chartGradRed)',
           linePath: 'M0,15 Q100,40 200,80 T400,120 T600,150',
