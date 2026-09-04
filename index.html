@@ -14,41 +14,45 @@
     :root {
       --bg-canvas: #FFFFFF;
       --text-primary: #111827;
-      --text-secondary: #374151;
-      --text-muted: #6B7280;
-      --border-hairline: #ECECEC;
+      --text-secondary: #1F2937;
+      --text-muted: #4B5563; /* High contrast: 7.0:1 on canvas, 6.6:1 on surface */
+      --border-hairline: #E5E7EB; /* Crisp accessible hairline divider */
       --bg-surface: #F7F7F8;
       --bg-track: #EBECEE;
+      --progress-fill: linear-gradient(90deg, #A1A1AA 0%, #71717A 100%);
+      --progress-stroke: #71717A;
       --card-active: #FFFFFF;
-      --header-bg: rgba(255, 255, 255, 0.92);
+      --header-bg: rgba(255, 255, 255, 0.94);
       --input-bg: #FFFFFF;
       --search-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
       --badge-up-text: #047857;
       --badge-up-bg: #ECFDF5;
-      --badge-up-border: rgba(167, 243, 208, 0.8);
+      --badge-up-border: rgba(167, 243, 208, 0.9);
       --badge-down-text: #BE123C;
       --badge-down-bg: #FFF1F2;
-      --badge-down-border: rgba(254, 205, 211, 0.8);
+      --badge-down-border: rgba(254, 205, 211, 0.9);
     }
 
     html.dark {
       --bg-canvas: #09090B;
       --text-primary: #FFFFFF;
       --text-secondary: #E4E4E7;
-      --text-muted: #A1A1AA;
+      --text-muted: #A1A1AA; /* 7.8:1 contrast on canvas, 6.8:1 on surface */
       --border-hairline: #27272A;
       --bg-surface: #18181B;
       --bg-track: #27272A;
+      --progress-fill: linear-gradient(90deg, #3F3F46 0%, #52525B 100%);
+      --progress-stroke: #52525B;
       --card-active: #18181B;
-      --header-bg: rgba(9, 9, 11, 0.92);
+      --header-bg: rgba(9, 9, 11, 0.94);
       --input-bg: #18181B;
       --search-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
       --badge-up-text: #34D399;
       --badge-up-bg: rgba(6, 78, 59, 0.4);
-      --badge-up-border: rgba(6, 95, 70, 0.6);
+      --badge-up-border: rgba(6, 95, 70, 0.7);
       --badge-down-text: #FB7185;
       --badge-down-bg: rgba(136, 19, 55, 0.4);
-      --badge-down-border: rgba(159, 18, 57, 0.6);
+      --badge-down-border: rgba(159, 18, 57, 0.7);
     }
 
     body {
@@ -60,7 +64,7 @@
     .font-display { font-family: 'Cabinet Grotesk', -apple-system, sans-serif; }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
 
-    /* Minimalist Apple Range Slider (Stroke-Free) */
+    /* Minimalist Stroke-Free Neutral Slider */
     input[type=range] {
       -webkit-appearance: none;
       appearance: none;
@@ -81,17 +85,17 @@
       border-radius: 50%;
       cursor: pointer;
       border: none !important;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.25);
-      transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+      transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
     }
     input[type=range]::-webkit-slider-thumb:hover {
-      transform: scale(1.18);
+      transform: scale(1.15);
     }
     input[type=range]::-webkit-slider-thumb:active {
       transform: scale(0.92);
     }
 
-    /* iOS Fluid Spring Toggle Switch */
+    /* iOS Fluid Spring Toggle Switch (Semantic Polarity: Green ON / Red OFF) */
     .ios-switch {
       position: relative;
       display: inline-block;
@@ -102,35 +106,93 @@
     .ios-switch input { opacity: 0; width: 0; height: 0; }
     .ios-slider {
       position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-      background-color: var(--bg-track); border-radius: 9999px;
-      transition: background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      background-color: #EF4444; /* Semantic Rose Red when OFF */
+      border-radius: 9999px;
+      transition: background-color 0.2s ease;
     }
     .ios-slider:before {
       position: absolute; content: ""; height: 20px; width: 20px; left: 2px; bottom: 2px;
       background-color: #FFFFFF; border-radius: 50%;
       box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    input:checked + .ios-slider { background-color: var(--text-primary); }
-    html.dark input:checked + .ios-slider { background-color: #38BDF8; }
+    input:checked + .ios-slider { background-color: #10B981; } /* Semantic Emerald Green when ON */
+    html.dark input:checked + .ios-slider { background-color: #10B981; }
+    html.dark .ios-slider { background-color: #EF4444; }
     input:checked + .ios-slider:before { transform: translateX(20px); }
 
     /* Circular Progress Ring */
     .progress-ring-circle {
-      transition: stroke-dashoffset 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: stroke-dashoffset 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       transform: rotate(-90deg);
       transform-origin: 50% 50%;
     }
 
-    /* Spring Animation Utilities */
-    .spring-press {
-      transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-    }
-    .spring-press:active {
-      transform: scale(0.95);
+    /* Ramsian Bare-Bone Skeleton Shimmer Engine */
+    @keyframes ramsianShimmer {
+      0% {
+        background-position: 100% 0;
+      }
+      100% {
+        background-position: -100% 0;
+      }
     }
 
-    /* Apple Segmented Control Slider Track & Pill */
+    .skeleton-shimmer {
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(0, 0, 0, 0.10) 50%,
+        transparent 100%
+      ) var(--bg-track);
+      background-size: 200% 100%;
+      animation: ramsianShimmer 2.8s ease-in-out infinite;
+    }
+    html.dark .skeleton-shimmer {
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.10) 50%,
+        transparent 100%
+      ) var(--bg-track);
+      background-size: 200% 100%;
+    }
+
+    /* Bad Connection Simulation: All target elements show bare-bone skeleton */
+    body.skeleton-active .skeleton-target {
+      color: transparent !important;
+      border-color: transparent !important;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(0, 0, 0, 0.10) 50%,
+        transparent 100%
+      ) var(--bg-track) !important;
+      background-size: 200% 100% !important;
+      animation: ramsianShimmer 2.8s ease-in-out infinite !important;
+      border-radius: 6px !important;
+      user-select: none !important;
+      pointer-events: none !important;
+    }
+    html.dark body.skeleton-active .skeleton-target {
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.10) 50%,
+        transparent 100%
+      ) var(--bg-track) !important;
+      background-size: 200% 100% !important;
+    }
+
+    /* Non-Jiggling Smooth Slide Utilities */
+    .spring-press {
+      transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+    .spring-press:active {
+      transform: scale(0.96);
+    }
+
+    /* Apple Segmented Control Slider Track & Pill (Smooth Glide, No Jiggle) */
     .apple-seg-track {
       position: relative;
       background-color: var(--bg-track);
@@ -147,11 +209,11 @@
       background-color: var(--card-active);
       border-radius: 9999px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.18);
-      transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), width 0.22s cubic-bezier(0.16, 1, 0.3, 1);
       pointer-events: none;
     }
 
-    /* Sliding Active Pill for RezerveHere Search Capsule Island */
+    /* Sliding Active Pill for Search Capsule (Smooth Glide, No Jiggle) */
     #searchSlidingPill {
       position: absolute;
       top: 0;
@@ -160,16 +222,16 @@
       background-color: var(--card-active);
       border-radius: 9999px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.14);
-      transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1), width 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), width 0.22s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 5;
       pointer-events: none;
     }
 
-    /* Continuous Siri Focal Wheel Track */
+    /* Siri Focal Wheel Track (Smooth Glide, No Jiggle) */
     #siriTrack {
       display: flex;
       align-items: center;
-      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       will-change: transform;
     }
     .siri-wheel-item {
@@ -184,7 +246,7 @@
       color: var(--text-muted);
       opacity: 0.85;
       font-weight: 500;
-      transition: opacity 0.25s ease, transform 0.25s ease, color 0.25s ease, font-size 0.25s ease;
+      transition: opacity 0.2s ease, color 0.2s ease, font-size 0.2s ease;
       user-select: none;
       cursor: pointer;
     }
@@ -197,11 +259,15 @@
 
     /* Text Slide Fade Animation */
     .text-slide-enter {
-      animation: textSlideIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      animation: textSlideIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     @keyframes textSlideIn {
-      0% { opacity: 0; transform: translateY(6px); }
+      0% { opacity: 0; transform: translateY(4px); }
       100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .no-transition {
+      transition: none !important;
     }
   </style>
 </head>
@@ -210,9 +276,9 @@
   <!-- Fixed Topbar (Single-Surface Standard with Cabinet Grotesk Brand) -->
   <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md [transform:translateZ(0)] border-b h-16 flex items-center px-6 md:px-12 transition-colors" style="background-color: var(--header-bg); border-color: var(--border-hairline);">
     <div class="max-w-6xl w-full mx-auto flex items-center justify-between gap-4">
-      <div class="flex items-center gap-1.5 select-none">
-        <span class="font-medium text-sm sm:text-base tracking-tight" style="color: var(--text-primary);">ramsian</span>
-        <span class="text-xs font-normal" style="color: var(--text-muted);">by</span>
+      <div class="flex items-baseline gap-2 select-none">
+        <span class="font-display font-bold text-lg sm:text-xl tracking-tight lowercase" style="color: var(--text-primary);">ramsian</span>
+        <span class="text-xs font-normal font-sans" style="color: var(--text-muted);">by</span>
         <a href="https://rezervehere.com" target="_blank" class="font-display font-bold text-lg sm:text-xl tracking-tight lowercase hover:opacity-80 transition-opacity" style="color: var(--text-primary);">rezervehere</a>
       </div>
 
@@ -231,9 +297,9 @@
         </a>
 
         <!-- 3. Copy Skill Button (Unified Pill Border) -->
-        <button onclick="copySkillCommand()" id="copySkillBtn" class="h-9 px-4 rounded-full text-xs font-semibold shadow-2xs spring-press flex items-center gap-1.5 cursor-pointer border dark:bg-white dark:text-black bg-[#111827] text-white" style="border-color: var(--border-hairline);">
+        <button onclick="copySkillCommand()" id="copySkillBtn" class="h-9 px-4 rounded-full text-xs font-semibold shadow-2xs spring-press flex items-center gap-1.5 cursor-pointer border" style="background-color: var(--card-active); border-color: var(--border-hairline); color: var(--text-primary);">
           <svg id="copySkillIcon" class="w-3.5 h-3.5 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-          <span id="copySkillText">Copy Skill</span>
+          <span id="copySkillText">Copy</span>
         </button>
       </div>
     </div>
@@ -248,7 +314,7 @@
       <div id="searchCapsule" class="w-full h-[60px] p-0 rounded-full flex items-center relative transition-all overflow-hidden border" style="background-color: var(--bg-track); border-color: var(--border-hairline); box-shadow: var(--search-shadow);">
         
         <!-- Sliding Highlight Pill -->
-        <div id="searchSlidingPill"></div>
+        <div id="searchSlidingPill" class="no-transition"></div>
 
         <!-- Segment 1: Where -->
         <button onclick="event.stopPropagation(); toggleSearchSegment('where')" id="seg-where" class="flex-1 self-stretch flex flex-col justify-center px-6 text-left rounded-full transition-all cursor-pointer relative z-10 spring-press">
@@ -268,41 +334,30 @@
         
         <!-- Segment 3: Service -->
         <button onclick="event.stopPropagation(); toggleSearchSegment('service')" id="seg-service" class="flex-1 self-stretch flex flex-col justify-center px-6 text-left rounded-full transition-all cursor-pointer relative z-10 spring-press">
-          <span class="block text-[11px] font-semibold leading-tight" style="color: var(--text-primary);">Type of service</span>
+          <span class="block text-[11px] font-semibold leading-tight" style="color: var(--text-primary);">Service</span>
           <span class="block text-xs font-normal truncate mt-0.5" style="color: var(--text-muted);" id="serviceLabel">Product Strategy & Design</span>
         </button>
         
         <!-- Search Magnifier Icon Capsule -->
         <div class="pr-2 z-20">
-          <button onclick="event.stopPropagation(); triggerToast('Searching for ' + currentWhere)" class="w-11 h-11 rounded-full flex items-center justify-center spring-press cursor-pointer shadow-sm dark:bg-white dark:text-black bg-[#111827] text-white">
+          <button onclick="event.stopPropagation();" class="w-11 h-11 rounded-full flex items-center justify-center spring-press cursor-pointer shadow-sm dark:bg-white dark:text-black bg-[#111827] text-white">
             <svg class="w-4 h-4 stroke-[2.2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
           </button>
         </div>
       </div>
 
-      <!-- Real Interactive Popups (Where / When / Service) -->
-      <div id="segmentFlyout" class="hidden absolute top-[68px] left-0 right-0 z-40 rounded-2xl border shadow-xl p-4 transition-all duration-200 transform scale-98 opacity-0" style="background-color: var(--card-active); border-color: var(--border-hairline);">
+      <!-- Real Interactive Popups (Where / When / Service) - Concentric radius: 16px padding + 12px inner = 28px outer -->
+      <div id="segmentFlyout" class="hidden absolute top-[68px] left-0 right-0 z-40 rounded-[28px] border shadow-xl p-4 transition-all duration-200 transform scale-98 opacity-0" style="background-color: var(--card-active); border-color: var(--border-hairline);">
         <div id="flyoutContent"></div>
       </div>
 
-      <!-- Category Filter Pills -->
+      <!-- Category Filter Pills (1-Word Standard, Direct Uniform Categories) -->
       <div class="flex items-center gap-2 overflow-x-auto py-1">
-        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full text-xs font-semibold spring-press cursor-pointer shadow-2xs dark:bg-white dark:text-black bg-[#111827] text-white">All</button>
-        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer flex items-center gap-1.5" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-secondary);">
-          <span>Women's Hair</span>
-        </button>
-        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer flex items-center gap-1.5" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-secondary);">
-          <span>Barbershop</span>
-        </button>
-        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer flex items-center gap-1.5" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-secondary);">
-          <span>Gel Nails</span>
-        </button>
-        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer flex items-center gap-1.5" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-secondary);">
-          <span>Facial & Skincare</span>
-        </button>
-        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer flex items-center gap-1.5" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-secondary);">
-          <span>Massage & Spa</span>
-        </button>
+        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer transition-all" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-secondary);">Hair</button>
+        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer transition-all" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-secondary);">Barber</button>
+        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer transition-all" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-secondary);">Nails</button>
+        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer transition-all" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-secondary);">Facial</button>
+        <button onclick="setTabPill(this)" class="tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer transition-all" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-secondary);">Spa</button>
       </div>
     </section>
 
@@ -311,9 +366,9 @@
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b pb-3" style="border-color: var(--border-hairline);">
         <div class="flex items-center gap-3">
           <div>
-            <span class="text-xs font-medium block" style="color: var(--text-muted);">Gross Merchandise Volume</span>
+            <span class="text-xs font-medium block" style="color: var(--text-muted);">Volume</span>
             <div class="flex items-baseline gap-2 mt-0.5">
-              <span id="chartRevenueText" class="font-bold text-2xl sm:text-3xl font-mono tracking-tight" style="color: var(--text-primary);">$52,100.00</span>
+              <span id="chartRevenueText" class="font-bold text-2xl sm:text-3xl font-mono tracking-tight skeleton-target" style="color: var(--text-primary);">$52,100.00</span>
               
               <!-- RezerveHere High-Contrast Trend Badge -->
               <span id="trendBadge" class="text-xs font-bold px-2.5 py-0.5 rounded-full transition-all" style="color: var(--badge-up-text); background-color: var(--badge-up-bg); border: 1px solid var(--badge-up-border);">
@@ -326,22 +381,20 @@
         <!-- Apple Segmented Controls -->
         <div class="flex items-center gap-3 flex-wrap">
           
-          <!-- Apple Segmented Trend Control (Up / Down) -->
+          <!-- Apple Segmented Trend Control (Up / Down: 1-Word & Directional) -->
           <div class="apple-seg-track relative" id="appleSegTrack">
-            <div class="apple-seg-pill" id="appleSegPill"></div>
+            <div class="apple-seg-pill no-transition" id="appleSegPill"></div>
             <button onclick="setTrendMode('up')" id="trendBtnUp" class="relative z-10 px-3.5 py-1.5 text-xs font-semibold flex items-center gap-1.5 cursor-pointer spring-press" style="color: var(--text-primary);">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-              <span>Up Trend</span>
+              <span class="text-emerald-500 font-bold">↑</span><span>Up</span>
             </button>
             <button onclick="setTrendMode('down')" id="trendBtnDown" class="relative z-10 px-3.5 py-1.5 text-xs font-medium flex items-center gap-1.5 cursor-pointer spring-press" style="color: var(--text-muted);">
-              <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
-              <span>Down Trend</span>
+              <span class="text-rose-500 font-bold">↓</span><span>Down</span>
             </button>
           </div>
 
           <!-- Apple Segmented Period Control (7D / 30D / 90D) -->
           <div class="apple-seg-track relative" id="applePeriodTrack">
-            <div class="apple-seg-pill" id="applePeriodPill"></div>
+            <div class="apple-seg-pill no-transition" id="applePeriodPill"></div>
             <button onclick="updateChartPeriod('7D')" id="chartBtn7D" class="relative z-10 px-3 py-1.5 text-xs font-medium spring-press cursor-pointer" style="color: var(--text-muted);">7D</button>
             <button onclick="updateChartPeriod('30D')" id="chartBtn30D" class="relative z-10 px-3 py-1.5 text-xs font-semibold spring-press cursor-pointer" style="color: var(--text-primary);">30D</button>
             <button onclick="updateChartPeriod('90D')" id="chartBtn90D" class="relative z-10 px-3 py-1.5 text-xs font-medium spring-press cursor-pointer" style="color: var(--text-muted);">90D</button>
@@ -382,9 +435,11 @@
               <path id="chartAreaPath" d="M0,130 Q100,100 200,80 T400,50 T600,20 L600,160 L0,160 Z" fill="url(#chartGradGreen)" class="transition-all duration-300"/>
               <path id="chartLinePath" d="M0,130 Q100,100 200,80 T400,50 T600,20" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" class="transition-all duration-300"/>
               
-              <line id="chartCrossLine" x1="400" y1="0" x2="400" y2="160" stroke="#9CA3AF" stroke-width="1.5" stroke-dasharray="3 3" class="hidden opacity-60"/>
-              <circle id="chartDot" cx="400" cy="50" r="5.5" fill="var(--bg-canvas)" stroke="#10B981" stroke-width="3" class="hidden shadow-md"/>
             </svg>
+
+            <!-- Undistorted HTML Crosshair and Dot (Anchored via percentage coordinates to ensure guaranteed 1:1 round circle) -->
+            <div id="chartCrossLineHtml" class="hidden absolute top-0 bottom-0 w-px border-l border-dashed pointer-events-none opacity-60 z-20" style="border-color: #9CA3AF;"></div>
+            <div id="chartDotHtml" class="hidden absolute w-3.5 h-3.5 rounded-full border-2 -translate-x-1/2 -translate-y-1/2 pointer-events-none shadow-md z-30" style="background-color: var(--bg-canvas); border-color: #10B981;"></div>
 
             <div id="chartTooltip" class="absolute top-1 right-2 text-right hidden backdrop-blur-xs px-3 py-1.5 rounded-xl border shadow-sm z-20 pointer-events-none" style="background-color: var(--card-active); border-color: var(--border-hairline);">
               <span id="tooltipDate" class="text-[10px] block font-medium" style="color: var(--text-muted);">Tracking</span>
@@ -408,47 +463,47 @@
       </div>
     </section>
 
-    <!-- 3. FLAT DIVIDER METRIC STATS ROW WITH COUNT-UP NUMBERS -->
+    <!-- 3. FLAT DIVIDER METRIC STATS ROW WITH COUNT-UP NUMBERS (1-WORD TOKENS) -->
     <section class="grid grid-cols-2 sm:grid-cols-4 gap-4 py-4 border-t border-b" style="border-color: var(--border-hairline);">
       <div>
         <span class="text-xs font-medium" style="color: var(--text-muted);">Transactions</span>
-        <p id="metricBookings" class="font-bold text-2xl font-mono mt-0.5" style="color: var(--text-primary);">1,248</p>
-        <span class="text-[10px] text-emerald-600 font-semibold">+18.4% pace</span>
+        <p id="metricBookings" class="font-bold text-2xl font-mono mt-0.5 skeleton-target" style="color: var(--text-primary);">1,248</p>
+        <span id="metricBookingsPace" class="text-[11px] text-emerald-600 font-semibold transition-colors">+18.4%</span>
       </div>
       <div>
-        <span class="text-xs font-medium" style="color: var(--text-muted);">Average Ticket</span>
-        <p id="metricTicket" class="font-bold text-2xl font-mono mt-0.5" style="color: var(--text-primary);">$42.50</p>
-        <span class="text-[10px]" style="color: var(--text-muted);">Median basket</span>
+        <span class="text-xs font-medium" style="color: var(--text-muted);">Ticket</span>
+        <p id="metricTicket" class="font-bold text-2xl font-mono mt-0.5 skeleton-target" style="color: var(--text-primary);">$42.50</p>
+        <span id="metricTicketSub" class="text-[11px] font-medium" style="color: var(--text-muted);">Median</span>
       </div>
       <div>
-        <span class="text-xs font-medium" style="color: var(--text-muted);">Take Rate</span>
-        <p id="metricFee" class="font-bold text-2xl font-mono mt-0.5" style="color: var(--text-primary);">$1,350</p>
-        <span class="text-[10px]" style="color: var(--text-muted);">1.75% + $0.30</span>
+        <span class="text-xs font-medium" style="color: var(--text-muted);">Rate</span>
+        <p id="metricFee" class="font-bold text-2xl font-mono mt-0.5 skeleton-target" style="color: var(--text-primary);">$1,350</p>
+        <span id="metricFeeSub" class="text-[11px] font-medium font-mono" style="color: var(--text-muted);">1.75%</span>
       </div>
       <div>
         <span class="text-xs font-medium" style="color: var(--text-muted);">MRR</span>
-        <p id="metricMRR" class="font-bold text-2xl text-emerald-600 font-mono mt-0.5">$3,420</p>
-        <span class="text-[10px] text-emerald-600/80">Active tier</span>
+        <p id="metricMRR" class="font-bold text-2xl text-emerald-600 font-mono mt-0.5 transition-colors skeleton-target">$3,420</p>
+        <span id="metricMRRSub" class="text-[11px] font-semibold text-emerald-600/80 transition-colors">Active</span>
       </div>
     </section>
 
-    <!-- 4. CONTROLS, PICKERS & SLIDERS (MINIMALIST & HIGH CONTRAST) -->
-    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 py-2">
+    <!-- 4. CONTROLS, PICKERS & SLIDERS (CONCENTRIC CORNER RADII & HIGH CONTRAST) -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 py-2">
       
-      <!-- ITEM 1: Wheel -->
+      <!-- ITEM 1: Wheel (Concentric: Outer 24px - 12px padding = 12px track; Track 12px - 2px inset = 10px focus box) -->
       <div class="space-y-2">
         <span class="text-xs font-semibold" style="color: var(--text-primary);">Wheel</span>
-        <div class="p-3 rounded-2xl border flex items-center justify-between gap-1 relative" style="background-color: var(--bg-surface); border-color: var(--border-hairline);">
+        <div class="p-3 rounded-[24px] border flex items-center justify-between gap-1 relative" style="background-color: var(--bg-surface); border-color: var(--border-hairline);">
           <button onclick="stepSiri(-1)" class="w-8 h-8 rounded-full border flex items-center justify-center spring-press cursor-pointer shadow-2xs z-30 shrink-0" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-primary);">
             <svg class="w-3.5 h-3.5 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
           </button>
           
           <div class="relative w-[180px] h-9 overflow-hidden rounded-xl">
-            <!-- Center Focus Box -->
-            <div class="absolute left-[60px] top-0.5 bottom-0.5 w-[60px] rounded-xl border shadow-2xs pointer-events-none z-0" style="background-color: var(--card-active); border-color: var(--text-primary);"></div>
+            <!-- Center Focus Box (Concentric: 12px - 2px inset = 10px, Stroke-Free Soft Elevation) -->
+            <div class="absolute left-[60px] top-0.5 bottom-0.5 w-[60px] rounded-[10px] pointer-events-none z-0" style="background-color: var(--card-active); box-shadow: 0 2px 8px rgba(0,0,0,0.14);"></div>
             
             <!-- Sliding Track (High Contrast Text) -->
-            <div id="siriTrack" class="absolute top-0 bottom-0 left-0 flex items-center z-10">
+            <div id="siriTrack" class="no-transition absolute top-0 bottom-0 left-0 flex items-center z-10">
               <div onclick="selectSiriIndex(0)" class="siri-wheel-item">1.00%</div>
               <div onclick="selectSiriIndex(1)" class="siri-wheel-item">1.25%</div>
               <div onclick="selectSiriIndex(2)" class="siri-wheel-item">1.50%</div>
@@ -466,132 +521,93 @@
         </div>
       </div>
 
-      <!-- ITEM 2: Slider (Stroke-Free Minimalist) -->
+      <!-- ITEM 2: Intensity Slider (Concentric Outer: 24px) -->
       <div class="space-y-2">
         <div class="flex justify-between items-center text-xs">
-          <span class="font-semibold" style="color: var(--text-primary);">Slider</span>
-          <span id="sliderValueText" class="font-bold text-xs" style="color: var(--text-primary);">500 Units</span>
+          <span class="font-semibold" style="color: var(--text-primary);">Intensity</span>
+          <span id="sliderValueText" class="font-bold text-xs font-mono px-2.5 py-0.5 rounded-full border transition-all" style="color: var(--text-primary); background-color: var(--bg-surface); border-color: var(--border-hairline);">500 Units</span>
         </div>
-        <div class="p-4 rounded-2xl border space-y-2" style="background-color: var(--bg-surface); border-color: var(--border-hairline);">
-          <input type="range" min="50" max="2000" step="50" value="500" oninput="updateSlider(this.value)" class="w-full cursor-pointer" />
-          <div class="flex justify-between text-[10.5px] font-mono font-semibold" style="color: var(--text-muted);">
+        <div class="p-3.5 rounded-[24px] border space-y-2.5" style="background-color: var(--bg-surface); border-color: var(--border-hairline);">
+          <input type="range" id="complexitySlider" min="50" max="2000" step="25" value="500" oninput="updateSlider(this.value)" class="w-full cursor-pointer" />
+          <div class="flex justify-between text-[11px] font-mono font-semibold" style="color: var(--text-muted);">
             <span>50</span>
+            <span>500</span>
             <span>2,000</span>
           </div>
         </div>
       </div>
 
-      <!-- ITEM 3: Controls -->
+      <!-- ITEM 3: Controls (Concentric Outer: 24px, Clean Standalone Switch) -->
       <div class="space-y-2">
         <span class="text-xs font-semibold" style="color: var(--text-primary);">Controls</span>
-        <div class="p-3 rounded-2xl border flex items-center justify-between" style="background-color: var(--bg-surface); border-color: var(--border-hairline);">
+        <div class="p-3 rounded-[24px] border flex items-center justify-between" style="background-color: var(--bg-surface); border-color: var(--border-hairline);">
           <div class="flex items-center gap-1.5 border rounded-full p-1 shadow-2xs" style="background-color: var(--bg-canvas); border-color: var(--border-hairline);">
             <button onclick="stepCount(-1)" class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold spring-press cursor-pointer" style="color: var(--text-primary);">-</button>
             <span id="counterVal" class="w-6 text-center text-xs font-bold font-mono" style="color: var(--text-primary);">4</span>
             <button onclick="stepCount(1)" class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold spring-press cursor-pointer" style="color: var(--text-primary);">+</button>
           </div>
-          <div class="flex items-center gap-2">
-            <span class="text-[11px] font-semibold" style="color: var(--text-muted);">Live</span>
-            <label class="ios-switch">
-              <input type="checkbox" checked onchange="triggerToast(this.checked ? 'Sync Active' : 'Sync Paused')">
-              <span class="ios-slider"></span>
-            </label>
-          </div>
+          <label class="ios-switch">
+            <input type="checkbox" id="liveToggleInput" checked onchange="handleLiveToggle(this.checked)">
+            <span class="ios-slider"></span>
+          </label>
         </div>
       </div>
 
-      <!-- ITEM 4: Progress -->
+      <!-- ITEM 4: Progress (Concentric Outer: 24px, Real-Time Circle + Inline Loading Bar) -->
       <div class="space-y-2">
-        <span class="text-xs font-semibold" style="color: var(--text-primary);">Progress</span>
-        <div class="p-3 rounded-2xl border flex items-center justify-between" style="background-color: var(--bg-surface); border-color: var(--border-hairline);">
-          <div class="space-y-0.5">
-            <p id="occupancyPercentText" class="font-bold text-sm font-mono" style="color: var(--text-primary);">92.4%</p>
-            <span class="text-[10px] text-emerald-600 font-semibold">Optimal peak</span>
-          </div>
-          <svg class="w-11 h-11" viewBox="0 0 36 36">
-            <path stroke="var(--bg-track)" stroke-width="3.5" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-            <path id="occupancyRing" stroke="var(--text-primary)" class="progress-ring-circle" stroke-dasharray="92, 100" stroke-width="3.5" stroke-linecap="round" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-          </svg>
+        <div class="flex justify-between items-center text-xs">
+          <span class="font-semibold" style="color: var(--text-primary);">Progress</span>
+          <span class="font-mono text-[11px] font-semibold" style="color: var(--text-muted);">Real-time</span>
         </div>
-      </div>
-
-    </section>
-
-    <!-- 5. SERVICES & INPUTS (PURE APPLE DIVIDER LIST) -->
-    <section class="grid grid-cols-1 md:grid-cols-2 gap-10 pt-2 border-t" style="border-color: var(--border-hairline);">
-      
-      <!-- Services (Clean Divider Rows, Zero Clunky Buttons) -->
-      <div class="space-y-1">
-        <span class="text-xs font-semibold block pb-1" style="color: var(--text-primary);">Services</span>
-        <div class="divide-y" style="border-color: var(--border-hairline);">
-          <div class="py-3 flex items-center justify-between">
-            <div class="space-y-0.5">
-              <h4 class="font-semibold text-xs" style="color: var(--text-primary);">Women's Haircut & Styling</h4>
-              <p class="text-[11px]" style="color: var(--text-muted);">Consultation, wash, haircut and salon blowdry · 45 min</p>
-            </div>
-            <div class="text-right shrink-0">
-              <span class="font-bold text-xs font-mono" style="color: var(--text-primary);">$45.00</span>
-              <p class="text-[10px] text-emerald-600 font-semibold">-15% off</p>
+        <div class="p-3.5 rounded-[24px] border space-y-3" style="background-color: var(--bg-surface); border-color: var(--border-hairline);">
+          <!-- Top Row: Real-time Percentage Counter + Animated Circular Ring -->
+          <div class="flex items-center justify-between">
+            <p id="progressPercentText" class="font-bold text-2xl font-mono tracking-tight" style="color: var(--text-primary);">0%</p>
+            <div class="relative w-10 h-10 flex items-center justify-center shrink-0">
+              <svg class="w-10 h-10 -rotate-90" viewBox="0 0 36 36">
+                <path stroke="var(--bg-track)" stroke-width="3.2" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                <path id="progressCircleRing" stroke="var(--progress-stroke)" stroke-dasharray="0, 100" stroke-width="2.8" stroke-linecap="round" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              </svg>
             </div>
           </div>
-
-          <div class="py-3 flex items-center justify-between">
-            <div class="space-y-0.5">
-              <h4 class="font-semibold text-xs" style="color: var(--text-primary);">Gentlemen's Beard Trim & Cut</h4>
-              <p class="text-[11px]" style="color: var(--text-muted);">Precision scissors, razor fade and hot towel · 30 min</p>
-            </div>
-            <div class="text-right shrink-0">
-              <span class="font-bold text-xs font-mono" style="color: var(--text-primary);">$28.00</span>
-              <p class="text-[10px]" style="color: var(--text-muted);">Standard</p>
-            </div>
-          </div>
-
-          <div class="py-3 flex items-center justify-between">
-            <div class="space-y-0.5">
-              <h4 class="font-semibold text-xs" style="color: var(--text-primary);">HydraFacial Deep Cleanse</h4>
-              <p class="text-[11px]" style="color: var(--text-muted);">Vortex infusion, extraction & hyaluronic mask · 60 min</p>
-            </div>
-            <div class="text-right shrink-0">
-              <span class="font-bold text-xs font-mono" style="color: var(--text-primary);">$75.00</span>
-              <p class="text-[10px] text-emerald-600 font-semibold">-20% off</p>
-            </div>
+          <!-- Bottom Row: Inline Real-Time Loading Bar (Synchronized 0% -> 100% Loop) -->
+          <div class="w-full h-1.5 rounded-full overflow-hidden" style="background-color: var(--bg-track);">
+            <div id="progressLineBar" class="h-full rounded-full" style="width: 0%; max-width: 100%; background: var(--progress-fill);"></div>
           </div>
         </div>
       </div>
 
-      <!-- Inputs -->
-      <div class="space-y-3">
-        <span class="text-xs font-semibold block pb-1" style="color: var(--text-primary);">Inputs</span>
-        
-        <div class="flex items-center border rounded-2xl px-3.5 h-10 transition-colors" style="background-color: var(--input-bg); border-color: var(--border-hairline);">
-          <input type="text" value="Alex Rivera" placeholder="Full Name..." class="w-full text-xs font-medium bg-transparent outline-none" style="color: var(--text-primary);" />
-          <svg class="w-4 h-4 text-emerald-500 shrink-0 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+      <!-- ITEM 5: Skeleton (Concentric Outer: 24px, Persistent Bare-Bone Loading State) -->
+      <div class="space-y-2">
+        <div class="flex justify-between items-center text-xs">
+          <span class="font-semibold" style="color: var(--text-primary);">Skeleton</span>
+          <button onclick="toggleSkeletonSimulation()" id="skeletonSimBtn" class="font-mono text-[11px] font-semibold px-2 py-0.5 rounded-full border transition-all cursor-pointer spring-press" style="background-color: var(--bg-track); border-color: var(--border-hairline); color: var(--text-muted);">Simulate</button>
         </div>
-
-        <div class="flex items-center gap-2 pt-0.5">
-          <input type="text" maxlength="1" value="7" class="w-10 h-10 text-center rounded-xl border font-mono text-sm font-bold outline-none spring-press" style="background-color: var(--input-bg); border-color: var(--border-hairline); color: var(--text-primary);" />
-          <input type="text" maxlength="1" value="3" class="w-10 h-10 text-center rounded-xl border font-mono text-sm font-bold outline-none spring-press" style="background-color: var(--input-bg); border-color: var(--border-hairline); color: var(--text-primary);" />
-          <input type="text" maxlength="1" value="9" class="w-10 h-10 text-center rounded-xl border font-mono text-sm font-bold outline-none spring-press" style="background-color: var(--input-bg); border-color: var(--border-hairline); color: var(--text-primary);" />
-          <input type="text" maxlength="1" value="2" class="w-10 h-10 text-center rounded-xl border font-mono text-sm font-bold outline-none spring-press" style="background-color: var(--input-bg); border-color: var(--border-hairline); color: var(--text-primary);" />
-          <span class="text-[11px]" style="color: var(--text-muted);">256-bit crypto auth</span>
-        </div>
-
-        <div class="flex flex-wrap items-center gap-2 pt-2">
-          <button onclick="triggerToast('Primary action triggered')" class="h-9 px-4 rounded-full text-xs font-semibold spring-press cursor-pointer shadow-2xs dark:bg-white dark:text-black bg-[#111827] text-white">Primary</button>
-          <button onclick="triggerToast('Secondary action triggered')" class="h-9 px-4 rounded-full border text-xs font-semibold spring-press cursor-pointer" style="background-color: var(--bg-canvas); border-color: var(--border-hairline); color: var(--text-primary);">Secondary</button>
-          <button onclick="copySkillPrompt()" class="h-9 px-3.5 rounded-full text-xs font-medium spring-press cursor-pointer" style="color: var(--text-muted);">Copy Prompt</button>
+        <div class="p-3.5 rounded-[24px] border space-y-3" style="background-color: var(--bg-surface); border-color: var(--border-hairline);">
+          <!-- Top Row: Avatar skeleton placeholder + text lines skeleton -->
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-full skeleton-shimmer shrink-0"></div>
+            <div class="space-y-1.5 flex-1">
+              <div class="h-2.5 w-4/5 rounded-full skeleton-shimmer"></div>
+              <div class="h-2 w-1/2 rounded-full skeleton-shimmer"></div>
+            </div>
+          </div>
+          <!-- Middle: Content line placeholder -->
+          <div class="space-y-1.5 pt-0.5">
+            <div class="h-2 w-full rounded-full skeleton-shimmer"></div>
+            <div class="h-2 w-3/4 rounded-full skeleton-shimmer"></div>
+          </div>
+          <!-- Bottom Row: Inline skeleton pills -->
+          <div class="flex justify-between items-center pt-0.5">
+            <div class="h-3.5 w-12 rounded-full skeleton-shimmer"></div>
+            <div class="h-3.5 w-16 rounded-full skeleton-shimmer"></div>
+          </div>
         </div>
       </div>
 
     </section>
 
   </main>
-
-  <!-- TOAST NOTIFICATION -->
-  <div id="toastNotification" class="fixed bottom-6 right-6 z-50 text-xs font-semibold px-4 py-2.5 rounded-2xl shadow-xl flex items-center gap-2 transform translate-y-12 opacity-0 transition-all duration-200 border dark:bg-white dark:text-black bg-[#111827] text-white" style="border-color: var(--border-hairline);">
-    <svg class="w-4 h-4 text-emerald-400 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-    <span id="toastMessage">Done</span>
-  </div>
 
   <script>
     function animateValue(id, start, end, duration, prefix = '', suffix = '') {
@@ -624,16 +640,14 @@
         sun.classList.remove('hidden');
         moon.classList.add('hidden');
         txt.innerText = 'Dark';
-        triggerToast('Dark mode activated');
       } else {
         html.classList.remove('dark');
         sun.classList.add('hidden');
         moon.classList.remove('hidden');
         txt.innerText = 'Light';
-        triggerToast('Light mode activated');
       }
       setTimeout(() => {
-        setTrendMode(currentTrend);
+        setTrendMode(currentTrend, true);
         updateChartPeriod(currentPeriod);
         updateSearchPillPosition();
       }, 50);
@@ -645,17 +659,15 @@
       
       const txt = document.getElementById('copySkillText');
       txt.innerText = 'Copied!';
-      triggerToast('Skill install command copied to clipboard!');
       
       setTimeout(() => {
-        txt.innerText = 'Copy Skill';
+        txt.innerText = 'Copy';
       }, 2000);
     }
 
     function copySkillPrompt() {
       const prompt = 'Follow the ramsian design standard: flat canvas with zero nested card containers, hairline dividers, stroke-free sliders, Siri 3-item focal wheels, animated counting numerals, and Apple spring physics. Never use emojis in UI controls.';
       navigator.clipboard.writeText(prompt);
-      triggerToast('AI System Prompt copied to clipboard!');
     }
 
     let currentTrend = 'up';
@@ -691,6 +703,8 @@
     let selectedCalDay = 15;
     let selectedTime = '14:00';
 
+    let currentSliderIntensity = 500;
+
     const CHART_DATA = {
       up: {
         '7D': {
@@ -699,8 +713,6 @@
           badgeUp: true,
           strokeColor: '#10B981',
           fillGrad: 'url(#chartGradGreen)',
-          linePath: 'M0,135 Q100,110 200,90 T400,60 T600,25',
-          areaPath: 'M0,135 Q100,110 200,90 T400,60 T600,25 L600,160 L0,160 Z',
           yMax: '$15k', yMidHigh: '$10k', yMidLow: '$5k', yMin: '$0k',
           xLabels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
         },
@@ -710,8 +722,6 @@
           badgeUp: true,
           strokeColor: '#10B981',
           fillGrad: 'url(#chartGradGreen)',
-          linePath: 'M0,130 Q100,100 200,80 T400,50 T600,20',
-          areaPath: 'M0,130 Q100,100 200,80 T400,50 T600,20 L600,160 L0,160 Z',
           yMax: '$60k', yMidHigh: '$45k', yMidLow: '$30k', yMin: '$0k',
           xLabels: ['Week 1', 'Week 2', 'Week 3', 'Week 4']
         },
@@ -721,8 +731,6 @@
           badgeUp: true,
           strokeColor: '#10B981',
           fillGrad: 'url(#chartGradGreen)',
-          linePath: 'M0,140 Q100,90 200,70 T400,40 T600,15',
-          areaPath: 'M0,140 Q100,90 200,70 T400,40 T600,15 L600,160 L0,160 Z',
           yMax: '$180k', yMidHigh: '$120k', yMidLow: '$60k', yMin: '$0k',
           xLabels: ['Month 1', 'Month 2', 'Month 3']
         }
@@ -734,8 +742,6 @@
           badgeUp: false,
           strokeColor: '#F43F5E',
           fillGrad: 'url(#chartGradRed)',
-          linePath: 'M0,25 Q100,50 200,85 T400,115 T600,145',
-          areaPath: 'M0,25 Q100,50 200,85 T400,115 T600,145 L600,160 L0,160 Z',
           yMax: '$15k', yMidHigh: '$10k', yMidLow: '$5k', yMin: '$0k',
           xLabels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
         },
@@ -745,8 +751,6 @@
           badgeUp: false,
           strokeColor: '#F43F5E',
           fillGrad: 'url(#chartGradRed)',
-          linePath: 'M0,20 Q100,45 200,75 T400,110 T600,140',
-          areaPath: 'M0,20 Q100,45 200,75 T400,110 T600,140 L600,160 L0,160 Z',
           yMax: '$60k', yMidHigh: '$45k', yMidLow: '$30k', yMin: '$0k',
           xLabels: ['Week 1', 'Week 2', 'Week 3', 'Week 4']
         },
@@ -756,59 +760,153 @@
           badgeUp: false,
           strokeColor: '#F43F5E',
           fillGrad: 'url(#chartGradRed)',
-          linePath: 'M0,15 Q100,40 200,80 T400,120 T600,150',
-          areaPath: 'M0,15 Q100,40 200,80 T400,120 T600,150 L600,160 L0,160 Z',
           yMax: '$180k', yMidHigh: '$120k', yMidLow: '$60k', yMin: '$0k',
           xLabels: ['Month 1', 'Month 2', 'Month 3']
         }
       }
     };
 
-    function renderChart() {
+    function getNoiseAt(t, period, trend) {
+      const seed = period === '7D' ? 1.7 : (period === '30D' ? 2.9 : 4.3);
+      const s1 = Math.sin(t * 8.5 * seed + 0.3);
+      const s2 = Math.sin(t * 21.3 * seed + 1.7);
+      const s3 = Math.sin(t * 54.1 * seed + 3.2);
+      const s4 = Math.sin(t * 118.7 * seed + 0.9);
+      return (s1 * 0.45 + s2 * 0.32 + s3 * 0.16 + s4 * 0.07);
+    }
+
+    function generateFinancialSeries(period, trend, intensityVal) {
+      const pointsCount = period === '7D' ? 42 : (period === '30D' ? 72 : 108);
+      const alpha = Math.max(0, Math.min(1, (intensityVal - 50) / 1950));
+      const pts = [];
+      
+      for (let i = 0; i <= pointsCount; i++) {
+        const t = i / pointsCount;
+        const x = t * 600;
+        
+        let macroY;
+        if (trend === 'up') {
+          macroY = 132 - 106 * (0.5 - 0.5 * Math.cos(t * Math.PI));
+        } else {
+          macroY = 28 + 106 * (0.5 - 0.5 * Math.cos(t * Math.PI));
+        }
+        
+        const macroWave = Math.sin(t * Math.PI * 2.2) * 5;
+        const noise = getNoiseAt(t, period, trend);
+        const maxNoiseAmp = 20.0;
+        const currentNoise = noise * maxNoiseAmp * alpha;
+        
+        let y = macroY + macroWave * (1 - alpha * 0.5) + currentNoise;
+        y = Math.max(14, Math.min(148, y));
+        pts.push({ x: Number(x.toFixed(1)), y: Number(y.toFixed(1)) });
+      }
+      return pts;
+    }
+
+    function pointsToSvgPath(pts) {
+      if (!pts || pts.length === 0) return '';
+      let d = `M${pts[0].x},${pts[0].y}`;
+      for (let i = 0; i < pts.length - 1; i++) {
+        const p0 = pts[i === 0 ? 0 : i - 1];
+        const p1 = pts[i];
+        const p2 = pts[i + 1];
+        const p3 = pts[i + 2 >= pts.length ? pts.length - 1 : i + 2];
+        
+        const cp1x = p1.x + (p2.x - p0.x) / 6;
+        const cp1y = p1.y + (p2.y - p0.y) / 6;
+        const cp2x = p2.x - (p3.x - p1.x) / 6;
+        const cp2y = p2.y - (p3.y - p1.y) / 6;
+        d += ` C${cp1x.toFixed(1)},${cp1y.toFixed(1)} ${cp2x.toFixed(1)},${cp2y.toFixed(1)} ${p2.x.toFixed(1)},${p2.y.toFixed(1)}`;
+      }
+      return d;
+    }
+
+    function renderChart(skipCountUp = false) {
       const data = CHART_DATA[currentTrend][currentPeriod];
       const prevVal = baseRevenue;
       baseRevenue = data.revenue;
-      animateValue('chartRevenueText', prevVal, baseRevenue, 450, '$');
+      if (!skipCountUp) {
+        animateValue('chartRevenueText', prevVal, baseRevenue, 450, '$');
+      } else {
+        const revElem = document.getElementById('chartRevenueText');
+        if (revElem) revElem.innerText = '$' + baseRevenue.toLocaleString() + '.00';
+      }
 
       const badge = document.getElementById('trendBadge');
-      badge.innerText = data.trend;
-      if (data.badgeUp) {
-        badge.style.color = 'var(--badge-up-text)';
-        badge.style.backgroundColor = 'var(--badge-up-bg)';
-        badge.style.borderColor = 'var(--badge-up-border)';
-      } else {
-        badge.style.color = 'var(--badge-down-text)';
-        badge.style.backgroundColor = 'var(--badge-down-bg)';
-        badge.style.borderColor = 'var(--badge-down-border)';
+      if (badge) {
+        badge.innerText = data.trend;
+        if (data.badgeUp) {
+          badge.style.color = 'var(--badge-up-text)';
+          badge.style.backgroundColor = 'var(--badge-up-bg)';
+          badge.style.borderColor = 'var(--badge-up-border)';
+        } else {
+          badge.style.color = 'var(--badge-down-text)';
+          badge.style.backgroundColor = 'var(--badge-down-bg)';
+          badge.style.borderColor = 'var(--badge-down-border)';
+        }
       }
+
+      // Procedural financial series path based on current slider intensity
+      const pts = generateFinancialSeries(currentPeriod, currentTrend, currentSliderIntensity);
+      const lineD = pointsToSvgPath(pts);
+      const areaD = `${lineD} L600,160 L0,160 Z`;
 
       const line = document.getElementById('chartLinePath');
       const area = document.getElementById('chartAreaPath');
-      const dot = document.getElementById('chartDot');
-      line.setAttribute('d', data.linePath);
-      line.setAttribute('stroke', data.strokeColor);
-      area.setAttribute('d', data.areaPath);
-      area.setAttribute('fill', data.fillGrad);
-      dot.setAttribute('stroke', data.strokeColor);
+      if (line && area) {
+        line.setAttribute('d', lineD);
+        line.setAttribute('stroke', data.strokeColor);
+        area.setAttribute('d', areaD);
+        area.setAttribute('fill', data.fillGrad);
+      }
 
-      document.getElementById('yAxisMax').innerText = data.yMax;
-      document.getElementById('yAxisMidHigh').innerText = data.yMidHigh;
-      document.getElementById('yAxisMidLow').innerText = data.yMidLow;
-      document.getElementById('yAxisMin').innerText = data.yMin;
+      const dotHtml = document.getElementById('chartDotHtml');
+      if (dotHtml) dotHtml.style.borderColor = data.strokeColor;
+
+      const yMax = document.getElementById('yAxisMax');
+      const yMidHigh = document.getElementById('yAxisMidHigh');
+      const yMidLow = document.getElementById('yAxisMidLow');
+      const yMin = document.getElementById('yAxisMin');
+      if (yMax) yMax.innerText = data.yMax;
+      if (yMidHigh) yMidHigh.innerText = data.yMidHigh;
+      if (yMidLow) yMidLow.innerText = data.yMidLow;
+      if (yMin) yMin.innerText = data.yMin;
 
       const xContainer = document.getElementById('xAxisLabels');
-      xContainer.innerHTML = data.xLabels.map(l => `<span>${l}</span>`).join('');
+      if (xContainer) {
+        xContainer.innerHTML = data.xLabels.map(l => `<span>${l}</span>`).join('');
+      }
+
+      // Keep stats row colors synchronized with trend
+      const mrrElem = document.getElementById('metricMRR');
+      const paceBadge = document.getElementById('metricBookingsPace');
+      const mrrSub = document.getElementById('metricMRRSub');
+      if (mrrElem && paceBadge && mrrSub) {
+        if (currentTrend === 'up') {
+          mrrElem.className = 'font-bold text-2xl text-emerald-600 font-mono mt-0.5 transition-colors';
+          paceBadge.className = 'text-[11px] text-emerald-600 font-semibold transition-colors';
+          mrrSub.className = 'text-[11px] font-semibold text-emerald-600/80 transition-colors';
+          mrrSub.innerText = 'Active';
+        } else {
+          mrrElem.className = 'font-bold text-2xl text-rose-600 font-mono mt-0.5 transition-colors';
+          paceBadge.className = 'text-[11px] text-rose-600 font-semibold transition-colors';
+          mrrSub.className = 'text-[11px] font-semibold text-rose-600/80 transition-colors';
+          mrrSub.innerText = 'Reduced';
+        }
+      }
     }
 
-    function setTrendMode(mode) {
+    function setTrendMode(mode, skipRender = false) {
       currentTrend = mode;
       const pill = document.getElementById('appleSegPill');
       const btnUp = document.getElementById('trendBtnUp');
       const btnDown = document.getElementById('trendBtnDown');
       const targetBtn = (mode === 'up') ? btnUp : btnDown;
 
-      pill.style.transform = `translateX(${targetBtn.offsetLeft}px)`;
-      pill.style.width = `${targetBtn.offsetWidth}px`;
+      if (pill && targetBtn) {
+        pill.style.transform = `translateX(${targetBtn.offsetLeft}px)`;
+        pill.style.width = `${targetBtn.offsetWidth}px`;
+      }
 
       if (mode === 'up') {
         btnUp.style.color = 'var(--text-primary)';
@@ -821,7 +919,9 @@
         btnUp.style.color = 'var(--text-muted)';
         btnUp.style.fontWeight = '500';
       }
-      renderChart();
+      if (!skipRender) {
+        renderChart();
+      }
     }
 
     function updateChartPeriod(period) {
@@ -872,28 +972,42 @@
         bestPt = pt;
       }
 
-      const dot = document.getElementById('chartDot');
-      dot.setAttribute('cx', bestPt.x);
-      dot.setAttribute('cy', bestPt.y);
-      dot.classList.remove('hidden');
+      const leftPct = (bestPt.x / 600) * 100;
+      const topPct = (bestPt.y / 160) * 100;
+      const strokeColor = currentTrend === 'up' ? '#10B981' : '#F43F5E';
 
-      const crossLine = document.getElementById('chartCrossLine');
-      crossLine.setAttribute('x1', bestPt.x);
-      crossLine.setAttribute('x2', bestPt.x);
-      crossLine.classList.remove('hidden');
+      const dotHtml = document.getElementById('chartDotHtml');
+      if (dotHtml) {
+        dotHtml.style.left = `${leftPct}%`;
+        dotHtml.style.top = `${topPct}%`;
+        dotHtml.style.borderColor = strokeColor;
+        dotHtml.classList.remove('hidden');
+      }
+
+      const crossLineHtml = document.getElementById('chartCrossLineHtml');
+      if (crossLineHtml) {
+        crossLineHtml.style.left = `${leftPct}%`;
+        crossLineHtml.classList.remove('hidden');
+      }
 
       const tooltip = document.getElementById('chartTooltip');
-      tooltip.classList.remove('hidden');
-      const val = currentTrend === 'up' 
-        ? Math.round(1400 + pct * (baseRevenue * 0.12))
-        : Math.round(baseRevenue * 0.12 - pct * (baseRevenue * 0.08));
-      document.getElementById('tooltipVal').innerText = '$' + val.toLocaleString() + '.00';
+      if (tooltip) {
+        tooltip.classList.remove('hidden');
+        const heightNorm = Math.max(0, Math.min(1, (148 - bestPt.y) / (148 - 16)));
+        const maxVal = currentPeriod === '7D' ? 15000 : (currentPeriod === '30D' ? 60000 : 180000);
+        const minVal = currentPeriod === '7D' ? 2000 : (currentPeriod === '30D' ? 10000 : 30000);
+        const val = Math.round(minVal + heightNorm * (maxVal - minVal));
+        document.getElementById('tooltipVal').innerText = '$' + val.toLocaleString() + '.00';
+      }
     }
 
     function handleChartLeave() {
-      document.getElementById('chartDot').classList.add('hidden');
-      document.getElementById('chartCrossLine').classList.add('hidden');
-      document.getElementById('chartTooltip').classList.add('hidden');
+      const dotHtml = document.getElementById('chartDotHtml');
+      if (dotHtml) dotHtml.classList.add('hidden');
+      const crossLineHtml = document.getElementById('chartCrossLineHtml');
+      if (crossLineHtml) crossLineHtml.classList.add('hidden');
+      const tooltip = document.getElementById('chartTooltip');
+      if (tooltip) tooltip.classList.add('hidden');
     }
 
     function updateSearchPillPosition() {
@@ -980,11 +1094,11 @@
                   const d = i + 1;
                   const isSel = d === selectedCalDay;
                   return `
-                    <button onclick="event.stopPropagation(); selectedCalDay = ${d}; renderFlyout('when');" class="h-6 rounded-full text-xs font-semibold flex items-center justify-center cursor-pointer transition-colors ${
+                    <button onclick="event.stopPropagation(); selectedCalDay = ${d}; renderFlyout('when');" class="h-6 rounded-full text-xs font-semibold flex items-center justify-center cursor-pointer transition-all ${
                       isSel 
-                        ? 'dark:bg-white dark:text-black bg-[#111827] text-white shadow-xs' 
+                        ? 'shadow-sm font-bold' 
                         : 'hover:bg-black/5 dark:hover:bg-white/5'
-                    }" style="${isSel ? '' : 'color: var(--text-primary);'}">
+                    }" style="${isSel ? 'background-color: var(--card-active); color: var(--text-primary); box-shadow: 0 2px 6px rgba(0,0,0,0.14);' : 'color: var(--text-primary);'}">
                       ${d}
                     </button>
                   `;
@@ -1000,11 +1114,11 @@
                   ${['09:00', '10:00', '11:30', '14:00', '16:30', '18:00'].map(t => {
                     const isSel = t === selectedTime;
                     return `
-                      <button onclick="event.stopPropagation(); selectedTime = '${t}'; renderFlyout('when');" class="py-1.5 rounded-xl text-xs font-semibold text-center border cursor-pointer transition-colors ${
+                      <button onclick="event.stopPropagation(); selectedTime = '${t}'; renderFlyout('when');" class="py-1.5 rounded-xl text-xs font-semibold text-center cursor-pointer transition-all ${
                         isSel 
-                          ? 'dark:bg-white dark:text-black bg-[#111827] text-white border-transparent' 
+                          ? 'shadow-sm font-bold' 
                           : 'border-transparent hover:bg-black/5 dark:hover:bg-white/5'
-                      }" style="${isSel ? '' : 'background-color: var(--bg-surface); color: var(--text-secondary);'}">
+                      }" style="${isSel ? 'background-color: var(--card-active); color: var(--text-primary); box-shadow: 0 2px 8px rgba(0,0,0,0.14);' : 'background-color: var(--bg-surface); color: var(--text-secondary);'}">
                         ${t}
                       </button>
                     `;
@@ -1017,7 +1131,7 @@
                 <button onclick="event.stopPropagation(); selectOption('when', 'Any week, Any time')" class="text-xs font-medium hover:underline cursor-pointer" style="color: var(--text-muted);">
                   Flexible
                 </button>
-                <button onclick="event.stopPropagation(); selectOption('when', '${currentMonth} ${selectedCalDay}, ${selectedTime}')" class="h-8 px-4 rounded-full text-xs font-bold dark:bg-white dark:text-black bg-[#111827] text-white shadow-xs cursor-pointer spring-press">
+                <button onclick="event.stopPropagation(); selectOption('when', '${currentMonth} ${selectedCalDay}, ${selectedTime}')" class="h-8 px-4 rounded-full text-xs font-bold shadow-xs cursor-pointer spring-press border" style="background-color: var(--card-active); color: var(--text-primary); border-color: var(--border-hairline);">
                   Apply
                 </button>
               </div>
@@ -1069,7 +1183,6 @@
       if (seg === 'when') currentWhen = val;
       if (seg === 'service') currentService = val;
 
-      triggerToast(`Selected ${val}`);
       closeFlyout();
 
       if (seg === 'where') setTimeout(() => toggleSearchSegment('when'), 280);
@@ -1092,16 +1205,59 @@
     }
 
     function setTabPill(btn) {
+      const wasActive = btn.classList.contains('active-tab');
       document.querySelectorAll('.tab-pill').forEach(p => {
-        p.className = 'tab-pill h-8 px-4 rounded-full border text-xs font-medium spring-press cursor-pointer';
+        p.classList.remove('active-tab');
         p.style.backgroundColor = 'var(--bg-canvas)';
         p.style.borderColor = 'var(--border-hairline)';
         p.style.color = 'var(--text-secondary)';
+        p.style.boxShadow = 'none';
+        p.style.fontWeight = '500';
       });
-      btn.className = 'tab-pill h-8 px-4 rounded-full text-xs font-semibold spring-press cursor-pointer shadow-2xs dark:bg-white dark:text-black bg-[#111827] text-white';
-      btn.style.backgroundColor = '';
-      btn.style.borderColor = '';
-      btn.style.color = '';
+      if (!wasActive) {
+        btn.classList.add('active-tab');
+        btn.style.backgroundColor = 'var(--card-active)';
+        btn.style.borderColor = 'transparent';
+        btn.style.boxShadow = '0 2px 8px rgba(0,0,0,0.12)';
+        btn.style.color = 'var(--text-primary)';
+        btn.style.fontWeight = '600';
+      }
+    }
+
+    function toggleSkeletonSimulation() {
+      const isSim = document.body.classList.toggle('skeleton-active');
+      const btn = document.getElementById('skeletonSimBtn');
+      if (btn) {
+        if (isSim) {
+          btn.innerText = 'Active';
+          btn.style.color = '#10B981';
+          btn.style.borderColor = '#10B981';
+        } else {
+          btn.innerText = 'Simulate';
+          btn.style.color = 'var(--text-muted)';
+          btn.style.borderColor = 'var(--border-hairline)';
+        }
+      }
+    }
+
+    let progressAnimStart = null;
+    const PROGRESS_CYCLE_DURATION = 3200;
+
+    function stepRealtimeProgress(timestamp) {
+      if (!progressAnimStart) progressAnimStart = timestamp;
+      const elapsed = timestamp - progressAnimStart;
+      const cycleProgress = (elapsed % PROGRESS_CYCLE_DURATION) / PROGRESS_CYCLE_DURATION;
+      const pct = Math.min(100, Math.max(0, cycleProgress * 100));
+
+      const pctElem = document.getElementById('progressPercentText');
+      const ringElem = document.getElementById('progressCircleRing');
+      const barElem = document.getElementById('progressLineBar');
+
+      if (pctElem) pctElem.innerText = `${Math.floor(pct)}%`;
+      if (ringElem) ringElem.setAttribute('stroke-dasharray', `${pct.toFixed(1)}, 100`);
+      if (barElem) barElem.style.width = `${pct.toFixed(1)}%`;
+
+      requestAnimationFrame(stepRealtimeProgress);
     }
 
     const SIRI_STEPS = [1.00, 1.25, 1.50, 1.75, 2.00, 2.25, 2.50, 3.00];
@@ -1110,13 +1266,11 @@
     function stepSiri(delta) {
       siriActiveIndex = Math.max(0, Math.min(SIRI_STEPS.length - 1, siriActiveIndex + delta));
       renderSiriWheel();
-      triggerToast(`Take-rate: ${SIRI_STEPS[siriActiveIndex].toFixed(2)}%`);
     }
 
     function selectSiriIndex(idx) {
       siriActiveIndex = idx;
       renderSiriWheel();
-      triggerToast(`Take-rate: ${SIRI_STEPS[siriActiveIndex].toFixed(2)}%`);
     }
 
     function renderSiriWheel() {
@@ -1136,8 +1290,75 @@
       });
     }
 
+    function handleLiveToggle(checked) {
+      // Direct state reflection without toast popups
+    }
+
     function updateSlider(val) {
-      document.getElementById('sliderValueText').innerText = val + ' Units';
+      currentSliderIntensity = Number(val);
+      const min = 50;
+      const max = 2000;
+      const pct = ((currentSliderIntensity - min) / (max - min)) * 100;
+      
+      // Update stroke-free neutral slider track fill
+      const sliderElem = document.getElementById('complexitySlider');
+      if (sliderElem) {
+        sliderElem.style.setProperty('--slider-pct', `${pct.toFixed(2)}%`);
+      }
+
+      // Neutral Monochrome Slider Value Badge (50-2000 magnitude)
+      const valBadge = document.getElementById('sliderValueText');
+      if (valBadge) {
+        valBadge.innerText = `${currentSliderIntensity} Units`;
+        valBadge.style.color = 'var(--text-primary)';
+        valBadge.style.backgroundColor = 'var(--bg-surface)';
+        valBadge.style.borderColor = 'var(--border-hairline)';
+      }
+
+      // Proportional scaling of transaction metrics based on intensity
+      const intensityRatio = (currentSliderIntensity - 50) / 1950;
+      const bookings = Math.round(520 + intensityRatio * 2240);
+      const ticket = (38.00 + intensityRatio * 16.50).toFixed(2);
+      const fee = Math.round(620 + intensityRatio * 1840);
+      const mrr = Math.round(1800 + intensityRatio * 4200);
+      const paceVal = (9.4 + intensityRatio * 21.2).toFixed(1);
+
+      const metricBookings = document.getElementById('metricBookings');
+      const metricTicket = document.getElementById('metricTicket');
+      const metricFee = document.getElementById('metricFee');
+      if (metricBookings) metricBookings.innerText = bookings.toLocaleString();
+      if (metricTicket) metricTicket.innerText = '$' + ticket;
+      if (metricFee) metricFee.innerText = '$' + fee.toLocaleString();
+
+      const mrrElem = document.getElementById('metricMRR');
+      if (mrrElem) mrrElem.innerText = '$' + mrr.toLocaleString();
+
+      const paceBadge = document.getElementById('metricBookingsPace');
+      const mrrSub = document.getElementById('metricMRRSub');
+      if (currentTrend === 'up') {
+        if (mrrElem) mrrElem.className = 'font-bold text-2xl text-emerald-600 font-mono mt-0.5 transition-colors';
+        if (paceBadge) {
+          paceBadge.className = 'text-[11px] text-emerald-600 font-semibold transition-colors';
+          paceBadge.innerText = `+${paceVal}%`;
+        }
+        if (mrrSub) {
+          mrrSub.className = 'text-[11px] font-semibold text-emerald-600/80 transition-colors';
+          mrrSub.innerText = 'Active';
+        }
+      } else {
+        if (mrrElem) mrrElem.className = 'font-bold text-2xl text-rose-600 font-mono mt-0.5 transition-colors';
+        if (paceBadge) {
+          paceBadge.className = 'text-[11px] text-rose-600 font-semibold transition-colors';
+          paceBadge.innerText = `-${paceVal}%`;
+        }
+        if (mrrSub) {
+          mrrSub.className = 'text-[11px] font-semibold text-rose-600/80 transition-colors';
+          mrrSub.innerText = 'Reduced';
+        }
+      }
+
+      // Re-render chart instantaneously with updated intensity (skip count-up for 60fps responsiveness)
+      renderChart(true);
     }
 
     let count = 4;
@@ -1146,26 +1367,29 @@
       document.getElementById('counterVal').innerText = count;
     }
 
-    function triggerToast(msg) {
-      const toast = document.getElementById('toastNotification');
-      document.getElementById('toastMessage').innerText = msg;
-      toast.classList.remove('translate-y-12', 'opacity-0');
-      toast.classList.add('translate-y-0', 'opacity-100');
-      setTimeout(() => {
-        toast.classList.remove('translate-y-0', 'opacity-100');
-        toast.classList.add('translate-y-12', 'opacity-0');
-      }, 2000);
-    }
-
     window.addEventListener('DOMContentLoaded', () => {
+      // 1. Mount all controls statically with .no-transition active
       renderChart();
-      setTrendMode('up');
+      setTrendMode('up', true);
       updateChartPeriod('30D');
       renderSiriWheel();
       updateSearchPillPosition();
+      updateSlider(500);
+
+      // Start real-time progress loop
+      requestAnimationFrame(stepRealtimeProgress);
+
+      // 2. Force reflow so DOM registers static initial placement
+      void document.body.offsetHeight;
+
+      // 3. Remove .no-transition after 50ms so all future interactions animate smoothly
+      setTimeout(() => {
+        document.querySelectorAll('.no-transition').forEach(el => el.classList.remove('no-transition'));
+      }, 50);
     });
+
     window.addEventListener('resize', () => {
-      setTrendMode(currentTrend);
+      setTrendMode(currentTrend, true);
       updateChartPeriod(currentPeriod);
       updateSearchPillPosition();
     });

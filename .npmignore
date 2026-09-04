@@ -9,3 +9,5 @@ __pycache__/
 scripts/
 pyproject.toml
 ramsian/
+test-repo/
+.agents/skills/!(ramsian)

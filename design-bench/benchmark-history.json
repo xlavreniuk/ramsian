@@ -1,0 +1,337 @@
+[
+  {
+    "id": "run-baseline-001",
+    "timestamp": "2026-09-04T18:30:00.000Z",
+    "model": "Generic Baseline LLM (Zero-Shot Without Skill)",
+    "skill_name": "none",
+    "skill_version": "none",
+    "skill_hash": "none",
+    "git_commit": "baseline",
+    "score_percent": 42.5,
+    "points_earned": 42.5,
+    "points_total": 100,
+    "passed_count": 17,
+    "total_count": 41,
+    "summary": "Failed concentric radii (pinched corners), used generic blue/gray switches instead of semantic green/red, nested cards inside cards, added yapping subtitles and emoji tags.",
+    "categories": {
+      "1. Single-Surface Architecture": {
+        "earned": 4,
+        "total": 10,
+        "pct": 40
+      },
+      "2. Concentric Corner Radius Law": {
+        "earned": 0,
+        "total": 10,
+        "pct": 0
+      },
+      "3. Strict Semantic Polarity": {
+        "earned": 2.5,
+        "total": 10,
+        "pct": 25
+      },
+      "4. Anti-AI-Slop Constraints": {
+        "earned": 2.5,
+        "total": 10,
+        "pct": 25
+      },
+      "5. Typography & Font Hierarchy": {
+        "earned": 7.5,
+        "total": 10,
+        "pct": 75
+      },
+      "6. Search Capsule Composer": {
+        "earned": 6,
+        "total": 10,
+        "pct": 60
+      },
+      "7. Procedural Financial Spline": {
+        "earned": 5,
+        "total": 10,
+        "pct": 50
+      },
+      "8. Siri Focal Wheel": {
+        "earned": 5,
+        "total": 10,
+        "pct": 50
+      },
+      "9. Contained Progress Engine": {
+        "earned": 5,
+        "total": 10,
+        "pct": 50
+      },
+      "10. Bare-Bone Skeleton Engine": {
+        "earned": 5,
+        "total": 10,
+        "pct": 50
+      }
+    }
+  },
+  {
+    "id": "run-ramsian-v1.0",
+    "timestamp": "2026-09-04T22:15:00.000Z",
+    "model": "Antigravity Assistant (Gemini 2.5 Pro / Claude 3.5)",
+    "skill_name": "ramsian",
+    "skill_version": "v1.0.0",
+    "skill_hash": "9c8a1f4...",
+    "git_commit": "fa777c4",
+    "score_percent": 88,
+    "points_earned": 88,
+    "points_total": 100,
+    "passed_count": 36,
+    "total_count": 41,
+    "summary": "Achieved single-surface architecture, 60px capsule, and Siri focal math. Failed contained progress line (pitch black blackboard fill) and skeleton shimmer direction.",
+    "categories": {
+      "1. Single-Surface Architecture": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "2. Concentric Corner Radius Law": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "3. Strict Semantic Polarity": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "4. Anti-AI-Slop Constraints": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "5. Typography & Font Hierarchy": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "6. Search Capsule Composer": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "7. Procedural Financial Spline": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "8. Siri Focal Wheel": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "9. Contained Progress Engine": {
+        "earned": 4,
+        "total": 10,
+        "pct": 40
+      },
+      "10. Bare-Bone Skeleton Engine": {
+        "earned": 4,
+        "total": 10,
+        "pct": 40
+      }
+    }
+  },
+  {
+    "id": "run-ramsian-v1.3-current",
+    "timestamp": "2026-09-05T00:17:30.000Z",
+    "model": "Antigravity Pair Programmer (Gemini 2.5 Pro / Claude 3.5)",
+    "skill_name": "ramsian",
+    "skill_version": "v1.3.0",
+    "skill_hash": "47b5c99264b27e65b5ce293ba5a592a6b1aca4335b055ceb80a4e66f4732ccf6",
+    "git_commit": "fa777c4",
+    "score_percent": 100,
+    "points_earned": 100,
+    "points_total": 100,
+    "passed_count": 41,
+    "total_count": 41,
+    "summary": "100% perfect compliance. All 41 checkpoints passed: Concentric geometry, semantic polarity, stroke-free soft elevation, contained progress line with subtle dark gradient, and big smooth 200% skeleton shimmer from left to right.",
+    "categories": {
+      "1. Single-Surface Architecture": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "2. Concentric Corner Radius Law": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "3. Strict Semantic Polarity": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "4. Anti-AI-Slop Constraints": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "5. Typography & Font Hierarchy": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "6. Search Capsule Composer": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "7. Procedural Financial Spline": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "8. Siri Focal Wheel": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "9. Contained Progress Engine": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "10. Bare-Bone Skeleton Engine": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      }
+    }
+  },
+  {
+    "id": "run-1788560372257",
+    "timestamp": "2026-09-04T22:19:32.257Z",
+    "model": "Antigravity Assistant (Gemini 2.5 Pro / Claude 3.5)",
+    "skill_name": "ramsian",
+    "skill_version": "v1.3.0",
+    "skill_hash": "47b5c99264b27e65b5ce293ba5a592a6b1aca4335b055ceb80a4e66f4732ccf6",
+    "git_commit": "fa777c4",
+    "score_percent": 100,
+    "points_earned": 100,
+    "points_total": 100,
+    "passed_count": 43,
+    "total_count": 43,
+    "summary": "Live audit run: 100% score. 43/43 checkpoints passed.",
+    "categories": {
+      "1. Single-Surface Architecture": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "2. Concentric Corner Radius Law": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "3. Strict Semantic Polarity": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "4. Anti-AI-Slop Constraints": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "5. Typography & Font Hierarchy": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "6. Search Capsule Composer": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "7. Procedural Financial Spline": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "8. Siri Focal Wheel": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "9. Contained Progress Engine": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "10. Bare-Bone Skeleton Engine": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      }
+    }
+  },
+  {
+    "id": "run-1788560681452",
+    "timestamp": "2026-09-04T22:24:41.452Z",
+    "model": "Gemini 3.8 Flash (High Setting)",
+    "skill_name": "ramsian",
+    "skill_version": "v1.3.0",
+    "skill_hash": "47b5c99264b27e65b5ce293ba5a592a6b1aca4335b055ceb80a4e66f4732ccf6",
+    "git_commit": "fa777c4",
+    "score_percent": 100,
+    "points_earned": 100,
+    "points_total": 100,
+    "passed_count": 43,
+    "total_count": 43,
+    "summary": "Live audit run: 100% score. 43/43 checkpoints passed.",
+    "categories": {
+      "1. Single-Surface Architecture": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "2. Concentric Corner Radius Law": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "3. Strict Semantic Polarity": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "4. Anti-AI-Slop Constraints": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "5. Typography & Font Hierarchy": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "6. Search Capsule Composer": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "7. Procedural Financial Spline": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "8. Siri Focal Wheel": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "9. Contained Progress Engine": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      },
+      "10. Bare-Bone Skeleton Engine": {
+        "earned": 10,
+        "total": 10,
+        "pct": 100
+      }
+    }
+  }
+]

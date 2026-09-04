@@ -24,7 +24,12 @@ export function startDesignEditorServer() {
         if (existsSync(HTML_PATH)) {
           const html = readFileSync(HTML_PATH, "utf-8");
           return new Response(html, {
-            headers: { "Content-Type": "text/html; charset=utf-8" },
+            headers: {
+              "Content-Type": "text/html; charset=utf-8",
+              "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+              "Pragma": "no-cache",
+              "Expires": "0"
+            },
           });
         }
       }

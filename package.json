@@ -1,6 +1,6 @@
 {
   "name": "ramsian",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Universal Apple & Linear single-surface architecture, stroke-free controls, and fluid spring motion design system by rezervehere",
   "main": "server.ts",
   "type": "module",

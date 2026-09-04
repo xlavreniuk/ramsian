@@ -1,0 +1,10 @@
+{
+  "name": "design-bench",
+  "version": "1.0.0",
+  "description": "Autonomous AI Benchmark for Ramsian Design System Recreation",
+  "type": "module",
+  "scripts": {
+    "start": "bun run server.ts",
+    "bench": "bun run evaluate.ts"
+  }
+}
